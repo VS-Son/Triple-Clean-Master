@@ -5,12 +5,6 @@ using Games.TileMatch.Tiles.Data;
 namespace Games.TileMatch.Level.Data
 {
     [Serializable]
-    public class TileSpriteData
-    {
-        public TileId  typeId;
-        public Sprite sprite;
-    }
-    [Serializable]
     public class LevelRoot
     {
         public string name;
@@ -20,8 +14,8 @@ namespace Games.TileMatch.Level.Data
     [Serializable]
     public class LevelData 
     {
-        public int levels;
-        public string nameLevel;
+        public int level;
+        public string levelName;
         public List<LayersData> layersData;
     }
     [Serializable]

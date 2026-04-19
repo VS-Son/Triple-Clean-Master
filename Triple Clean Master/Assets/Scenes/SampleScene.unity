@@ -1092,5 +1092,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81427ce457914540a149e3067312ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 5
   prefab: {fileID: 3739456829574475772, guid: 57a7d30be51f8f34dab40150cae69893, type: 3}
+  listDataSprites: {fileID: 11400000, guid: 404f3f44293762f41b4d3660abf5dea6, type: 2}
+  listThemesData: {fileID: 11400000, guid: 040e772daf790a3468f5d33bb9d9405d, type: 2}

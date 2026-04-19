@@ -8,8 +8,7 @@ using UI.Screen;
 namespace Project.Services
 {
     public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, Next, Shop }
-    public enum TypeUI { TypeScreen, TypePopup }
-    public enum TypePopup {Setting}
+    
 
 
 
@@ -36,11 +35,7 @@ namespace Project.Services
         {
             InitConfig();
         }
-
-        private void Start()
-        {
-            
-        }
+        
 
         private void InitConfig()
         {
@@ -127,7 +122,7 @@ namespace Project.Services
             get
             {
                 UICanvas uiCanvas = null;
-                if (_backUICanvas.Count > 0) uiCanvas = _backUICanvas[_backUICanvas.Count - 1];
+                if (_backUICanvas.Count > 0) uiCanvas = _backUICanvas[^1];
                 return uiCanvas;
             }
         }
@@ -137,5 +132,6 @@ namespace Project.Services
             _backUICanvas.Remove(canvas);
         }
 
+       
     }
 }

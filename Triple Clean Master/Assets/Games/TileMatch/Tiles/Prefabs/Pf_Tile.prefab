@@ -98,7 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20468bffd16cd564f9b67489a3767dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteTile: {fileID: 7607021376594090247}
   tileId: 0
+  col: 0
+  row: 0
+  currentLayer: 0
+  originalPos: {x: 0, y: 0}
+  originalLayer: 0
 --- !u!61 &7533804027216155095
 BoxCollider2D:
   m_ObjectHideFlags: 0
