@@ -5,7 +5,7 @@ namespace UI.Screen
 {
     public abstract class UICanvas : MonoBehaviour
     {
-        public abstract TypeScreen Type { get; }
+        public TypeScreen type;
 
         public void Open()
         {

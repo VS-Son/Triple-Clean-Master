@@ -6,7 +6,7 @@ namespace UI.Screen.Gameplay
 {
     public class PlayScreen:UICanvas
     {
-        public override TypeScreen Type => TypeScreen.PlayScreen;
+        //public override TypeScreen Type => TypeScreen.PlayScreen;
 
         public void OnHome()
         {

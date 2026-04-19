@@ -8,6 +8,10 @@ using UI.Screen;
 namespace Project.Services
 {
     public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, Next, Shop }
+    public enum TypeUI { TypeScreen, TypePopup }
+    public enum TypePopup {Setting}
+
+
 
     [Serializable]
     public class UIConfig
@@ -25,8 +29,9 @@ namespace Project.Services
 
         private readonly Dictionary<TypeScreen, UICanvas> _cache = new();
         
-        
-           
+
+
+
         private void Awake()
         {
             InitConfig();
@@ -72,13 +77,14 @@ namespace Project.Services
         {
             return _cache.ContainsKey(typeScreen) && _cache[typeScreen] != null;
         }
-        public T GetUI<T>(TypeScreen typeScreen) where T : UICanvas
+
+        private T GetUI<T>(TypeScreen typeScreen) where T : UICanvas
         {
-            
             if (_cache.TryGetValue(typeScreen, out var ui))
             {
                 return ui as T;
-            }
+            }   
+            
             if (!_pathScreen.TryGetValue(typeScreen, out var path))
             {
                 Debug.LogError($"[UIManager] no path for {typeScreen}");
