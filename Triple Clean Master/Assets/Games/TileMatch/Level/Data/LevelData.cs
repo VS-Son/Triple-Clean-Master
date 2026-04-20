@@ -16,7 +16,7 @@ namespace Games.TileMatch.Level.Data
     {
         public int level;
         public string levelName;
-        public List<LayersData> layersData;
+        public List<LayersData> layers;
     }
     [Serializable]
     public class LayersData
@@ -25,10 +25,13 @@ namespace Games.TileMatch.Level.Data
         public int cols;
         public float posY;
         public float posX;
-        public int layerSort;
+        public float y;
+        public int layer;
         public string tileNameLayer;
         public int girdSize;
         public int tileSpace;
+        public List<Vector2Int> inactiveCells;
+
         
     }
 }

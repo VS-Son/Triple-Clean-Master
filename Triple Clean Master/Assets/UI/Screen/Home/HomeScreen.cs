@@ -1,4 +1,5 @@
 using System;
+using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Services;
 using UI.Screen.Gameplay;
@@ -16,6 +17,7 @@ namespace UI.Screen.Home
       public void OnPlay()
       {
          StateUI.ChangeState(TypeScreen.PlayScreen);
+         TileManager.Instance.Spawner();
       }
    }
 }
