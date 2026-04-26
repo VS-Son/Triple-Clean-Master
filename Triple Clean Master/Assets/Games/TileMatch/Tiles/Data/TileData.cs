@@ -8,10 +8,11 @@ namespace Games.TileMatch.Tiles.Data
     {
         public SpriteRenderer spriteTile;
         public TileId tileId;
-        public int col;
         public int row;
+        public int col;
         public int currentLayer;
         public Vector2 originalPos;
         public int originalLayer;
+        public bool isSelect;
     }
 }

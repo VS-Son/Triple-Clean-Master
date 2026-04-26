@@ -27,7 +27,7 @@ namespace Games.TileMatch.Level.Data
         public float posX;
         public float y;
         public int layer;
-        public string tileNameLayer;
+        public string layerName;
         public int girdSize;
         public int tileSpace;
         public List<Vector2Int> inactiveCells;

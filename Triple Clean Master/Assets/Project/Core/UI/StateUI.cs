@@ -1,4 +1,5 @@
 using System;
+using Games.TileMatch.Manager;
 using Project.Manager;
 using Project.Services;
 using UI.Screen.Gameplay;
@@ -20,10 +21,13 @@ namespace Project.Core.UI
                 case TypeScreen.HomeScreen:
                     UIManager.Instance.OpenUI<HomeScreen>(TypeScreen.HomeScreen);
                     UIManager.Instance.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
+                    TileManager.Instance.gameObject.SetActive(false);
                     break;
                 case TypeScreen.PlayScreen:
                     UIManager.Instance.OpenUI<PlayScreen>(TypeScreen.PlayScreen);
                     UIManager.Instance.CloseUI<HomeScreen>(TypeScreen.HomeScreen);
+                    TileManager.Instance.gameObject.SetActive(true);
+                    TileManager.Instance.OnInit();
                     break;
 
             }

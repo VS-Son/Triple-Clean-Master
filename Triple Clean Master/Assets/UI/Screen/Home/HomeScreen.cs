@@ -12,12 +12,14 @@ namespace UI.Screen.Home
       //public override TypeScreen Type => TypeScreen.HomeScreen;
       private void Start()
       {
+         
       }
 
       public void OnPlay()
       {
          StateUI.ChangeState(TypeScreen.PlayScreen);
          TileManager.Instance.Spawner();
+
       }
    }
 }

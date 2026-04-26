@@ -11,7 +11,6 @@ namespace Games.TileMatch.Tiles.Scripts
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("Click");
-            TileManager.Instance.CheckLevel();
         }
     }
 }

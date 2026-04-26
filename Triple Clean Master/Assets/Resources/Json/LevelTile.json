@@ -8,8 +8,9 @@
             "layers": [
                 {
                     "layer": 1,
-                    "rows": 8,
-                    "cols": 8,
+                    "rows": 5,
+                    "cols": 5,
+                    "layerName": "Layer 1",
                     "inactiveCells": [
                         {
                             "x": 0,
@@ -51,9 +52,10 @@
                 },
                 {
                     "layer": 2,
-                    "rows": 7,
-                    "cols": 7,
+                    "rows": 4,
+                    "cols": 4,
                     "y": 1.05,
+                    "layerName": "Layer 2",
                     "inactiveCells": [
                         {
                             "x": 0,
