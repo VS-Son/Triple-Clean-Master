@@ -8,23 +8,28 @@ using Games.TileMatch.Tiles.Data;
 using Project.Manager;
 using UnityEngine;
 using Games.TileMatch.Tiles.Scripts;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using Project.Extensions;
 
 namespace Games.TileMatch.Manager
 {
     public class TileManager : Singleton<TileManager>
     {
-        public GameObject spawner;
+        [Min(1)] public int currentLv = 2;
         [SerializeField] private Tile prefab;
         [SerializeField] private ListDataSprite listDataSprites;
         [SerializeField] private ListTileThemesData listThemesData;
+        [SerializeField] private int tileIndex;
+        
         private Dictionary<int, LevelData> _levelData;
         private readonly Dictionary<int, Transform> _layerParent = new ();
         private readonly Dictionary<int, Tile[,]> _layerTile = new ();
-        private List<TileId> _tileIds = new List<TileId>()
-            { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
+        private  List<TileId> _distributeTiles;
+        private readonly Dictionary<TileId, int> _countTileId = new Dictionary<TileId, int>();
+        private Dictionary<TileId, Sprite> _spriteLookUp;
+        private readonly List<TileId> _tileId = new List<TileId>()
+            { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5};
 
-        [Min(1)]private readonly int _currentLv = 1;
         private void Awake()
         {
             LoadFileJson.LoadResource("Json/LevelTile");
@@ -33,23 +38,34 @@ namespace Games.TileMatch.Manager
         private void Start()
         {
             OnInit();
+            GenerateTileManager();
         }
 
         public void OnInit()
         {
             var level = LoadFileJson.GetData<LevelRoot>().levelTile;
             _levelData = level.ToDictionary(l => l.level);
+            _spriteLookUp = new Dictionary<TileId, Sprite>();
+            foreach (var dataSprite in listDataSprites.listTileSprite)
+            {
+                if (!_spriteLookUp.ContainsKey(dataSprite.typeId))
+                {
+                    _spriteLookUp.Add(dataSprite.typeId, dataSprite.sprite);
+                }
+            }
 
-           
+
         }
 
-        public void Spawner()
+        private void GenerateTileManager()
         {
             
-            var layerConfig =LoadLayerConfigs();
+            var layerConfig = LoadLayerConfigs();
+            int totalTiles = layerConfig.Sum(config => (config.rows * config.cols) - config.inactiveCells.Count);
+            CalculateDistributeId(totalTiles);
             foreach (var config in layerConfig)
             {
-               var tileGrid = GridTileSpawner(config);
+                var tileGrid = GridTileSpawner(config);
                _layerTile[config.layer] = tileGrid;
             }
 
@@ -59,6 +75,7 @@ namespace Games.TileMatch.Manager
 
         private void SetTileBlocked()
         {
+            var layerMax = _layerTile.Keys.Max();
             foreach (var layerValue in _layerTile.Values)
             {
                 for (int x = 0; x < layerValue.GetLength(0); x++)
@@ -68,18 +85,14 @@ namespace Games.TileMatch.Manager
                         var tile = layerValue[x, y];
                         if (tile != null)
                         {
-                            foreach (var layer in _layerTile)
+                            if (layerMax > tile.currentLayer)
                             {
-                                var layerHigh = layer.Key;
-                                if (layerHigh > tile.currentLayer)
-                                {
-                                    tile.isSelect = false;
-                                    tile.spriteTile.color = Color.black;
-                                }
-                                else
-                                {
-                                    tile.isSelect = true;
-                                }
+                                tile.isSelect = false;
+                                tile.spriteTile.color = Color.black;
+                            }
+                            else
+                            {
+                                tile.isSelect = true;
                             }
                         }
                     }
@@ -87,12 +100,54 @@ namespace Games.TileMatch.Manager
             }
         }
 
+        private void CalculateDistributeId(int totalTiles)
+        {
+            _distributeTiles = GenerateDistributedId(totalTiles, _tileId);
+            Util.ShuffleList(_distributeTiles);
+            foreach (var tileType in _distributeTiles)
+            {
+                if (!_countTileId.ContainsKey(tileType)) _countTileId[tileType] = 0;
+                _countTileId[tileType]++;
+            }
+        }
+
+        private List<TileId> GenerateDistributedId(int totalTiles, List<TileId> tileId)
+        {
+            var listCount = new List<int>();
+            int baseCount = (totalTiles / tileId.Count) / 3 * 3;
+            for (int i = 0; i < tileId.Count; i++)
+            {
+                listCount.Add(baseCount);
+            }
+            int used = baseCount * tileId.Count;
+            int remaining = totalTiles - used;
+            int extra = remaining / 3;
+
+            List<int> indices = new List<int>();
+            for (int i = 0; i < tileId.Count; i++) indices.Add(i);
+            for (int i = 0; i < extra; i++)
+            {
+                listCount[indices[i]] += 3;
+            }
+            Util.ShuffleList(listCount);
+            var result = new List<TileId>();
+            for (int i = 0; i < tileId.Count; i++)
+            {
+                for (int j = 0; j < listCount[i]; j++)
+                {
+                    result.Add(tileId[i]);
+                }
+            }
+            
+            return result;
+        }
+
         private List<LayersData> LoadLayerConfigs()
         {
-            if (_levelData.TryGetValue(_currentLv, out var data)) return data.layers;
+            if (_levelData.TryGetValue(currentLv, out var data)) return data.layers;
             return null;
         }
-        
+
         private Tile[,] GridTileSpawner(LayersData layer)
         {
             Tile[,] tiles = new Tile[layer.cols, layer.rows];
@@ -111,20 +166,26 @@ namespace Games.TileMatch.Manager
                 {
                     if (layer.inactiveCells.Contains(new Vector2Int(x,y)))
                     {
-                       // continue;
+                        continue;
                     }
                     var position =  new Vector2(x *spacing - offsetX, -y * spacing + offsetY ) ;//layer 1: y_0, layer 2: y = -1.05
                     var tile = Instantiate(prefab, position, Quaternion.identity);
                     tile.transform.SetParent(_layerParent[layer.layer]);
-                    tile.currentLayer = layer.layer;
-                    tile.transform.localScale = SetScale(layer);
-                    tile.row = x;
-                    tile.col = y;
+                    tile.SetPropertyTile(layer, x,y);
                     tile.name = $"Tile_x:{x}_y:{y}";
                     tiles[x, y] = tile;
                 }
             }
             return tiles;
+        }
+
+        public Sprite SetSpriteForTile(TileId tileId)
+        {
+            if (_spriteLookUp.TryGetValue(tileId, out var sprite))
+            {
+                return sprite;
+            }
+            return null;
         }
 
         private float SetSpacing(LayersData layer)
@@ -154,32 +215,14 @@ namespace Games.TileMatch.Manager
             return spacing;
         }
 
-        private Vector3 SetScale(LayersData layer)
+        public TileId GetDistributedTileType()
         {
-            float scale = 1;
-            if (layer.layer % 2 == 0)
-            {
-                scale = layer.cols switch
-                {
-                    <= 2 => 1f,
-                    <= 4 and > 2 => 0.8f,
-                    <= 7 and > 4 => 0.5f,
-                    _ => scale
-                };
-            }
-            else
-            {
-                scale = layer.cols switch
-                {
-                    <= 3 => 1,
-                    <= 5 and > 3 => 0.8f,
-                    <= 8 and > 5 => 0.5f,
-                    _ => scale
-                };
-            }
-            return new Vector3(scale, scale);
+            var tileType = _distributeTiles[tileIndex];
+            tileIndex++;
+            return tileType;
         }
     }
+    
 
    
 }

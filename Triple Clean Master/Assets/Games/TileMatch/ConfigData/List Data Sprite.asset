@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listTileSprite:
   - typeId: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: d4be0a19ab767be49b089eb3074b3bce, type: 3}
   - typeId: 1
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 8eb44ba3bc7a0d14ab277a1af48cfed9, type: 3}
   - typeId: 2
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: dabab7d6c8a61ca48b3e43e5eb6913cf, type: 3}
   - typeId: 3
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 4e4dbc53d660c5b46a3a1eb07d2c0442, type: 3}
   - typeId: 4
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 03d4d36a305efdc45a340e81f0a61f28, type: 3}

@@ -18,7 +18,6 @@ namespace UI.Screen.Home
       public void OnPlay()
       {
          StateUI.ChangeState(TypeScreen.PlayScreen);
-         TileManager.Instance.Spawner();
 
       }
    }
