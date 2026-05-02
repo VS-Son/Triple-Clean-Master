@@ -20,6 +20,7 @@ namespace Project.Manager
                 }
                 return _instance;
             }
+            
         }
     }
 }

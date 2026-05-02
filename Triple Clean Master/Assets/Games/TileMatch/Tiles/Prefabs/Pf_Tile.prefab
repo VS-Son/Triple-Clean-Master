@@ -106,6 +106,9 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   originalLayer: 0
   isSelect: 0
+  isCollected: 0
+  coverCount: 0
+  collider: {fileID: 7533804027216155095}
 --- !u!61 &7533804027216155095
 BoxCollider2D:
   m_ObjectHideFlags: 0

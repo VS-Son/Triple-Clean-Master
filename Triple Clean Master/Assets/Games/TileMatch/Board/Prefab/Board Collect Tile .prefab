@@ -262,6 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5518833906671504328}
   - component: {fileID: 5518833906671504183}
+  - component: {fileID: 2490911806343824971}
   m_Layer: 0
   m_Name: 'Board Collect Tile '
   m_TagString: Untagged
@@ -346,6 +347,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2490911806343824971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5518833906671504182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628e55d0d3a8d0c46965d19b310feeb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots:
+  - {fileID: 4283750696501623614}
+  - {fileID: 7820917330185443945}
+  - {fileID: 3297682617132260640}
+  - {fileID: 767493460653623015}
+  - {fileID: 185208469261985894}
+  - {fileID: 88248960493233362}
+  - {fileID: 606686360365555800}
+  - {fileID: 5209359910798636426}
+  - {fileID: 4262736341423734483}
+  - {fileID: 6268721479984417258}
 --- !u!1 &5809090702981199242
 GameObject:
   m_ObjectHideFlags: 0

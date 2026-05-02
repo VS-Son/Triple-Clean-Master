@@ -19,7 +19,7 @@ namespace UI.Screen
 
         public void CloseDirectly()
         {
-            UIManager.Instance.RemoveBackUI(this);
+            UIManager.RemoveBackUI(this);
             gameObject.SetActive(false);
         }
     }

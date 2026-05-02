@@ -7,11 +7,8 @@ using UI.Screen;
 
 namespace Project.Services
 {
-    public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, Next, Shop }
+    public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, Next, Shop, StatusBar }
     
-
-
-
     [Serializable]
     public class UIConfig
     {
@@ -21,13 +18,11 @@ namespace Project.Services
 
     public class UIManager : Singleton<UIManager>
     {
-        [SerializeField] private Transform uiRoot;
         public List<UIConfig> uiConfigs = new();
 
-        private readonly Dictionary<TypeScreen, string> _pathScreen = new();
+        private static readonly Dictionary<TypeScreen, string> PathScreen = new();
 
-        private readonly Dictionary<TypeScreen, UICanvas> _cache = new();
-        
+        private static readonly Dictionary<TypeScreen, UICanvas> Cache = new();
 
 
 
@@ -39,15 +34,15 @@ namespace Project.Services
 
         private void InitConfig()
         {
-            _pathScreen.Clear();
+            PathScreen.Clear();
 
             foreach (var config in uiConfigs)
             {
-                _pathScreen[config.typeScreen] = config.path;
+                PathScreen[config.typeScreen] = config.path;
             }
         }
 
-        public T OpenUI<T>(TypeScreen typeScreen) where T : UICanvas
+        public static T OpenUI<T>(TypeScreen typeScreen) where T : UICanvas
         {
             var ui = GetUI<T>(typeScreen);
             if (ui == null) return null;
@@ -55,32 +50,32 @@ namespace Project.Services
             return ui;
         }
 
-        public void CloseUI<T>(TypeScreen typeScreen) where T : UICanvas
+        public static void CloseUI<T>(TypeScreen typeScreen) where T : UICanvas
         {
-            if (_cache.TryGetValue(typeScreen, out var ui) && IsOpened(typeScreen))
+            if (Cache.TryGetValue(typeScreen, out var ui) && IsOpened(typeScreen))
             {
                 ui.CloseDirectly();
             }
         }
 
-        private bool IsOpened(TypeScreen typeScreen)
+        private static bool IsOpened(TypeScreen typeScreen)
         {
-            return IsLoaded(typeScreen) && _cache[typeScreen].gameObject.activeInHierarchy;
+            return IsLoaded(typeScreen) && Cache[typeScreen].gameObject.activeInHierarchy;
         }
 
-        private bool IsLoaded(TypeScreen typeScreen)
+        private static bool IsLoaded(TypeScreen typeScreen)
         {
-            return _cache.ContainsKey(typeScreen) && _cache[typeScreen] != null;
+            return Cache.ContainsKey(typeScreen) && Cache[typeScreen] != null;
         }
 
-        private T GetUI<T>(TypeScreen typeScreen) where T : UICanvas
+        public static T GetUI<T>(TypeScreen typeScreen) where T : UICanvas
         {
-            if (_cache.TryGetValue(typeScreen, out var ui))
+            if (Cache.TryGetValue(typeScreen, out var ui))
             {
                 return ui as T;
             }   
             
-            if (!_pathScreen.TryGetValue(typeScreen, out var path))
+            if (!PathScreen.TryGetValue(typeScreen, out var path))
             {
                 Debug.LogError($"[UIManager] no path for {typeScreen}");
                 return null;
@@ -96,7 +91,7 @@ namespace Project.Services
             }
 
             
-            GameObject go = Instantiate(prefab, uiRoot);
+            GameObject go = Instantiate(prefab, Instance.transform);
 
 
             var screen = go.GetComponent<T>();
@@ -108,28 +103,28 @@ namespace Project.Services
             }
 
 
-            _cache[typeScreen] = screen;
+            Cache[typeScreen] = screen;
 
             return screen;
 
 
         }
 
-        private readonly List<UICanvas> _backUICanvas = new();
+        private static readonly List<UICanvas> BackUI = new();
 
-        private UICanvas BackTopUI
+        private static UICanvas BackTopUI
         {
             get
             {
                 UICanvas uiCanvas = null;
-                if (_backUICanvas.Count > 0) uiCanvas = _backUICanvas[^1];
+                if (BackUI.Count > 0) uiCanvas = BackUI[^1];
                 return uiCanvas;
             }
         }
 
-        public void RemoveBackUI(UICanvas canvas)
+        public static void RemoveBackUI(UICanvas canvas)
         {
-            _backUICanvas.Remove(canvas);
+            BackUI.Remove(canvas);
         }
 
        
