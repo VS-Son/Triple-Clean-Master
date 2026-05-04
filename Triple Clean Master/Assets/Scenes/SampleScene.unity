@@ -647,6 +647,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2078785945}
     m_Modifications:
+    - target: {fileID: 2490911806343824971, guid: 6833e827c2b28044c8cb408a03c787cb, type: 3}
+      propertyPath: physics2DRaycaster
+      value: 
+      objectReference: {fileID: 519420035}
     - target: {fileID: 5518833906671504182, guid: 6833e827c2b28044c8cb408a03c787cb, type: 3}
       propertyPath: m_Name
       value: 'Board Contains Tile '

@@ -10,6 +10,7 @@ using Project.Core.UI;
 using Project.Services;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
+using UnityEngine.EventSystems;
 
 namespace Games.TileMatch.Board.Scripts
 {
@@ -20,38 +21,37 @@ namespace Games.TileMatch.Board.Scripts
        private readonly List<Tile> _originalTile = new List<Tile>();
        private int _slotIndex;
        private int _countSlot;
-       private bool _isMatching;
+       private bool _isMatching =false;
 
        private Vector2 _originalScale;
+
        public void CollectTile(Tile tile)
-        {
-            tile.spriteTile.sortingOrder += 3;
-            tile.originalPos = tile.transform.position;
-            tile.originalLayer = tile.currentLayer;
+       {
+           tile.spriteTile.sortingOrder += 3;
+           tile.originalPos = tile.transform.position;
+           tile.originalLayer = tile.currentLayer;
 
-            _originalScale = tile.transform.lossyScale;
-            _collectedTile.Add(tile);
-            _originalTile.Add(tile);
-            _slotIndex = _collectedTile.Count;
-            _slotIndex = _countSlot;
-            _countSlot++;
-            tile.transform.parent = slots[_slotIndex];
-            SetMatchThree(tile);
-            tile.transform.DOMove(slots[_slotIndex].position, 0.5f).OnComplete((() =>
-            {
-                ReArrangeBoard();
-                if(_isMatching) return;
-                if (_countSlot == 7)
-                {
-                    StateUI.ChangeState(TypeScreen.Revive);
-                }
-            }));
-            tile.transform.DOScale(tile.transform.localScale + new Vector3(0.2f, 0.2f), 0.4f).SetLink(tile.gameObject)
-                .OnComplete((() => tile.transform.DOScale(1, 0.2f)));
-           
-        }
+           _originalScale = tile.transform.lossyScale;
+           _collectedTile.Add(tile);
+           _originalTile.Add(tile);
+           _slotIndex = _collectedTile.Count;
+           _slotIndex = _countSlot;
+           _countSlot++;
+           Debug.Log("slot index: "+_slotIndex);
+           tile.transform.parent = slots[_slotIndex];
+           SetMatchThree(tile);
+           if (CheckShowRevive())
+           {
+               TileManager.Instance.DisableInput(false);
+               DOVirtual.DelayedCall(0.4f, (() => StateUI.ChangeState(TypeScreen.Revive)));
+           }
+       }
 
-        private void SetMatchThree(Tile tile)
+       private bool CheckShowRevive()
+       {
+           return _countSlot >= 7 && !_isMatching;
+       }
+       private void SetMatchThree(Tile tile)
         {
             var matchThree = new List<Tile>();
             foreach (var t in _collectedTile)
@@ -62,16 +62,24 @@ namespace Games.TileMatch.Board.Scripts
                 }
             }
 
+            if (matchThree.Count ==1)
+            {
+                tile.transform.DOMove(slots[_slotIndex].position, 0.3f).SetId("collect").OnComplete((() =>
+                {
+                    DOVirtual.DelayedCall(0.1f,ReArrangeBoard);
+                }));
+                tile.transform.DOScale(1, 0.3f);
+            }
             if (matchThree.Count == 2)
             {
                 InsertMatching(matchThree, tile,0);
-
+                
             }
             if (matchThree.Count == 3)
             {
                 _isMatching = true;
                 InsertMatching(matchThree, tile,1);
-                StartCoroutine(ClearMatchedTiles(matchThree));
+                
             }
         }
 
@@ -82,24 +90,45 @@ namespace Games.TileMatch.Board.Scripts
             _slotIndex = targetIndex;
             _collectedTile.Remove(tile);
             _collectedTile.Insert(targetIndex, tile);
-            ReArrangeBoard();
+            DOVirtual.DelayedCall(0.1f,ReArrangeBoard);
+            tile.transform.DOMove(slots[_slotIndex].position, 0.3f).OnComplete((() =>
+            {
+                if (index == 1)
+                {
+                    DOVirtual.DelayedCall(0.1f, (() => StartCoroutine(ClearMatchedTiles(matchThree))));
+
+                }
+
+            }));
+            tile.transform.DOScale(1, 0.3f);
+
+
         }
+
         IEnumerator ClearMatchedTiles(List<Tile> tileMatch)
         {
-            yield return new WaitForSeconds(0.6f);
             foreach (var tile in tileMatch)
             {
-                yield return tile.transform.DOScale(0.001f, 0.05f).OnComplete((() =>
-                {
-                    _collectedTile.Remove(tile);
-                    _originalTile.Remove(tile);
-                    _countSlot--;
-                    Destroy(tile.gameObject);
-                    _isMatching = false;
-                })).SetLink(tile.gameObject).WaitForCompletion();
-               
+                yield return tile.transform.DOScale(tile.transform.localScale, 0.05f)
+                    .SetEase(Ease.OutBack).OnComplete((() => { tile.transform.DOScale(0.001f, 0.1f); }))
+                    .WaitForCompletion();
+                yield return new WaitForSeconds(0.001f);
+            }
+            
+            foreach (var tile in tileMatch)
+            {
+
+                _collectedTile.Remove(tile);
+                _originalTile.Remove(tile);
+                Destroy(tile.gameObject);
+                _countSlot--;
+                DOTween.Kill("collect");
+                
+
             }
             ReArrangeBoard();
+            _isMatching = false;
+
         }
 
         private void ReArrangeBoard()
@@ -108,7 +137,8 @@ namespace Games.TileMatch.Board.Scripts
             {
                 var tile = _collectedTile[i];
                 tile.transform.parent = slots[i];
-                tile.transform.DOMove(slots[i].position, 0.3f);
+                tile.transform.DOMove(slots[i].position, 0.4f);
+                tile.transform.DOScale(1, 0.1f);
 
             }
         }
@@ -146,8 +176,22 @@ namespace Games.TileMatch.Board.Scripts
             }
 
             _slotIndex = 0;
+            _countSlot = 0;
             _collectedTile.Clear();
             _originalTile.Clear();
+        }
+
+        public List<Tile> GetListCollect()
+        {
+            return new  List<Tile>(_collectedTile);
+        }
+
+        public void MoveSlotTile(List<Tile> result)
+        {
+            foreach (var tile in result)
+            {
+               CollectTile(tile);
+            }
         }
     }
 }

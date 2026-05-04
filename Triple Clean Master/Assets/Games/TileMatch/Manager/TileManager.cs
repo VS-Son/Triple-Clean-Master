@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.ConfigData;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Level.Scripts;
@@ -11,6 +11,7 @@ using Games.TileMatch.Tiles.Scripts;
 using Project.Core.UI;
 using Project.Extensions;
 using Project.Services;
+using Random = UnityEngine.Random;
 
 namespace Games.TileMatch.Manager
 {
@@ -83,21 +84,12 @@ namespace Games.TileMatch.Manager
         
         public void InitCoverageCount()
         {
-            foreach (var layer in _layerTile)
+            foreach (var tile in LayerTile())
             {
-                Tile[,] grid = layer.Value;
+                if (tile == null) continue;
 
-                for (int c = 0; c < grid.GetLength(0); c++)
-                {
-                    for (int r = 0; r < grid.GetLength(1); r++)
-                    {
-                        Tile tile = grid[c, r];
-                        if (tile == null) continue;
-
-                        tile.coverCount = CountCoveringTiles(tile);
-                        UpdateVisual(tile);
-                    }
-                }
+                tile.coverCount = CountCoveringTiles(tile);
+                UpdateVisual(tile);
             }
         }
         private int CountCoveringTiles(Tile lowerTile)
@@ -125,9 +117,9 @@ namespace Games.TileMatch.Manager
 
             return count;
         }
-        private bool IsInsideGrid(int c, int r, Tile[,] grid)
+        private bool IsInsideGrid(int y, int x, Tile[,] grid)
         {
-            return c >= 0 && c < grid.GetLength(0) && r >= 0 && r < grid.GetLength(1);
+            return y >= 0 && y < grid.GetLength(0) && x >= 0 && x < grid.GetLength(1);
         }
 
         private void CalculateDistributeId(int totalTiles)
@@ -193,18 +185,18 @@ namespace Games.TileMatch.Manager
                 layerParent.transform.SetParent(gameObject.transform);
             }
 
-            for (int c = 0; c < tiles.GetLength(0); c++)
+            for (int y = 0; y < tiles.GetLength(0); y++)
             {
-                for (int r = 0; r < tiles.GetLength(1); r++)
+                for (int x = 0; x < tiles.GetLength(1); x++)
                 {
-                    if (!layer.inactiveCells.Contains(new Vector2Int(r, c)))
+                    if (!layer.inactiveCells.Contains(new Vector2Int(x, y)))
                     {
-                        var position = new Vector2(r * spacing - offsetX, -c * spacing + offsetY); //layer 1: y_0, layer 2: y = -1.05
+                        var position = new Vector2(x * spacing - offsetX, -y * spacing + offsetY); //layer 1: y_0, layer 2: y = -1.05
                         var tile = Instantiate(prefab, position, Quaternion.identity);
                         tile.transform.SetParent(_layerParent[layer.layer]);
-                        tile.SetData(layer, r, c);
-                        tile.name = $"Tile_x:{c}_y:{r}";
-                        tiles[c, r] = tile;
+                        tile.SetData(layer, x, y);
+                        tile.name = $"Tile_x:{y}_y:{x}";
+                        tiles[y, x] = tile;
                     }
                 }
             }
@@ -268,6 +260,19 @@ namespace Games.TileMatch.Manager
             return _layerParent[layer];
         }
 
+        private IEnumerable<Tile> LayerTile()
+        {
+            foreach (var layer in _layerTile.Values)
+            {
+                for (int y = 0; y < layer.GetLength(0); y++)
+                {
+                    for (int x = 0; x < layer.GetLength(1); x++)
+                    {
+                        yield return layer[y, x];
+                    }
+                }
+            }
+        }
         public void ResetTiles()
         {
             tileIndex = 0;
@@ -280,6 +285,110 @@ namespace Games.TileMatch.Manager
             _countTileId.Clear();
             _distributeTiles = null;
             GenerateTileManager();
+            DisableInput(true);
+        }
+
+        public  void CollectMatchThreeTiles()
+        {
+            List<Tile> listCollect = BoardCollectTile.Instance.GetListCollect();
+            if (listCollect.Count == 0)
+            {
+                Dictionary<TileId, List<Tile>> availableTiles = new();
+                foreach (var tile in LayerTile())
+                {
+                    if (tile!= null && !tile.isCollected)
+                    {
+                        if (!availableTiles.ContainsKey((tile.tileId)))
+                        {
+                            availableTiles[tile.tileId] = new List<Tile>();
+                        }
+                        availableTiles[tile.tileId].Add(tile);
+                    }
+                }
+               
+                
+                List<TileId> validTypes =
+                    availableTiles.Where(kvp => kvp.Value.Count >= 3).Select(kvl => kvl.Key).ToList();
+                TileId randomId = validTypes[Random.Range(0, validTypes.Count)];
+                List<Tile> collectTile = availableTiles[randomId];
+                Util.ShuffleList(collectTile);
+                List<Tile> result = collectTile.GetRange(0, 3);
+                BoardCollectTile.Instance.MoveSlotTile(result);
+                return;
+            }
+
+            TileId tileId = listCollect[0].tileId;
+            int countSlot = listCollect.Count(t => t.tileId == tileId);
+            int missingCount = 3 - countSlot;
+            List<Tile> remaining = FindTileIdSame(tileId, missingCount);
+            if (remaining.Count == missingCount)
+            {
+                BoardCollectTile.Instance.MoveSlotTile(remaining);
+
+            }
+        }
+
+        private List<Tile> FindTileIdSame(TileId tileId, int missingCount = 3)
+        {
+            List<Tile> result = new List<Tile>();
+            foreach (var tile in LayerTile())
+            {
+                if (tile!=null && !tile.isCollected && tile.tileId == tileId)
+                {
+                    result.Add(tile);
+                    if (result.Count >= missingCount)
+                    {
+                        return result;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void DisableInput(bool isActive)
+        {
+            foreach (var tile in LayerTile())
+            {
+                if (tile != null && !tile.isCollected)
+                {
+                    tile.collider.enabled = isActive;
+
+                }
+            }
+        }
+
+        public void ShuffleList()
+        {
+            List<Tile> remainingTile = new List<Tile>();
+            List<TileId> shuffleId = new List<TileId>();
+            foreach (var tile in LayerTile())
+            {
+                if (tile!=null && !tile.isCollected)
+                {
+                    remainingTile.Add(tile);
+                    var tileId = GetSprite(tile.spriteTile.sprite);
+                    shuffleId.Add(tileId);
+                }
+            }
+            Util.ShuffleList(shuffleId);
+            for (int i = 0; i < remainingTile.Count; i++)
+            {
+                if (_spriteLookUp.TryGetValue(shuffleId[i], out var sprite))
+                {
+                    remainingTile[i].spriteTile.sprite = sprite;
+                    remainingTile[i].tileId = shuffleId[i];
+                }
+            }
+        }
+
+        private TileId GetSprite(Sprite sprite)
+        {
+            foreach (var s in _spriteLookUp)
+            {
+                if (s.Value == sprite)
+                  return s.Key;
+            }
+            return TileId.None;
         }
     }
 }
