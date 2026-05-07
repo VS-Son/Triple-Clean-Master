@@ -30,7 +30,7 @@ namespace UI.Screen
 
         public void OnShuffle()
         {
-            TileManager.Instance.ShuffleList();
+            TileManager.Instance.ShuffleGridTiles();
         }
     }
 }

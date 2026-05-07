@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Games.TileMatch.Tiles.Data
@@ -17,5 +18,6 @@ namespace Games.TileMatch.Tiles.Data
         public int coverCount = 0;
         public SpriteRenderer spriteTile;
         public new Collider2D collider;
+       
     }
 }

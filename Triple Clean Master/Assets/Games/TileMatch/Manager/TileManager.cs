@@ -18,10 +18,10 @@ namespace Games.TileMatch.Manager
     public class TileManager : Singleton<TileManager>
     {
         [Min(1)] public int currentLv;
+        [SerializeField] private int tileIndex;
         [SerializeField] private Tile prefab;
         [SerializeField] private ListDataSprite listDataSprites;
         [SerializeField] private ListTileThemesData listThemesData;
-        [SerializeField] private int tileIndex;
 
         private Dictionary<int, LevelData> _levelData;
         private readonly Dictionary<int, Transform> _layerParent = new();
@@ -31,10 +31,9 @@ namespace Games.TileMatch.Manager
         private Dictionary<TileId, Sprite> _spriteLookUp;
 
         private readonly List<TileId> _tileId = new List<TileId>()
-            { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
-
-        private readonly int[,] _offsets = { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } };
-
+            {TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
+        
+       
         private void Awake()
         {
             LoadFileJson.LoadResource("Json/LevelTile");
@@ -73,55 +72,76 @@ namespace Games.TileMatch.Manager
                 var tileGrid = GridTileSpawner(config);
                 _layerTile[config.layer] = tileGrid;
             }
-
+            BuildCoverGraph();
             InitCoverageCount();
+            
             if (StateUI.IsState(TypeScreen.HomeScreen))
             {
                 PlayManager.SetActive(false);
             }
 
         }
-        
-        public void InitCoverageCount()
+
+        private void BuildCoverGraph()
         {
             foreach (var tile in LayerTile())
             {
                 if (tile == null) continue;
+                tile.coveredBy.Clear();
+                tile.covers.Clear();
+            }
 
-                tile.coverCount = CountCoveringTiles(tile);
+            foreach (var upperLayer in _layerTile)
+            {
+                foreach (var lowerLayer in _layerTile)
+                {
+                    if (upperLayer.Key <= lowerLayer.Key) continue;
+
+                    LinkLayer(upperLayer.Value, lowerLayer.Value);
+                }
+            }
+        }
+
+        public void InitCoverageCount()
+        {
+           
+            foreach (var tile in LayerTile())
+            {
+                if (tile == null) continue;
+            
+                tile.coverCount = tile.coveredBy.Count(t => !t.isCollected);
                 UpdateVisual(tile);
             }
         }
-        private int CountCoveringTiles(Tile lowerTile)
-        {
-            int count = 0;
-            foreach (var layer in _layerTile)
-            {
-                if (layer.Key <= lowerTile.currentLayer) continue; 
-                Tile[,] higherGrid = layer.Value;
-                for (int i = 0; i < _offsets.GetLength(0); i++)
-                {
-                    int checkCol = lowerTile.col - _offsets[i, 0];
-                    int checkRow = lowerTile.row - _offsets[i, 1];
 
-                    if (IsInsideGrid(checkCol, checkRow, higherGrid))
+        private void LinkLayer(Tile[,] upper, Tile[,] lower)
+        {
+            foreach (var up in upper)
+            {
+                if (up == null) continue;
+
+                foreach (var down in lower)
+                {
+                    if (down == null) continue;
+
+                    if (IsOverlapping(up, down))
                     {
-                        Tile coveringTile = higherGrid[checkCol, checkRow];
-                        if (coveringTile != null && !coveringTile.isCollected)
-                        {
-                            count++;
-                        }
+                        down.coveredBy.Add(up);
+                        up.covers.Add(down);
                     }
                 }
             }
-
-            return count;
         }
-        private bool IsInsideGrid(int y, int x, Tile[,] grid)
+        private bool IsOverlapping(Tile a, Tile b)
         {
-            return y >= 0 && y < grid.GetLength(0) && x >= 0 && x < grid.GetLength(1);
-        }
+            var aCollider = a.collider as BoxCollider2D;
+            var bCollider = b.collider as BoxCollider2D;
 
+            if (aCollider == null || bCollider == null) return false;
+
+            return aCollider.bounds.Intersects(bCollider.bounds);
+        }
+        
         private void CalculateDistributeId(int totalTiles)
         {
             _distributeTiles = GenerateDistributedId(totalTiles, _tileId);
@@ -222,32 +242,20 @@ namespace Games.TileMatch.Manager
         }
 
         
-        public void OnTileCollected(Tile collectedTile)
+        public void HandleTileCollected(Tile tile)
         {
-            collectedTile.isCollected = true;
-            foreach (var layer in _layerTile)
+            tile.isCollected = true;
+            foreach (var down in tile.covers)
             {
-                if (layer.Key >= collectedTile.currentLayer) continue; 
+                if (down == null || down.isCollected) continue;
 
-                Tile[,] lowerGrid = layer.Value;
-                for (int i = 0; i < _offsets.GetLength(0); i++)
-                {
-                    int checkCol = collectedTile.col + _offsets[i, 0];
-                    int checkRow = collectedTile.row + _offsets[i, 1];
+                down.coverCount--;
 
-                    if (IsInsideGrid(checkCol, checkRow, lowerGrid))
-                    {
-                        Tile lowerTile = lowerGrid[checkCol, checkRow];
-                        if (lowerTile != null && !lowerTile.isCollected)
-                        {
-                            lowerTile.coverCount--;
-                            UpdateVisual(lowerTile);
-                        }
-                    }
-                }
+                UpdateVisual(down);
             }
         }
 
+       
         private void UpdateVisual(Tile tile)
         {
             bool covered = tile.coverCount <= 0;
@@ -298,6 +306,7 @@ namespace Games.TileMatch.Manager
                 {
                     if (tile!= null && !tile.isCollected)
                     {
+
                         if (!availableTiles.ContainsKey((tile.tileId)))
                         {
                             availableTiles[tile.tileId] = new List<Tile>();
@@ -311,9 +320,18 @@ namespace Games.TileMatch.Manager
                     availableTiles.Where(kvp => kvp.Value.Count >= 3).Select(kvl => kvl.Key).ToList();
                 TileId randomId = validTypes[Random.Range(0, validTypes.Count)];
                 List<Tile> collectTile = availableTiles[randomId];
-                Util.ShuffleList(collectTile);
                 List<Tile> result = collectTile.GetRange(0, 3);
-                BoardCollectTile.Instance.MoveSlotTile(result);
+                Util.ShuffleList(result);
+                foreach (var tile in result)
+                {
+                    tile.isCollected = true;
+                    BoardCollectTile.Instance.CollectTile(tile);
+                    HandleTileCollected(tile);
+                    tile.spriteTile.color = Util.SetAlphaSprite(255);
+                   
+
+                }
+
                 return;
             }
 
@@ -323,7 +341,13 @@ namespace Games.TileMatch.Manager
             List<Tile> remaining = FindTileIdSame(tileId, missingCount);
             if (remaining.Count == missingCount)
             {
-                BoardCollectTile.Instance.MoveSlotTile(remaining);
+                foreach (var tile in remaining)
+                {
+                    BoardCollectTile.Instance.CollectTile(tile);
+                    HandleTileCollected(tile);
+                    tile.spriteTile.color = Util.SetAlphaSprite(255);
+
+                }
 
             }
         }
@@ -357,26 +381,26 @@ namespace Games.TileMatch.Manager
             }
         }
 
-        public void ShuffleList()
+        public void ShuffleGridTiles()
         {
             List<Tile> remainingTile = new List<Tile>();
-            List<TileId> shuffleId = new List<TileId>();
+            List<TileId> listId = new List<TileId>();
             foreach (var tile in LayerTile())
             {
                 if (tile!=null && !tile.isCollected)
                 {
                     remainingTile.Add(tile);
                     var tileId = GetSprite(tile.spriteTile.sprite);
-                    shuffleId.Add(tileId);
+                    listId.Add(tileId);
                 }
             }
-            Util.ShuffleList(shuffleId);
+            Util.ShuffleList(listId);
             for (int i = 0; i < remainingTile.Count; i++)
             {
-                if (_spriteLookUp.TryGetValue(shuffleId[i], out var sprite))
+                if (_spriteLookUp.TryGetValue(listId[i], out var sprite))
                 {
                     remainingTile[i].spriteTile.sprite = sprite;
-                    remainingTile[i].tileId = shuffleId[i];
+                    remainingTile[i].tileId = listId[i];
                 }
             }
         }
@@ -389,6 +413,17 @@ namespace Games.TileMatch.Manager
                   return s.Key;
             }
             return TileId.None;
+        }
+
+        public bool CheckGridEmptyTile()
+        {
+            tileIndex --;
+            if (tileIndex == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

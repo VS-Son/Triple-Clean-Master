@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Manager;
@@ -11,6 +12,8 @@ namespace Games.TileMatch.Tiles.Scripts
 {
     public class Tile : TileData, IPointerClickHandler
     {
+        public List<Tile> coveredBy = new();
+        public List<Tile> covers = new(); 
         public void SetData(LayersData layer, int x, int y)
         {
             currentLayer = layer.layer;
@@ -37,7 +40,7 @@ namespace Games.TileMatch.Tiles.Scripts
             if (isSelect)
             {
                 collider.enabled = false;
-                TileManager.Instance.OnTileCollected(this);
+                TileManager.Instance.HandleTileCollected(this);
                 BoardCollectTile.Instance.CollectTile(this);
             }
             

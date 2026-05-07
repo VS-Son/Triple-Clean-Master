@@ -8,6 +8,7 @@ using DG.Tweening;
 using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Services;
+using UI.Screen;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine.EventSystems;
@@ -27,7 +28,7 @@ namespace Games.TileMatch.Board.Scripts
 
        public void CollectTile(Tile tile)
        {
-           tile.spriteTile.sortingOrder += 3;
+           tile.spriteTile.sortingOrder += 10;
            tile.originalPos = tile.transform.position;
            tile.originalLayer = tile.currentLayer;
 
@@ -43,7 +44,8 @@ namespace Games.TileMatch.Board.Scripts
            if (CheckShowRevive())
            {
                TileManager.Instance.DisableInput(false);
-               DOVirtual.DelayedCall(0.4f, (() => StateUI.ChangeState(TypeScreen.Revive)));
+               DOVirtual.DelayedCall(0.5f, (() => StateUI.ChangeState(TypeScreen.Revive)));
+              
            }
        }
 
@@ -93,7 +95,7 @@ namespace Games.TileMatch.Board.Scripts
             DOVirtual.DelayedCall(0.1f,ReArrangeBoard);
             tile.transform.DOMove(slots[_slotIndex].position, 0.3f).OnComplete((() =>
             {
-                if (index == 1)
+                if (index == 1 && tile != null)
                 {
                     DOVirtual.DelayedCall(0.1f, (() => StartCoroutine(ClearMatchedTiles(matchThree))));
 
@@ -110,21 +112,27 @@ namespace Games.TileMatch.Board.Scripts
             foreach (var tile in tileMatch)
             {
                 yield return tile.transform.DOScale(tile.transform.localScale, 0.05f)
-                    .SetEase(Ease.OutBack).OnComplete((() => { tile.transform.DOScale(0.001f, 0.1f); }))
+                    .SetEase(Ease.OutBack).OnComplete((() =>
+                    {
+                        tile.transform.DOScale(0.001f, 0.1f);
+                        
+                    }))
                     .WaitForCompletion();
-                yield return new WaitForSeconds(0.001f);
-            }
-            
-            foreach (var tile in tileMatch)
-            {
-
+                yield return new WaitForSeconds(0.05f);
                 _collectedTile.Remove(tile);
                 _originalTile.Remove(tile);
                 Destroy(tile.gameObject);
                 _countSlot--;
-                DOTween.Kill("collect");
-                
+                if (TileManager.Instance.CheckGridEmptyTile())
+                {
+                    DOVirtual.DelayedCall(0.1f, (() =>
+                    {
+                        StateUI.ChangeState(TypeScreen.NextScreen);
 
+                    }));
+                }
+
+                
             }
             ReArrangeBoard();
             _isMatching = false;
@@ -137,6 +145,7 @@ namespace Games.TileMatch.Board.Scripts
             {
                 var tile = _collectedTile[i];
                 tile.transform.parent = slots[i];
+                DOTween.Kill("collect");
                 tile.transform.DOMove(slots[i].position, 0.4f);
                 tile.transform.DOScale(1, 0.1f);
 
@@ -185,13 +194,6 @@ namespace Games.TileMatch.Board.Scripts
         {
             return new  List<Tile>(_collectedTile);
         }
-
-        public void MoveSlotTile(List<Tile> result)
-        {
-            foreach (var tile in result)
-            {
-               CollectTile(tile);
-            }
-        }
+        
     }
 }

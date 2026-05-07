@@ -66,7 +66,21 @@
                             "y": 0
                         }
                     ]
+                },
+                {
+                    "layer": 3,
+                    "rows": 5,
+                    "cols": 5,
+                    "y": 1.05,
+                    "layerName": "Layer 3",
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        }
+                    ]
                 }
+               
             ]
         },
         {

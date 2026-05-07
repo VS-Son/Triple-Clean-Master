@@ -34,6 +34,9 @@ namespace Project.Core.UI
                 case TypeScreen.Revive:
                     UIManager.OpenUI<ReviveScreen>(TypeScreen.Revive);
                     break;
+                case TypeScreen.NextScreen:
+                    UIManager.OpenUI<NextScreen>(TypeScreen.NextScreen);
+                    break;
 
             }
         }
