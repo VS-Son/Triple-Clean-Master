@@ -1,12 +1,22 @@
 using System;
 using Games.TileMatch.Level.Data;
 using Project.Manager;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using System.IO;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 
 namespace Games.TileMatch.Level.Scripts
 {
+    [Serializable]
+    public class FileConstants
+    {
+        public const string FilePath = "LevelTile.json";
+        public const string FolderPath = "Assets/Resources/Json";
+        public static string FullPath => Path.Combine(FolderPath,FilePath);
+
+
+    }
     public static class LoadFileJson 
     {
         private static TextAsset _json;
@@ -22,7 +32,6 @@ namespace Games.TileMatch.Level.Scripts
             {
                 return default;
             }
-            //Debug.Log(_json.text);
             return JsonUtility.FromJson<T>(_json.text);;
         }
 

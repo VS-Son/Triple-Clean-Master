@@ -17,8 +17,7 @@ namespace Games.TileMatch.Manager
 {
     public class TileManager : Singleton<TileManager>
     {
-        [Min(1)] public int currentLv;
-        [SerializeField] private int tileIndex;
+        [SerializeField] public int tileIndex;
         [SerializeField] private Tile prefab;
         [SerializeField] private ListDataSprite listDataSprites;
         [SerializeField] private ListTileThemesData listThemesData;
@@ -36,7 +35,7 @@ namespace Games.TileMatch.Manager
        
         private void Awake()
         {
-            LoadFileJson.LoadResource("Json/LevelTile");
+            LoadFileJson.LoadResource("Json/LevelTile" );
         }
 
         private void Start()
@@ -45,7 +44,7 @@ namespace Games.TileMatch.Manager
             GenerateTileManager();
         }
 
-        private void OnInit()
+        public void OnInit()
         {
             var level = LoadFileJson.GetData<LevelRoot>().levelTile;
             _levelData = level.ToDictionary(l => l.level);
@@ -66,15 +65,17 @@ namespace Games.TileMatch.Manager
 
             var layerConfig = LoadLayerConfigs();
             int totalTiles = layerConfig.Sum(config => (config.rows * config.cols) - config.inactiveCells.Count);
+            Debug.Log("total tile: "+ totalTiles);
             CalculateDistributeId(totalTiles);
             foreach (var config in layerConfig)
             {
                 var tileGrid = GridTileSpawner(config);
                 _layerTile[config.layer] = tileGrid;
             }
+
+            Physics2D.SyncTransforms();
             BuildCoverGraph();
             InitCoverageCount();
-            
             if (StateUI.IsState(TypeScreen.HomeScreen))
             {
                 PlayManager.SetActive(false);
@@ -188,16 +189,18 @@ namespace Games.TileMatch.Manager
 
         private List<LayersData> LoadLayerConfigs()
         {
-            if (_levelData.TryGetValue(currentLv, out var data)) return data.layers;
+            if (_levelData.TryGetValue(PlayManager.CurrentLevel, out var data)) return data.layers;
             return null;
         }
 
         private Tile[,] GridTileSpawner(LayersData layer)
         {
-            Tile[,] tiles = new Tile[layer.cols, layer.rows];
-            var spacing = Util.SetSpacing(layer);
-            float offsetX = (layer.rows - 1) * spacing / 2f;
-            float offsetY = (layer.cols - 1) * spacing / 2f; // layer 1: y_1.05f, layer 2: y_0.525f
+            Tile[,] tiles = new Tile[layer.rows, layer.cols];
+            var spacing = Util.SetSpacing(PlayManager.CurrentLevel);
+
+            var offsetY = (layer.rows - 1 ) * spacing/ 2f;
+            var offsetX = (layer.cols - 1) * spacing/ 2f;
+            float posZ = 0.1f;
             if (!_layerParent.ContainsKey(layer.layer))
             {
                 var layerParent = new GameObject(layer.layerName);
@@ -211,11 +214,12 @@ namespace Games.TileMatch.Manager
                 {
                     if (!layer.inactiveCells.Contains(new Vector2Int(x, y)))
                     {
-                        var position = new Vector2(x * spacing - offsetX, -y * spacing + offsetY); //layer 1: y_0, layer 2: y = -1.05
+                        posZ++;
+                        var position = new Vector2(x * spacing - offsetX, -y * spacing + offsetY);
                         var tile = Instantiate(prefab, position, Quaternion.identity);
                         tile.transform.SetParent(_layerParent[layer.layer]);
-                        tile.SetData(layer, x, y);
-                        tile.name = $"Tile_x:{y}_y:{x}";
+                        tile.SetData(layer,PlayManager.CurrentLevel, x, y,posZ);
+                        tile.name = $"Tile_y:{y}_x:{x}";
                         tiles[y, x] = tile;
                     }
                 }
@@ -424,6 +428,21 @@ namespace Games.TileMatch.Manager
             }
 
             return false;
+        }
+
+        public void NextLevel()
+        {
+            PlayManager.CurrentLevel++;
+            tileIndex = 0;
+            foreach (var layer in _layerParent.Values)
+            {
+                Destroy(layer.gameObject);
+            }
+            _layerTile.Clear();
+            _layerParent.Clear();
+            _countTileId.Clear();
+            _distributeTiles = null;
+            GenerateTileManager();
         }
     }
 }

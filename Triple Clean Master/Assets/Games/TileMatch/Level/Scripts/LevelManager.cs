@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Games.TileMatch.Level.Data;
-using Project.Manager;
 using UnityEngine;
-
 namespace Games.TileMatch.Level.Scripts
 {
     public static class LevelManager

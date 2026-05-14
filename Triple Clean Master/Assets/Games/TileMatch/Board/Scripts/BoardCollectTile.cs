@@ -8,11 +8,6 @@ using DG.Tweening;
 using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Services;
-using UI.Screen;
-using Unity.VisualScripting.Dependencies.Sqlite;
-using UnityEditor;
-using UnityEngine.EventSystems;
-
 namespace Games.TileMatch.Board.Scripts
 {
     public class BoardCollectTile : Singleton<BoardCollectTile>
@@ -22,7 +17,7 @@ namespace Games.TileMatch.Board.Scripts
        private readonly List<Tile> _originalTile = new List<Tile>();
        private int _slotIndex;
        private int _countSlot;
-       private bool _isMatching =false;
+       private bool _isMatching;
 
        private Vector2 _originalScale;
 
@@ -64,24 +59,22 @@ namespace Games.TileMatch.Board.Scripts
                 }
             }
 
-            if (matchThree.Count ==1)
+            switch (matchThree.Count)
             {
-                tile.transform.DOMove(slots[_slotIndex].position, 0.3f).SetId("collect").OnComplete((() =>
-                {
-                    DOVirtual.DelayedCall(0.1f,ReArrangeBoard);
-                }));
-                tile.transform.DOScale(1, 0.3f);
-            }
-            if (matchThree.Count == 2)
-            {
-                InsertMatching(matchThree, tile,0);
-                
-            }
-            if (matchThree.Count == 3)
-            {
-                _isMatching = true;
-                InsertMatching(matchThree, tile,1);
-                
+                case 1:
+                    tile.transform.DOMove(slots[_slotIndex].position, 0.3f).SetId("collect").OnComplete((() =>
+                    {
+                        DOVirtual.DelayedCall(0.1f,ReArrangeBoard);
+                    }));
+                    tile.transform.DOScale(1, 0.3f);
+                    break;
+                case 2:
+                    InsertMatching(matchThree, tile,0);
+                    break;
+                case 3:
+                    _isMatching = true;
+                    InsertMatching(matchThree, tile,1);
+                    break;
             }
         }
 

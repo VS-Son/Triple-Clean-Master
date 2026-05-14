@@ -17,6 +17,7 @@ namespace UI.Screen
         {
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
+            TileManager.Instance.OnInit();
         }
         public void Undo()
         {

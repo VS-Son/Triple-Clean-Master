@@ -5,6 +5,7 @@ namespace Project.Extensions
 {
     public static class Util
     {
+        
         public static void ShuffleList<T>(List<T> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -19,54 +20,38 @@ namespace Project.Extensions
             var color = new Color(value,value,value, 1f);
             return color;
         }
-        public static float SetSpacing(LayersData layer)
+        
+        public static float SetSpacing(int level)
         {
             float spacing = 0;
-            if (layer.layer % 2 == 0)
+            if (level ==  1)
             {
-                spacing = layer.cols switch
-                {
-                    <= 2 => 1.05f,
-                    <= 4 and > 2 => 0.83f,
-                    <= 7 and > 4 => 0.3f,
-                    _ => spacing
-                };
+                spacing = 1f;
             }
-            else
+            if (level == 2)
             {
-                spacing = layer.cols switch
-                {
-                    <= 3 => 1.05f,
-                    <= 5 and > 2 => 0.83f,
-                    <= 8 and > 4 => 0.3f,
-                    _ => spacing
-                };
+                spacing = 0.90f;
             }
-
+            if (level > 2 )
+            {
+                spacing = 0.7f;
+            }
             return spacing;
         }
-        public static Vector3 SetScale(LayersData layer)
+        public static Vector3 SetScale(int level)
         {
             float scale = 1;
-            if (layer.layer % 2 == 0)
+            if (level == 1 )
             {
-                scale = layer.cols switch
-                {
-                    <= 2 => 1f,
-                    <= 4 and > 2 => 0.8f,
-                    <= 7 and > 4 => 0.5f,
-                    _ => scale
-                };
+                scale = 1.1f;
             }
-            else
+            if (level == 2)
             {
-                scale = layer.cols switch
-                {
-                    <= 3 => 1,
-                    <= 5 and > 3 => 0.8f,
-                    <= 8 and > 5 => 0.5f,
-                    _ => scale
-                };
+                scale = 0.95f;
+            }
+            if (level > 2 )
+            {
+                scale = 0.7f;
             }
             return new Vector3(scale, scale);
         }

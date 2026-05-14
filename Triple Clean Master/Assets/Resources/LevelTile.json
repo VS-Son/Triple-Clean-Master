@@ -1,0 +1,189 @@
+{
+    "levelTile": [
+        {
+            "levelName": "Level 1: ",
+            "level": 1,
+            "gridIndex": 0,
+            "coin": 0,
+            "layers": [
+                {
+                    "layer": 1,
+                    "rows": 5,
+                    "cols": 5,
+                    "layerName": "Layer 1",
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 0
+                        },
+                        {
+                            "x": 2,
+                            "y": 0
+                        },
+                        {
+                            "x": 0,
+                            "y": 1
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 1
+                        },
+                        {
+                            "x": 0,
+                            "y": 2
+                        },
+                        {
+                            "x": 1,
+                            "y": 2
+                        },
+                        {
+                            "x": 2,
+                            "y": 2
+                        }
+                    ]
+                },
+                {
+                    "layer": 2,
+                    "rows": 4,
+                    "cols": 4,
+                    "y": 1.05,
+                    "layerName": "Layer 2",
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 0
+                        }
+                    ]
+                },
+                {
+                    "layer": 3,
+                    "rows": 5,
+                    "cols": 5,
+                    "y": 1.05,
+                    "layerName": "Layer 3",
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        }
+                    ]
+                }
+               
+            ]
+        },
+        {
+            "levelName": "Level 2: ",
+            "level": 2,
+            "gridIndex": 0,
+            "coin": 0,
+            "layers": [
+                {
+                    "layer": 1,
+                    "rows": 3,
+                    "cols": 3,
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 0
+                        },
+                        {
+                            "x": 2,
+                            "y": 0
+                        },
+                        {
+                            "x": 0,
+                            "y": 1
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 1
+                        },
+                        {
+                            "x": 0,
+                            "y": 2
+                        },
+                        {
+                            "x": 1,
+                            "y": 2
+                        },
+                        {
+                            "x": 2,
+                            "y": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "levelName": "Level 3: ",
+            "level": 3,
+            "gridIndex": 0,
+            "coin": 0,
+            "layers": [
+                {
+                    "layer": 1,
+                    "rows": 3,
+                    "cols": 3,
+                    "inactiveCells": [
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 0
+                        },
+                        {
+                            "x": 2,
+                            "y": 0
+                        },
+                        {
+                            "x": 0,
+                            "y": 1
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 1
+                        },
+                        {
+                            "x": 0,
+                            "y": 2
+                        },
+                        {
+                            "x": 1,
+                            "y": 2
+                        },
+                        {
+                            "x": 2,
+                            "y": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -3,6 +3,7 @@ using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Manager;
 using UnityEngine;
 using DG.Tweening;
+using Project.Manager;
 using TMPro;
 
 namespace UI.Screen
@@ -22,7 +23,7 @@ namespace UI.Screen
         private void OnEnable()
         {
             bg.DOScale(1, timeScale);
-            textLevel.text = ("Level " + TileManager.Instance.currentLv);
+            textLevel.text = ("Level " + PlayManager.CurrentLevel);
         }
 
         public void OnRevive()

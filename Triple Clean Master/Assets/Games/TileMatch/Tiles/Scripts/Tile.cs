@@ -14,10 +14,15 @@ namespace Games.TileMatch.Tiles.Scripts
     {
         public List<Tile> coveredBy = new();
         public List<Tile> covers = new(); 
-        public void SetData(LayersData layer, int x, int y)
+        public void SetData(LayersData layer, int level, int x, int y, float posZ)
         {
+           
             currentLayer = layer.layer;
-            transform.localScale = Util.SetScale(layer);
+            Transform transform1;
+            (transform1 = transform).localScale = Util.SetScale(level);
+            var position = transform1.position;
+            position = new Vector3(position.x, position.y, (position.y + posZ));
+            transform1.position = position;
             row = x;
             col = y;
             tileId = TileManager.Instance.GetDistributedTileType();
