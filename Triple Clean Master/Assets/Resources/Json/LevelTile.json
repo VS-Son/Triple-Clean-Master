@@ -9,6 +9,7 @@
             "layers": [
                 {
                     "layer": 1,
+                    "layerName": "Layer 1",
                     "rows": 1,
                     "cols": 5,
                     "inactiveCells": [
@@ -33,6 +34,7 @@
             "layers": [
                 {
                     "layer": 1,
+                    "layerName": "Layer 1",
                     "rows": 2,
                     "cols": 6,
                     "inactiveCells": [
@@ -64,6 +66,7 @@
                 },
                 {
                     "layer": 2,
+                    "layerName": "Layer 2",
                     "rows": 1,
                     "cols": 5,
                     "inactiveCells": [
@@ -88,6 +91,7 @@
             "layers": [
                 {
                     "layer": 1,
+                    "layerName": "Layer 1",
                     "rows": 9,
                     "cols": 7,
                     "inactiveCells": [
@@ -243,6 +247,7 @@
                 },
                 {
                     "layer": 2,
+                    "layerName": "Layer 2",
                     "rows": 8,
                     "cols": 6,
                     "inactiveCells": [

@@ -365,6 +365,7 @@ namespace Tools.Editor
                         {
                             for (int i = 0; i < Layer.Count; i++)
                             {
+                                Layer[i].layerName = "Layer" + ( i + 1 );
                                 if (GUILayout.Toggle(CurrentLayer == (i), $"Layer {i + 1} ({Layer[i].cols}x{Layer[i].rows})", "Button",GUILayout.Height(80)))
                                 {
                                     CurrentLayer = i;

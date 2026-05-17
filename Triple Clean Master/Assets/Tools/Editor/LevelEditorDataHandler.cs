@@ -124,6 +124,7 @@ namespace Editor
                 exportLevel.optionRowIndex = level.optionRowIndex;
                 exportLevel.optionColIndex = level.optionColIndex;
                 exportLevel.coin = level.coinReward;
+                exportLevel.levelName = level.levelName;
                 for (int l = 0; l < level.layers.Count; l++)
                 {
                     var layer = level.layers[l];
@@ -132,6 +133,7 @@ namespace Editor
                     exportLayer.layer = l + 1;
                     exportLayer.rows = layer.rows;
                     exportLayer.cols = layer.cols;
+                    exportLayer.layerName = "Layer "+(l+1);
 
                     for (int y = 0; y < layer.rows; y++)
                     {

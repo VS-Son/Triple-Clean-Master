@@ -18,6 +18,7 @@ namespace Editor
     public class ExportLayer
     {
         public int layer;
+        public string layerName;
         public int rows;
         public int cols;
         public List<CellPos> inactiveCells = new();
