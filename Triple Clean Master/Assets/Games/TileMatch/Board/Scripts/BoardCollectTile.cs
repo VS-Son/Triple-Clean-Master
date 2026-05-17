@@ -18,7 +18,6 @@ namespace Games.TileMatch.Board.Scripts
        private int _slotIndex;
        private int _countSlot;
        private bool _isMatching;
-
        private Vector2 _originalScale;
 
        public void CollectTile(Tile tile)
@@ -114,7 +113,7 @@ namespace Games.TileMatch.Board.Scripts
                 yield return new WaitForSeconds(0.05f);
                 _collectedTile.Remove(tile);
                 _originalTile.Remove(tile);
-                Destroy(tile.gameObject);
+                PlayManager.PoolTile.Release(tile);
                 _countSlot--;
                 if (TileManager.Instance.CheckGridEmptyTile())
                 {
@@ -156,13 +155,13 @@ namespace Games.TileMatch.Board.Scripts
                 {
                     if (numberUndo > 1)
                     {
-                        
+                        DOVirtual.DelayedCall(0.1f,()=> TileManager.Instance.ShuffleGridTiles());
                     }
 
                 }));
                 tile.transform.DOScale(_originalScale, 0.6f);
                 _collectedTile.Remove(tile);
-                 tile.SetUndoData();
+                 tile.SetDataUndo();
                  TileManager.Instance.InitCoverageCount();
             }
             _originalTile.RemoveRange(_originalTile.Count-count,count);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Level.Scripts;
+using Project.Constants;
 using UnityEditor;
 
 namespace Editor
@@ -12,31 +13,31 @@ namespace Editor
     {
         public static void InitDataFile()
         {
-            if (!Directory.Exists(FileConstants.FolderPath))
+            if (!Directory.Exists(FilePathConstants.FolderPathJson))
             {
-                Directory.CreateDirectory(FileConstants.FolderPath);
+                Directory.CreateDirectory(FilePathConstants.FolderPathJson);
                 AssetDatabase.Refresh();
             }
 
-            if (!File.Exists(FileConstants.FullPath))
+            if (!File.Exists(FilePathConstants.FullPath))
             {
                 ExportData data = new ExportData(); 
 
                 string json = JsonUtility.ToJson(data, true);
 
-                File.WriteAllText(FileConstants.FullPath, json);
+                File.WriteAllText(FilePathConstants.FullPath, json);
                 AssetDatabase.Refresh();
 
-                Debug.Log("🆕 Created Editor JSON: " + FileConstants.FullPath);
+                Debug.Log("🆕 Created Editor JSON: " + FilePathConstants.FullPath);
             }
         }
 
         public static void LoadEditor(List<LevelData> levels)
         {
-            if (!File.Exists(FileConstants.FullPath))
+            if (!File.Exists(FilePathConstants.FullPath))
                 return;
 
-            string json = File.ReadAllText(FileConstants.FullPath);
+            string json = File.ReadAllText(FilePathConstants.FullPath);
             ExportData data = JsonUtility.FromJson<ExportData>(json);
 
             if (data == null || data.levelTile == null)
@@ -103,7 +104,7 @@ namespace Editor
 
             string json = JsonUtility.ToJson(data, true);
        
-            File.WriteAllText(FileConstants.FullPath, json);
+            File.WriteAllText(FilePathConstants.FullPath, json);
             AssetDatabase.Refresh();
 
             Debug.Log("Saved Editor Data");

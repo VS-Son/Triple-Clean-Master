@@ -5,24 +5,22 @@ using Games.TileMatch.Manager;
 using Games.TileMatch.Tiles.Data;
 using Project.Extensions;
 using DG.Tweening;
+using Project.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Games.TileMatch.Tiles.Scripts
 {
-    public class Tile : TileData, IPointerClickHandler
+    public class Tile : TileData, IPointerClickHandler,IPool
     {
         public List<Tile> coveredBy = new();
         public List<Tile> covers = new(); 
-        public void SetData(LayersData layer, int level, int x, int y, float posZ)
+        public void SetData(LayersData layer, int level, int x, int y)
         {
-           
+            collider.enabled = true;
+            isCollected = false;
             currentLayer = layer.layer;
-            Transform transform1;
-            (transform1 = transform).localScale = Util.SetScale(level);
-            var position = transform1.position;
-            position = new Vector3(position.x, position.y, (position.y + posZ));
-            transform1.position = position;
+            transform.localScale = Util.SetScale(level);
             row = x;
             col = y;
             tileId = TileManager.Instance.GetDistributedTileType();
@@ -30,7 +28,7 @@ namespace Games.TileMatch.Tiles.Scripts
             spriteTile.sortingOrder = layer.layer;
         }
 
-        public void SetUndoData()
+        public void SetDataUndo()
         {
             isCollected = false;
             collider.enabled = true;

@@ -31,7 +31,6 @@ namespace Games.TileMatch.Manager
 
         private readonly List<TileId> _tileId = new List<TileId>()
             {TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
-        
        
         private void Awake()
         {
@@ -200,7 +199,6 @@ namespace Games.TileMatch.Manager
 
             var offsetY = (layer.rows - 1 ) * spacing/ 2f;
             var offsetX = (layer.cols - 1) * spacing/ 2f;
-            float posZ = 0.1f;
             if (!_layerParent.ContainsKey(layer.layer))
             {
                 var layerParent = new GameObject(layer.layerName);
@@ -214,16 +212,15 @@ namespace Games.TileMatch.Manager
                 {
                     if (!layer.inactiveCells.Contains(new Vector2Int(x, y)))
                     {
-                        posZ++;
                         var position = new Vector2(x * spacing - offsetX, -y * spacing + offsetY);
-                        var tile = Instantiate(prefab, position, Quaternion.identity);
+                        var tile = PlayManager.PoolTile.GetPool(prefab, position);
                         tile.transform.SetParent(_layerParent[layer.layer]);
-                        tile.SetData(layer,PlayManager.CurrentLevel, x, y,posZ);
+                        tile.SetData(layer,PlayManager.CurrentLevel, x, y);
                         tile.name = $"Tile_y:{y}_x:{x}";
-                        tiles[y, x] = tile;
+                        tiles[y, x] = tile; 
                     }
                 }
-            }
+            }   
 
             return tiles;
         }

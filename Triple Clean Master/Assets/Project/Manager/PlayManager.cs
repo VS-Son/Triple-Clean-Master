@@ -1,3 +1,4 @@
+using Games.TileMatch.Tiles.Scripts;
 using UnityEngine;
 
 namespace Project.Manager
@@ -5,7 +6,8 @@ namespace Project.Manager
     public class PlayManager : Singleton<PlayManager>
     {
         [Min(1)][SerializeField] private int level;
-
+        private readonly PoolManager<Tile> _poolTile = new();
+        public static PoolManager<Tile> PoolTile => Instance._poolTile;
         public static int CurrentLevel
         {
             get => Instance.level;

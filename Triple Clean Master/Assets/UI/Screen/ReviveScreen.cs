@@ -28,7 +28,7 @@ namespace UI.Screen
 
         public void OnRevive()
         {
-            BoardCollectTile.Instance.UndoTile(3);
+            BoardCollectTile.Instance.UndoTile(5);
             TileManager.Instance.DisableInput(true);
             Close();
             SetScale();
