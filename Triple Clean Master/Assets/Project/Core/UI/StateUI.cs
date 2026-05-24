@@ -25,7 +25,6 @@ namespace Project.Core.UI
                 case TypeScreen.HomeScreen:
                     UIManager.OpenUI<HomeScreen>(TypeScreen.HomeScreen);
                     UIManager.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
-                    UIManager.OpenUI<StatusBar>(TypeScreen.StatusBar);
                     break;
                 case TypeScreen.PlayScreen:
                     UIManager.OpenUI<PlayScreen>(TypeScreen.PlayScreen);
@@ -36,6 +35,9 @@ namespace Project.Core.UI
                     break;
                 case TypeScreen.NextScreen:
                     UIManager.OpenUI<NextScreen>(TypeScreen.NextScreen);
+                    break;
+                case TypeScreen.Setting:
+                    UIManager.OpenUI<SettingScreen>(TypeScreen.Setting);
                     break;
 
             }

@@ -1,13 +1,12 @@
-using UnityEngine;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using Editor;
 using Games.TileMatch.Level.Data;
-using Games.TileMatch.Level.Scripts;
 using Project.Constants;
 using UnityEditor;
+using UnityEngine;
 
-namespace Editor
+namespace Tools.Editor
 {
     public static class LevelEditorDataHandler 
     {
@@ -28,7 +27,7 @@ namespace Editor
                 File.WriteAllText(FilePathConstants.FullPath, json);
                 AssetDatabase.Refresh();
 
-                Debug.Log("🆕 Created Editor JSON: " + FilePathConstants.FullPath);
+                Debug.Log("Created Editor JSON: " + FilePathConstants.FullPath);
             }
         }
 

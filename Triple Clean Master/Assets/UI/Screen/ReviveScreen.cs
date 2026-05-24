@@ -23,7 +23,7 @@ namespace UI.Screen
         private void OnEnable()
         {
             bg.DOScale(1, timeScale);
-            textLevel.text = ("Level " + PlayManager.CurrentLevel);
+            textLevel.text = ("Level " + GameplayManager.CurrentLevel);
         }
 
         public void OnRevive()

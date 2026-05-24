@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Games.TileMatch.Level.Data;
+using Project.Manager;
 using UnityEngine;
 namespace Project.Extensions
 {
     public static class Util
     {
-        
+        private static int Level => GameplayManager.CurrentLevel; 
         public static void ShuffleList<T>(List<T> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -21,35 +22,37 @@ namespace Project.Extensions
             return color;
         }
         
-        public static float SetSpacing(int level)
+        public static float SetSpacing()
         {
+           
             float spacing = 0;
-            if (level ==  1)
+            if (Level ==  1)
             {
                 spacing = 1f;
             }
-            if (level == 2)
+            if (Level == 2)
             {
                 spacing = 0.90f;
             }
-            if (level > 2 )
+            if (Level > 2 )
             {
                 spacing = 0.7f;
             }
             return spacing;
         }
-        public static Vector3 SetScale(int level)
+        public static Vector3 SetScale()
         {
+          
             float scale = 1;
-            if (level == 1 )
+            if (Level == 1 )
             {
                 scale = 1.1f;
             }
-            if (level == 2)
+            if (Level == 2)
             {
                 scale = 0.95f;
             }
-            if (level > 2 )
+            if (Level > 2 )
             {
                 scale = 0.7f;
             }

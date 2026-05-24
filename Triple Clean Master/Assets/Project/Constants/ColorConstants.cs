@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Extensions
+namespace Project.Constants
 {
     public static class ColorConstants
     {

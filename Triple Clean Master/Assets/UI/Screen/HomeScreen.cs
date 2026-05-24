@@ -20,7 +20,9 @@ namespace UI.Screen
          if (StateUI.IsState(TypeScreen.PlayScreen))
          {
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
-            PlayManager.SetActive(true);
+            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
+            TileManager.ZoomScaleTile();
+            GameplayManager.Show(true);
          }
 
       }

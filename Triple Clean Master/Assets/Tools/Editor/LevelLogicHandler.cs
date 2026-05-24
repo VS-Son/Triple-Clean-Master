@@ -1,8 +1,9 @@
-using Games.TileMatch.Level.Data;
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
-namespace Editor
+using Games.TileMatch.Level.Data;
+using UnityEditor;
+using UnityEngine;
+
+namespace Tools.Editor
 {
     public static class LevelLogicHandler
     {

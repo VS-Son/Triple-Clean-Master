@@ -8,16 +8,21 @@ using DG.Tweening;
 using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Services;
+using UI.Components.booster;
+using UI.Screen;
+
 namespace Games.TileMatch.Board.Scripts
 {
     public class BoardCollectTile : Singleton<BoardCollectTile>
     {
+        public static event Action<TypeBooster, float> AlphaBooster; 
+
        [SerializeField] public List<Transform> slots = new ();
        private readonly List<Tile> _collectedTile = new List<Tile>();
        private readonly List<Tile> _originalTile = new List<Tile>();
        private int _slotIndex;
        private int _countSlot;
-       private bool _isMatching;
+       public static bool IsMatching;
        private Vector2 _originalScale;
 
        public void CollectTile(Tile tile)
@@ -32,6 +37,11 @@ namespace Games.TileMatch.Board.Scripts
            _slotIndex = _collectedTile.Count;
            _slotIndex = _countSlot;
            _countSlot++;
+           
+           if (_collectedTile.Count > 0 && !PlayScreen.IsClick && !IsMatching)
+           {
+               PlayScreen.SetUndoAlpha(TypeBooster.Undo, 1f);
+           }
            Debug.Log("slot index: "+_slotIndex);
            tile.transform.parent = slots[_slotIndex];
            SetMatchThree(tile);
@@ -45,7 +55,7 @@ namespace Games.TileMatch.Board.Scripts
 
        private bool CheckShowRevive()
        {
-           return _countSlot >= 7 && !_isMatching;
+           return _countSlot >= 7 && !IsMatching;
        }
        private void SetMatchThree(Tile tile)
         {
@@ -71,7 +81,8 @@ namespace Games.TileMatch.Board.Scripts
                     InsertMatching(matchThree, tile,0);
                     break;
                 case 3:
-                    _isMatching = true;
+                    IsMatching = true;
+                    PlayScreen.SetUndoAlpha(TypeBooster.Undo, 0.6f);
                     InsertMatching(matchThree, tile,1);
                     break;
             }
@@ -113,13 +124,15 @@ namespace Games.TileMatch.Board.Scripts
                 yield return new WaitForSeconds(0.05f);
                 _collectedTile.Remove(tile);
                 _originalTile.Remove(tile);
-                PlayManager.PoolTile.Release(tile);
+                GameplayManager.PoolTile.Release(tile);
                 _countSlot--;
                 if (TileManager.Instance.CheckGridEmptyTile())
                 {
-                    DOVirtual.DelayedCall(0.1f, (() =>
+                    DOVirtual.DelayedCall(0.5f, (() =>
                     {
                         StateUI.ChangeState(TypeScreen.NextScreen);
+                        TileManager.Instance.NextLevel();
+                        UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(false);
 
                     }));
                 }
@@ -127,7 +140,8 @@ namespace Games.TileMatch.Board.Scripts
                 
             }
             ReArrangeBoard();
-            _isMatching = false;
+            IsMatching = false;
+            PlayScreen.IsClick = false;
 
         }
 
@@ -144,16 +158,16 @@ namespace Games.TileMatch.Board.Scripts
             }
         }
 
-        public void UndoTile(int numberUndo)
+        public void UndoTile(int quantity)
         {
-            int count = Math.Min(numberUndo, _originalTile.Count);
+            int count = Math.Min(quantity, _originalTile.Count);
             for (int i = 0; i < count; i++)
             {
                 int index = _originalTile.Count - 1 - i;
                 Tile tile = _originalTile[index];
                 tile.transform.DOMove(tile.originalPos, 0.4f).SetEase(Ease.Flash).OnComplete((() =>
                 {
-                    if (numberUndo > 1)
+                    if (quantity > 1)
                     {
                         DOVirtual.DelayedCall(0.1f,()=> TileManager.Instance.ShuffleGridTiles());
                     }
@@ -167,6 +181,11 @@ namespace Games.TileMatch.Board.Scripts
             _originalTile.RemoveRange(_originalTile.Count-count,count);
             _countSlot -= count;
             ReArrangeBoard();
+            if (_collectedTile.Count <= 0)
+            {
+                PlayScreen.SetUndoAlpha(TypeBooster.Undo, 0.6f);
+            }
+            
         }
 
         public void ResetBoard()
@@ -186,6 +205,15 @@ namespace Games.TileMatch.Board.Scripts
         {
             return new  List<Tile>(_collectedTile);
         }
-        
+
+        public static bool HasTileInBoard()
+        {
+            if (Instance._collectedTile.Count <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

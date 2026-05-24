@@ -15,12 +15,12 @@ namespace Games.TileMatch.Tiles.Scripts
     {
         public List<Tile> coveredBy = new();
         public List<Tile> covers = new(); 
-        public void SetData(LayersData layer, int level, int x, int y)
+        public void SetData(LayersData layer, int x, int y)
         {
             collider.enabled = true;
             isCollected = false;
             currentLayer = layer.layer;
-            transform.localScale = Util.SetScale(level);
+            transform.localScale = Util.SetScale();
             row = x;
             col = y;
             tileId = TileManager.Instance.GetDistributedTileType();
@@ -45,6 +45,10 @@ namespace Games.TileMatch.Tiles.Scripts
                 collider.enabled = false;
                 TileManager.Instance.HandleTileCollected(this);
                 BoardCollectTile.Instance.CollectTile(this);
+            }
+            else
+            {
+                
             }
             
         }
