@@ -19,20 +19,10 @@ namespace UI.Screen
         public void OnNext()
         {
             TileManager.ZoomScaleTile();
+            TileManager.Instance.NextLevel();
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
-            if (GameplayManager.LevelUnlockUndo)
-            {
-               PlayScreen.SetUndoAlpha(TypeBooster.Undo,0.6f);
-            }
-            if (GameplayManager.LevelUnlockMagic)
-            {
-                PlayScreen.SetUndoAlpha(TypeBooster.MagicWand,1);
-            }
-            if (GameplayManager.LevelUnlockShuffle)
-            {
-                PlayScreen.SetUndoAlpha(TypeBooster.Shuffle, 1);
-            }
+            PlayScreen.UpdateUnlockBooster();
             Close();
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Manager;
 using Project.Manager;
 using Project.Services;
@@ -24,6 +23,7 @@ namespace Project.Core.UI
             {
                 case TypeScreen.HomeScreen:
                     UIManager.OpenUI<HomeScreen>(TypeScreen.HomeScreen);
+                    UIManager.OpenUI<StatusBar>(TypeScreen.StatusBar);
                     UIManager.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
                     break;
                 case TypeScreen.PlayScreen:
@@ -39,6 +39,8 @@ namespace Project.Core.UI
                 case TypeScreen.Setting:
                     UIManager.OpenUI<SettingScreen>(TypeScreen.Setting);
                     break;
+               
+                
 
             }
         }

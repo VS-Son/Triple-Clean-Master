@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.ConfigData;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Level.Scripts;
@@ -11,6 +10,7 @@ using UnityEngine;
 using Games.TileMatch.Tiles.Scripts;
 using Project.Core.UI;
 using Project.Extensions;
+using Project.Games.TileMatch.Board.Scripts;
 using Project.Services;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
@@ -501,15 +501,14 @@ namespace Games.TileMatch.Manager
             return TileId.None;
         }
 
-        public bool CheckGridEmptyTile()
+        public void DecreaseTileIndex()
         {
             tileIndex--;
-            if (tileIndex == 0)
-            {
-                return true;
-            }
-
-            return false;
+        }
+        public bool IsLastThreeTile()
+        {
+            
+            return tileIndex <= 3;
         }
 
         public void NextLevel()

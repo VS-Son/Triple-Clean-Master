@@ -1,30 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Games.TileMatch.Tiles.Scripts;
-using Project.Manager;
-using UnityEngine;
 using DG.Tweening;
 using Games.TileMatch.Manager;
+using Games.TileMatch.Tiles.Scripts;
+using Project.Constants;
 using Project.Core.UI;
+using Project.Manager;
 using Project.Services;
 using UI.Components.booster;
 using UI.Screen;
+using UnityEngine;
 
-namespace Games.TileMatch.Board.Scripts
+namespace Project.Games.TileMatch.Board.Scripts
 {
     public class BoardCollectTile : Singleton<BoardCollectTile>
     {
-        public static event Action<TypeBooster, float> AlphaBooster; 
-
-       [SerializeField] public List<Transform> slots = new ();
+        [SerializeField] public List<Transform> slots = new ();
        private readonly List<Tile> _collectedTile = new List<Tile>();
        private readonly List<Tile> _originalTile = new List<Tile>();
        private int _slotIndex;
        private int _countSlot;
        public static bool IsMatching;
        private Vector2 _originalScale;
-
+       private readonly Queue<List<Tile>> _clearQueue = new();
+       private bool _isClearing;
        public void CollectTile(Tile tile)
        {
            tile.spriteTile.sortingOrder += 10;
@@ -40,7 +40,7 @@ namespace Games.TileMatch.Board.Scripts
            
            if (_collectedTile.Count > 0 && !PlayScreen.IsClick && !IsMatching)
            {
-               PlayScreen.SetUndoAlpha(TypeBooster.Undo, 1f);
+               PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 1f);
            }
            Debug.Log("slot index: "+_slotIndex);
            tile.transform.parent = slots[_slotIndex];
@@ -82,7 +82,11 @@ namespace Games.TileMatch.Board.Scripts
                     break;
                 case 3:
                     IsMatching = true;
-                    PlayScreen.SetUndoAlpha(TypeBooster.Undo, 0.6f);
+                    PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 0.6f);
+                    if (PlayScreen.IsClick)
+                    {
+                        PlayScreen.SetBoosterAlpha(TypeBooster.MagicWand,0.6f);
+                    }
                     InsertMatching(matchThree, tile,1);
                     break;
             }
@@ -100,8 +104,12 @@ namespace Games.TileMatch.Board.Scripts
             {
                 if (index == 1 && tile != null)
                 {
-                    DOVirtual.DelayedCall(0.1f, (() => StartCoroutine(ClearMatchedTiles(matchThree))));
+                    _clearQueue.Enqueue(new List<Tile>(matchThree));
 
+                    if (!_isClearing)
+                    {
+                        StartCoroutine(ProcessClearQueue());
+                    }
                 }
 
             }));
@@ -109,39 +117,89 @@ namespace Games.TileMatch.Board.Scripts
 
 
         }
+        private IEnumerator ProcessClearQueue()
+        {
+            _isClearing = true;
 
+            while (_clearQueue.Count > 0)
+            {
+                var match = _clearQueue.Dequeue();
+                yield return StartCoroutine(ClearMatchedTiles(match));
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            _isClearing = false;
+            IsMatching = false;
+        }
         IEnumerator ClearMatchedTiles(List<Tile> tileMatch)
         {
-            foreach (var tile in tileMatch)
+            if (TileManager.Instance.IsLastThreeTile())
             {
-                yield return tile.transform.DOScale(tile.transform.localScale, 0.05f)
-                    .SetEase(Ease.OutBack).OnComplete((() =>
-                    {
-                        tile.transform.DOScale(0.001f, 0.1f);
-                        
-                    }))
-                    .WaitForCompletion();
-                yield return new WaitForSeconds(0.05f);
-                _collectedTile.Remove(tile);
-                _originalTile.Remove(tile);
-                GameplayManager.PoolTile.Release(tile);
-                _countSlot--;
-                if (TileManager.Instance.CheckGridEmptyTile())
+                yield return StartCoroutine(LastThreeAnimation(tileMatch));
+                _collectedTile.Clear();
+                _originalTile.Clear();
+                foreach (var tile in tileMatch)
                 {
-                    DOVirtual.DelayedCall(0.5f, (() =>
-                    {
-                        StateUI.ChangeState(TypeScreen.NextScreen);
-                        TileManager.Instance.NextLevel();
-                        UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(false);
-
-                    }));
+                    GameplayManager.PoolTile.Release(tile);
+                    _countSlot--;
                 }
 
-                
+                DOVirtual.DelayedCall(0.1f, (() => StateUI.ChangeState(TypeScreen.NextScreen)));
+
             }
+            else
+            {
+                foreach (var tile in tileMatch)
+                {
+                    yield return DOTween.Sequence().Join(tile.transform.DOScale(tile.transform.localScale, 0.05f)).SetEase(Ease.OutBack).WaitForCompletion();
+                    yield return DOTween.Sequence().Join(tile.transform.DOScale(0.001f, 0.1f)).WaitForCompletion();
+                    yield return new WaitForSeconds(0.05f);
+
+                    _collectedTile.Remove(tile);
+                    _originalTile.Remove(tile);
+                    TileManager.Instance.DecreaseTileIndex();
+                    GameplayManager.PoolTile.Release(tile);
+                    _countSlot--;
+                }
+            }
+
+            AudioManager.Instance.PlaySfx(AudioConstants.Clear);
+
             ReArrangeBoard();
+
             IsMatching = false;
             PlayScreen.IsClick = false;
+            if (!PlayScreen.IsClick)
+            {
+                DOVirtual.DelayedCall(0.3f, ()=> PlayScreen.SetBoosterAlpha(TypeBooster.MagicWand,1f));
+            }
+        }
+
+        private IEnumerator LastThreeAnimation(List<Tile> tiles)
+        {
+            Tile first = tiles[0];
+            Tile second = tiles[1];
+            Tile third = tiles[2];
+
+            Vector3 slotTarget = slots[0].position;
+            Vector3 firstMovePos = slotTarget + Vector3.down * 1f;
+
+            first.transform.DORotate(new Vector3(0, 0, -360), 1.3f, RotateMode.FastBeyond360).SetEase(Ease.InOutSine);
+            yield return DOTween.Sequence().Join(first.transform.DOMove(firstMovePos, 0.2f).SetEase(Ease.OutQuad)).WaitForCompletion();
+            
+            Sequence dilate = DOTween.Sequence();
+            dilate.Join(second.transform.DOMove(second.transform.position + Vector3.right * 0.5f, 0.2f));
+            dilate.Join(third.transform.DOMove(third.transform.position + Vector3.right * 0.5f, 0.2f));
+            yield return dilate.WaitForCompletion();
+            
+            Sequence merge = DOTween.Sequence();
+            merge.Join(first.transform.DOMove(slotTarget, 0.4f).SetEase(Ease.InBack));
+            merge.Join(second.transform.DOMove(slotTarget, 0.3f).SetEase(Ease.InBack));
+            merge.Join(third.transform.DOMove(slotTarget, 0.3f).SetEase(Ease.InBack));
+            
+            yield return merge.WaitForCompletion();
+            yield return DOTween.Sequence().Join(first.transform.DOScale(0, 0.12f)).Join(second.transform.DOScale(0, 0.12f)).Join(third.transform.DOScale(0, 0.12f)).WaitForCompletion();
+            yield return new WaitForSeconds(0.1f);
 
         }
 
@@ -183,7 +241,7 @@ namespace Games.TileMatch.Board.Scripts
             ReArrangeBoard();
             if (_collectedTile.Count <= 0)
             {
-                PlayScreen.SetUndoAlpha(TypeBooster.Undo, 0.6f);
+                PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 0.6f);
             }
             
         }

@@ -1,5 +1,4 @@
 using System;
-using Games.TileMatch.Board.Scripts;
 using Project.Manager;
 using UI.Screen;
 using UnityEngine;
@@ -23,12 +22,10 @@ namespace UI.Components.booster
         private void OnEnable()
         {
             PlayScreen.AlphaBooster += OnAlphaBooster;
-           // NextScreen.Display += OnDisplayBooster;
         }
         private void OnDisable()
         {
             PlayScreen.AlphaBooster -= OnAlphaBooster;
-           // NextScreen.Display -= OnDisplayBooster;
 
 
         }
@@ -41,6 +38,18 @@ namespace UI.Components.booster
                 redDot.SetActive(true);
                 iconLock.SetActive(false);
             }
+        }
+
+        public bool IsDisplay(TypeBooster type)
+        {
+            if (type == typeBooster)
+            {
+                if ( canvasGroup.alpha.Equals(1))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void OnDisplayBooster(TypeBooster type)
         {

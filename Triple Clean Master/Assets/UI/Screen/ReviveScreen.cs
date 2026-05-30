@@ -1,8 +1,8 @@
 using System;
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Manager;
 using UnityEngine;
 using DG.Tweening;
+using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
 using TMPro;
 

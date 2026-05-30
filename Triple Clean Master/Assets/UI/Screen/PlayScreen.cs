@@ -1,9 +1,10 @@
 using System;
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Manager;
 using Project.Constants;
 using Project.Core.Notification;
+using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
+using Project.Services;
 using UI.Components.booster;
 using UnityEngine;
 
@@ -11,9 +12,9 @@ namespace UI.Screen
 {
     public class PlayScreen:UICanvas
     {
-        [SerializeField] private GameObject undo;
-        [SerializeField] private GameObject magicWand;
-        [SerializeField] private GameObject shuffle;
+        [SerializeField] private Booster undo;
+        [SerializeField] private Booster magicWand;
+        [SerializeField] private Booster shuffle;
         public static event Action<TypeBooster, float> AlphaBooster;
         public static bool IsClick = false;
         private void Start()
@@ -22,20 +23,35 @@ namespace UI.Screen
         }
 
         
-        public void OnReset()
+        public void OnLoadLevel()
         {
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
             TileManager.Instance.OnInit();
+            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
+            UpdateUnlockBooster();
         }
-        public static void SetUndoAlpha(TypeBooster type,float alpha)
+
+        public static void UpdateUnlockBooster()
         {
             if (GameplayManager.LevelUnlockUndo)
             {
-                AlphaBooster?.Invoke(type,alpha);
-
+                SetBoosterAlpha(TypeBooster.Undo,0.6f);
+            }
+            if (GameplayManager.LevelUnlockMagic)
+            {
+                SetBoosterAlpha(TypeBooster.MagicWand,1);
+            }
+            if (GameplayManager.LevelUnlockShuffle)
+            {
+                SetBoosterAlpha(TypeBooster.Shuffle, 1);
             }
         }
+        public static void SetBoosterAlpha(TypeBooster type, float alpha)
+        {
+            AlphaBooster?.Invoke(type, alpha);
+        }
+
         public void Undo()
         {
             if (GameplayManager.LevelUnlockUndo)
@@ -61,9 +77,12 @@ namespace UI.Screen
         public void MagicWand()
         {
             IsClick = true;
-            if (GameplayManager.LevelUnlockMagic)
+            if (GameplayManager.LevelUnlockMagic )
             {
-                TileManager.Instance.CollectMatchThreeTiles();
+                if (!BoardCollectTile.IsMatching && magicWand.IsDisplay(TypeBooster.MagicWand))
+                {
+                    TileManager.Instance.CollectMatchThreeTiles();
+                }
             }
             else
             {

@@ -16,7 +16,7 @@ namespace UI.Screen
         {
             gameObject.SetActive(false);
         }
-
+        
         public void CloseDirectly()
         {
             UIManager.RemoveBackUI(this);

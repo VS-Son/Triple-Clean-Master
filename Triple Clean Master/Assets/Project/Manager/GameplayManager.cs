@@ -33,7 +33,6 @@ namespace Project.Manager
             {
                 child.gameObject.SetActive(isActive);
             }
-          //  Instance.gameObject.SetActive(isActive);
         }
         
     }

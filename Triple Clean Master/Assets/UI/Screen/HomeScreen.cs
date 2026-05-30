@@ -1,5 +1,5 @@
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Manager;
+using Project.Constants;
 using Project.Core.UI;
 using Project.Manager;
 using Project.Services;
@@ -17,14 +17,15 @@ namespace UI.Screen
       public void OnPlay()
       {
          StateUI.ChangeState(TypeScreen.PlayScreen);
-         if (StateUI.IsState(TypeScreen.PlayScreen))
-         {
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
-            TileManager.ZoomScaleTile();
-            GameplayManager.Show(true);
-         }
+         AudioManager.Instance.PlayBGM(AudioConstants.BGM, 1);
+         AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
 
+         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
+         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
+         TileManager.ZoomScaleTile();
+         GameplayManager.Show(true);
+         PlayScreen.UpdateUnlockBooster();
+         
       }
    }
 }

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Games.TileMatch.Board.Scripts;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Manager;
 using Games.TileMatch.Tiles.Data;
 using Project.Extensions;
 using DG.Tweening;
+using Project.Constants;
+using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +18,7 @@ namespace Games.TileMatch.Tiles.Scripts
         public List<Tile> covers = new(); 
         public void SetData(LayersData layer, int x, int y)
         {
+            transform.localRotation = Quaternion.identity;
             collider.enabled = true;
             isCollected = false;
             currentLayer = layer.layer;
@@ -42,6 +44,7 @@ namespace Games.TileMatch.Tiles.Scripts
             Debug.Log("Click");
             if (isSelect)
             {
+                AudioManager.Instance.PlaySfx(AudioConstants.Select);
                 collider.enabled = false;
                 TileManager.Instance.HandleTileCollected(this);
                 BoardCollectTile.Instance.CollectTile(this);
