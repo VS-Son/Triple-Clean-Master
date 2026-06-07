@@ -425,6 +425,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4764704924360020767}
     m_Modifications:
+    - target: {fileID: 1137665236208570213, guid: 3a35d4b4a5faac64fa7da6dda512691a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e001f9d4294540644a8397e582b1782f, type: 3}
     - target: {fileID: 1397160363279843331, guid: 3a35d4b4a5faac64fa7da6dda512691a, type: 3}
       propertyPath: m_Alpha
       value: 0.6
@@ -714,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 1137665236208570213, guid: 3a35d4b4a5faac64fa7da6dda512691a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 74c327d0951f77a41ae1ae84f526938f, type: 3}
+      objectReference: {fileID: 21300000, guid: f0faa3948f17ed3408b3b42dbaf37306, type: 3}
     - target: {fileID: 2845018499883425986, guid: 3a35d4b4a5faac64fa7da6dda512691a, type: 3}
       propertyPath: m_SizeDelta.x
       value: 95

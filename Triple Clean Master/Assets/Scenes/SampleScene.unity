@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7be6f7d4137a8346a05a42090d2e77e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 3
   levelUnlockUndo: 2
   levelUnlockMagic: 3
   levelUnlockShuffle: 4

@@ -125,7 +125,7 @@ namespace Project.Games.TileMatch.Board.Scripts
             {
                 var match = _clearQueue.Dequeue();
                 yield return StartCoroutine(ClearMatchedTiles(match));
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.1f);
             }
 
             _isClearing = false;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace Project.Manager
 
         private void LoadAllSfx()
         {
-            AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audio");
+            AudioClip[] audioClips = UnityEngine.Resources.LoadAll<AudioClip>("Audio");
             foreach (var clip in audioClips)
             {
                 var nameClip = clip.name.ToLower();

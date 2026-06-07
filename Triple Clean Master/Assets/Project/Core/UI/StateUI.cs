@@ -3,6 +3,7 @@ using Games.TileMatch.Manager;
 using Project.Manager;
 using Project.Services;
 using UI.Screen;
+using UI.Screen.Shop;
 using UnityEngine;
 
 namespace Project.Core.UI
@@ -38,6 +39,9 @@ namespace Project.Core.UI
                     break;
                 case TypeScreen.Setting:
                     UIManager.OpenUI<SettingScreen>(TypeScreen.Setting);
+                    break;
+                case TypeScreen.Shop:
+                    UIManager.OpenUI<ShopScreen>(TypeScreen.Shop);
                     break;
                
                 

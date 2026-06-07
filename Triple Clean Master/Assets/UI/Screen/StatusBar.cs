@@ -41,6 +41,10 @@ namespace UI.Screen
 
         }
 
+        public void OnShop()
+        {
+            StateUI.ChangeState(TypeScreen.Shop);
+        }
         public  void UpdateLevelText()
         {
             levelText.text = "Level " + (GameplayManager.CurrentLevel);
