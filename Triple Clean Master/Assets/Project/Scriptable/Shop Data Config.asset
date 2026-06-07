@@ -19,60 +19,74 @@ MonoBehaviour:
     coin: 1000
     price: 49000
     isPurchase: 0
-    backgound: {fileID: 0}
+    backgound: {fileID: 21300000, guid: 24d0f0c74d729584ea727f62fedb6708, type: 3}
     undo: 4
     magicWand: 4
     shuffle: 4
   - id: bundle_pack
     name: Bundle Pack
-    icon: {fileID: 21300000, guid: 764097c047a2c3b479aeb735773b7861, type: 3}
+    icon: {fileID: 21300000, guid: cd59076bac5099c4ba9456fd8e63b94b, type: 3}
     coin: 2000
     price: 243000
     isPurchase: 0
-    backgound: {fileID: 0}
+    backgound: {fileID: 21300000, guid: 34099c9b60076154ba00f8c6cca09b84, type: 3}
     undo: 2
     magicWand: 2
     shuffle: 2
-  - id: bundle_pack
-    name: Bundle Pack
-    icon: {fileID: 21300000, guid: 764097c047a2c3b479aeb735773b7861, type: 3}
-    coin: 2000
-    price: 243000
+  - id: super_pack
+    name: Super Pack
+    icon: {fileID: 21300000, guid: cd59076bac5099c4ba9456fd8e63b94b, type: 3}
+    coin: 4500
+    price: 475000
+    isPurchase: 1
+    backgound: {fileID: 21300000, guid: 34099c9b60076154ba00f8c6cca09b84, type: 3}
+    undo: 5
+    magicWand: 5
+    shuffle: 5
+  - id: legendary_pack
+    name: Legendary Pack
+    icon: {fileID: 21300000, guid: 6c6907346f214e4488ec084100238f00, type: 3}
+    coin: 8000
+    price: 704000
     isPurchase: 0
-    backgound: {fileID: 0}
-    undo: 2
-    magicWand: 2
-    shuffle: 2
+    backgound: {fileID: 21300000, guid: 34099c9b60076154ba00f8c6cca09b84, type: 3}
+    undo: 4
+    magicWand: 4
+    shuffle: 4
   coinPackCellViews:
+  - id: coin_free
+    name: 
+    icon: {fileID: 21300000, guid: b8e3b9a26aba6604ebb5a700d87e8089, type: 3}
+    coin: 10
+    price: 0
+    isPurchase: 0
+    offerType: 1
   - id: coin_small
     name: 
     icon: {fileID: 21300000, guid: b8e3b9a26aba6604ebb5a700d87e8089, type: 3}
     coin: 320
     price: 49000
     isPurchase: 0
+    offerType: 0
   - id: coin_medium
     name: 
-    icon: {fileID: 21300000, guid: b8e3b9a26aba6604ebb5a700d87e8089, type: 3}
-    coin: 320
-    price: 49000
+    icon: {fileID: 21300000, guid: 76c57595d03c26046a84912fa252a9be, type: 3}
+    coin: 920
+    price: 122000
     isPurchase: 0
+    offerType: 0
   - id: coin_medium
     name: 
-    icon: {fileID: 21300000, guid: b8e3b9a26aba6604ebb5a700d87e8089, type: 3}
-    coin: 320
-    price: 49000
+    icon: {fileID: 21300000, guid: 76c57595d03c26046a84912fa252a9be, type: 3}
+    coin: 920
+    price: 122000
     isPurchase: 0
-  - id: coin_medium
-    name: 
-    icon: {fileID: 21300000, guid: b8e3b9a26aba6604ebb5a700d87e8089, type: 3}
-    coin: 320
-    price: 49000
-    isPurchase: 0
+    offerType: 0
   removeAdsCellViews:
   - id: remove_ads
-    name: Remove Ads
+    name: 
     icon: {fileID: 21300000, guid: 9b30d6b3ba6e7c946ba70480fc60109f, type: 3}
     coin: 300
-    price: 132000
+    price: 192000
     isPurchase: 0
     description: no ads & + 300 coin

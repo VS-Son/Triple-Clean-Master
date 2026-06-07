@@ -875,6 +875,8 @@ MonoBehaviour:
     path: Next Screen
   - typeScreen: 7
     path: Setting Screen
+  - typeScreen: 5
+    path: Shop Screen
 --- !u!1 &1585217922
 GameObject:
   m_ObjectHideFlags: 0
