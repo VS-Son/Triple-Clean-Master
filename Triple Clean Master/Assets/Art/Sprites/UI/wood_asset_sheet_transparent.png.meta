@@ -1,0 +1,783 @@
+fileFormatVersion: 2
+guid: e67804c0b274ebe4ba4576fb1796e4bc
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 622
+        width: 382
+        height: 440
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05d4162f88c4bd44eb3ec35021960fdf
+      internalID: -1780582052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_1
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 624
+        width: 159
+        height: 435
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90ecc8643f0179d4299961c0554ffda5
+      internalID: -1433178503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_2
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 624
+        width: 148
+        height: 438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2645aa9b885059d47bbad85db993be99
+      internalID: -1360805054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_3
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 624
+        width: 178
+        height: 438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b988f2f3975108f4da31d214268dd5ed
+      internalID: 943329157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_4
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 624
+        width: 430
+        height: 438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee0f7d8caf0ef34fba3518ca2fec8a6
+      internalID: -284316550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_5
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 416
+        width: 443
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5307fce66543de24ebc1906b8942375f
+      internalID: -651497383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_6
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 414
+        width: 458
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d71edeee08212c4da43b40635e21c37
+      internalID: -909950911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_7
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 406
+        width: 196
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e091d34ac5507b744bbb6b25f76b1852
+      internalID: 1472259361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_8
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 406
+        width: 190
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e03a4106e908be44a848fdb75582304
+      internalID: -1882156316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_9
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 276
+        width: 441
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25b60c4996bf5a44696e1c00d6ab0ccc
+      internalID: -143126704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_10
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 275
+        width: 456
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36145cdb9aade2a479a3126230e80003
+      internalID: 852233806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_11
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 269
+        width: 422
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07c78daf3544a3844909f57ea3745895
+      internalID: 1987608525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_12
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 215
+        width: 345
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 618f13567ce8db64eac1256367a913e5
+      internalID: 1132368089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_13
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 215
+        width: 304
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df28e3010caf9df4eafbd9cf4dafba4c
+      internalID: 1801782459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_14
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 214
+        width: 313
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77f51f2423823bb40aa97e18500dc275
+      internalID: -976941564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_15
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 214
+        width: 372
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a74528505c6db5749afc63c6fce81cdc
+      internalID: -2116168971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_16
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 169
+        width: 345
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58311f1f7fd3c54cb296211847b8b53
+      internalID: -1417621560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_17
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 169
+        width: 38
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c1fb28b69b43074783004417129d44a
+      internalID: -662119231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_18
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 169
+        width: 50
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c61be0e1af799b849b7c0224aa6dfb7d
+      internalID: 35107617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_19
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 169
+        width: 82
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50d1b20cfefff994187cb8dd579d61c6
+      internalID: 1342111518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_20
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 169
+        width: 72
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 831474b7220e1324a895a27aae195df7
+      internalID: -768181198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_21
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 39
+        width: 289
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3cd8784c9e650d4eab820a1134df36f
+      internalID: 1620186345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_22
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 39
+        width: 252
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8453c908ff8b4c42ba3f9e0e8359eca
+      internalID: 592553056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_23
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 42
+        width: 101
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3811076f75f33b6409fa16707a5d75d1
+      internalID: -1729107705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_24
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 42
+        width: 99
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 215db00fcd18f184a8c7d5f994ea94d2
+      internalID: -2075009299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_25
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 42
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6290c3e02ffcf544597d75d4800e4554
+      internalID: 650890797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_26
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 42
+        width: 101
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 563fc0325910c1d4e9e0882c1f14420e
+      internalID: -1118757885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_27
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 43
+        width: 83
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba633bb62bbc2134b94bb78e6821ff34
+      internalID: -1698902020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_28
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 45
+        width: 78
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 173c712f6c31af74d90b4d7818a38781
+      internalID: -2010168389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wood_asset_sheet_transparent_29
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 38
+        width: 101
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebdc890aa14bf754da987323d1b6aa24
+      internalID: -1614870224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      wood_asset_sheet_transparent_0: -1780582052
+      wood_asset_sheet_transparent_1: -1433178503
+      wood_asset_sheet_transparent_10: 852233806
+      wood_asset_sheet_transparent_11: 1987608525
+      wood_asset_sheet_transparent_12: 1132368089
+      wood_asset_sheet_transparent_13: 1801782459
+      wood_asset_sheet_transparent_14: -976941564
+      wood_asset_sheet_transparent_15: -2116168971
+      wood_asset_sheet_transparent_16: -1417621560
+      wood_asset_sheet_transparent_17: -662119231
+      wood_asset_sheet_transparent_18: 35107617
+      wood_asset_sheet_transparent_19: 1342111518
+      wood_asset_sheet_transparent_2: -1360805054
+      wood_asset_sheet_transparent_20: -768181198
+      wood_asset_sheet_transparent_21: 1620186345
+      wood_asset_sheet_transparent_22: 592553056
+      wood_asset_sheet_transparent_23: -1729107705
+      wood_asset_sheet_transparent_24: -2075009299
+      wood_asset_sheet_transparent_25: 650890797
+      wood_asset_sheet_transparent_26: -1118757885
+      wood_asset_sheet_transparent_27: -1698902020
+      wood_asset_sheet_transparent_28: -2010168389
+      wood_asset_sheet_transparent_29: -1614870224
+      wood_asset_sheet_transparent_3: 943329157
+      wood_asset_sheet_transparent_4: -284316550
+      wood_asset_sheet_transparent_5: -651497383
+      wood_asset_sheet_transparent_6: -909950911
+      wood_asset_sheet_transparent_7: 1472259361
+      wood_asset_sheet_transparent_8: -1882156316
+      wood_asset_sheet_transparent_9: -143126704
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

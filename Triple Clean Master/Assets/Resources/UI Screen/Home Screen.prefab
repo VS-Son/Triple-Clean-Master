@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6536133321594025988}
   - component: {fileID: 35872262880768626}
   m_Layer: 5
-  m_Name: Image
+  m_Name: master
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,11 +67,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 26c2ca6d3e2f7e347a583703bf3fbb2f, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 0
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 9019148252697093625}
   - component: {fileID: 979566160678192194}
   m_Layer: 5
-  m_Name: tile T (4)
+  m_Name: tile L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ RectTransform:
   m_GameObject: {fileID: 2065502479672022244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6574572593219969621}
@@ -524,6 +524,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  btPlay: {fileID: 6473815619515515949}
+  logoTiles:
+  - {fileID: 8762013521706757634}
+  - {fileID: 8954739127883535467}
+  - {fileID: 5837670483088573189}
+  - {fileID: 7312622242509429261}
+  - {fileID: 1580552471167735874}
+  - {fileID: 2246043206896254363}
+  bannerExplorer: {fileID: 35872262880768626}
 --- !u!1 &3039221288761920869
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +561,8 @@ RectTransform:
   m_GameObject: {fileID: 3039221288761920869}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2276732557375762725}
   - {fileID: 6079707155644751475}
@@ -747,7 +756,7 @@ GameObject:
   - component: {fileID: 8813361308374066738}
   - component: {fileID: 1636071222220209074}
   m_Layer: 5
-  m_Name: tile T (3)
+  m_Name: tile P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -762,7 +771,7 @@ RectTransform:
   m_GameObject: {fileID: 4658954356752565620}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6574572593219969621}
@@ -865,7 +874,7 @@ GameObject:
   - component: {fileID: 4298458072331460645}
   - component: {fileID: 9108306703006584658}
   m_Layer: 5
-  m_Name: tile T (2)
+  m_Name: tile I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -880,7 +889,7 @@ RectTransform:
   m_GameObject: {fileID: 5313926735384097300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6574572593219969621}
@@ -941,7 +950,7 @@ GameObject:
   - component: {fileID: 2743045769877627716}
   - component: {fileID: 8960706161980926059}
   m_Layer: 5
-  m_Name: tile T (1)
+  m_Name: tile R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -956,7 +965,7 @@ RectTransform:
   m_GameObject: {fileID: 7193385069510675522}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6574572593219969621}
@@ -1187,8 +1196,8 @@ RectTransform:
   m_GameObject: {fileID: 8363288328200100001}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6574572593219969621}
   m_RootOrder: 0
@@ -1324,7 +1333,7 @@ GameObject:
   - component: {fileID: 5745969819494207518}
   - component: {fileID: 4475086530818492160}
   m_Layer: 5
-  m_Name: tile T (5)
+  m_Name: tile E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1339,7 +1348,7 @@ RectTransform:
   m_GameObject: {fileID: 9054342754924621564}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6574572593219969621}

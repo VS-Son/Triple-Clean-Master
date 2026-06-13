@@ -5,10 +5,7 @@ using UnityEngine;
 
 namespace Project.Manager
 {
-    public interface IPool
-    {
-      
-    }
+  
     public class PoolManager<T> where T: Component
     {
         private readonly List<T> _poolActive = new();

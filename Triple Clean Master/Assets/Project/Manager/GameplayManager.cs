@@ -18,14 +18,14 @@ namespace Project.Manager
             set => Instance.level = value;
         }
         [Header("Unlock Booster")]
-        [Min(1)] [SerializeField] private int levelUnlockUndo;
-        public static bool LevelUnlockUndo => CurrentLevel >= Instance.levelUnlockUndo;
+        [Min(1)] [SerializeField] private int levelUndo;
+        public static bool LevelUnlockUndo => CurrentLevel >= Instance.levelUndo;
 
-        [Min(1)] [SerializeField] private int levelUnlockMagic;
-        public static bool LevelUnlockMagic => CurrentLevel >= Instance.levelUnlockMagic;
+        [Min(1)] [SerializeField] private int levelMagicWand;
+        public static bool LevelUnlockMagic => CurrentLevel >= Instance.levelMagicWand;
         
-        [Min(1)] [SerializeField] private int levelUnlockShuffle;
-        public static bool LevelUnlockShuffle => CurrentLevel >= Instance.levelUnlockShuffle;
+        [Min(1)] [SerializeField] private int levelShuffle;
+        public static bool LevelUnlockShuffle => CurrentLevel >= Instance.levelShuffle;
 
         public static void Show(bool isActive)
         {

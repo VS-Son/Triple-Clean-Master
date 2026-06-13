@@ -12,9 +12,11 @@ namespace Games.TileMatch.Tiles.Data
         public int row;
         public int col;
         public Vector2 originalPos;
+        public Vector2 originalScale;
         public int originalLayer;
         public bool isSelect;
         public bool isCollected;
+        public bool isClearing;
         public int coverCount = 0;
         public SpriteRenderer spriteTile;
         public new Collider2D collider;

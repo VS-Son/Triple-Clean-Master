@@ -106,11 +106,13 @@ MonoBehaviour:
   originalLayer: 0
   isSelect: 0
   isCollected: 0
+  isClearing: 0
   coverCount: 0
   spriteTile: {fileID: 7607021376594090247}
   collider: {fileID: 7533804027216155095}
   coveredBy: []
   covers: []
+  effectStar: {fileID: 0}
 --- !u!61 &7533804027216155095
 BoxCollider2D:
   m_ObjectHideFlags: 0
