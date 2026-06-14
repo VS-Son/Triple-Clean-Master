@@ -24,6 +24,8 @@ namespace Project.Services
 
         private static readonly Dictionary<TypeScreen, UICanvas> Cache = new();
 
+        private static readonly Dictionary<TypeScreen, int> OrderScreen = new();
+
 
 
         private void Awake()
@@ -36,9 +38,14 @@ namespace Project.Services
         {
             PathScreen.Clear();
 
-            foreach (var config in uiConfigs)
+            OrderScreen.Clear();
+
+            for (int i = 0; i < uiConfigs.Count; i++)
             {
+                var config = uiConfigs[i];
+
                 PathScreen[config.typeScreen] = config.path;
+                OrderScreen[config.typeScreen] = i;
             }
         }
 
@@ -49,7 +56,24 @@ namespace Project.Services
             if(!ui.gameObject.activeSelf) ui.Open();
             return ui;
         }
+        private static void SortLoadedUIByConfig()
+        {
+            var list = new List<KeyValuePair<TypeScreen, UICanvas>>(Cache);
 
+            list.Sort((a, b) =>
+            {
+                int orderA = OrderScreen.TryGetValue(a.Key, out var indexA) ? indexA : int.MaxValue;
+                int orderB = OrderScreen.TryGetValue(b.Key, out var indexB) ? indexB : int.MaxValue;
+
+                return orderA.CompareTo(orderB);
+            });
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Value == null) continue;
+                list[i].Value.transform.SetSiblingIndex(i);
+            }
+        }
         public static void CloseUI<T>(TypeScreen typeScreen) where T : UICanvas
         {
             if (Cache.TryGetValue(typeScreen, out var ui) && IsOpened(typeScreen))
@@ -93,7 +117,6 @@ namespace Project.Services
             
             GameObject go = Instantiate(prefab, Instance.transform);
 
-
             var screen = go.GetComponent<T>();
 
             if (screen == null)
@@ -102,8 +125,9 @@ namespace Project.Services
                 return null;
             }
 
-
             Cache[typeScreen] = screen;
+
+            SortLoadedUIByConfig();
 
             return screen;
 

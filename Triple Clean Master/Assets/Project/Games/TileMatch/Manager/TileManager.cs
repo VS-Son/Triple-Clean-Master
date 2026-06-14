@@ -24,6 +24,8 @@ namespace Games.TileMatch.Manager
         [SerializeField] private ListDataSprite listDataSprites;
         [SerializeField] private ListTileThemesData listThemesData;
 
+        private int _lastScreenWidth;
+        private int _lastScreenHeight;
         private Dictionary<int, LevelData> _levelData;
         private readonly Dictionary<int, Transform> _layerParent = new();
         private readonly Dictionary<int, Tile[,]> _layerTile = new();
@@ -37,6 +39,7 @@ namespace Games.TileMatch.Manager
         private void Awake()
         {
             LoadFileJson.LoadResource("Json/LevelTile");
+            
         }
 
         private void Start()
@@ -73,7 +76,7 @@ namespace Games.TileMatch.Manager
                 var tileGrid = GridTileSpawner(config);
                 _layerTile[config.layer] = tileGrid;
             }
-
+            ApplyResponsiveBoardScale();
             Physics2D.SyncTransforms();
             BuildCoverGraph();
             InitCoverageCount();
@@ -82,6 +85,20 @@ namespace Games.TileMatch.Manager
                 GameplayManager.Show(false);
             }
 
+        }
+
+        private void ApplyResponsiveBoardScale()
+        {
+            if (transform == null) return;
+
+            _lastScreenWidth = Screen.width;
+            _lastScreenHeight = Screen.height;
+
+            float scale = Util.GetScreenAspectScale();
+
+            transform.localScale = Vector3.one * scale;
+
+            Physics2D.SyncTransforms();
         }
 
         private void BuildCoverGraph()
@@ -198,17 +215,22 @@ namespace Games.TileMatch.Manager
         private Tile[,] GridTileSpawner(LayersData layer)
         {
             Tile[,] tiles = new Tile[layer.rows, layer.cols];
-            var spacing = Util.SetSpacing();
 
-            var offsetY = (layer.rows - 1) * spacing / 2f;
-            var offsetX = (layer.cols - 1) * spacing / 2f;
+            float spacing = Util.SetSpacing();
+
+            float offsetY = (layer.rows - 1) * spacing / 2f;
+            float offsetX = (layer.cols - 1) * spacing / 2f;
+
             if (!_layerParent.ContainsKey(layer.layer))
             {
                 var layerParent = new GameObject(layer.layerName);
+
                 var sortingGroup = layerParent.AddComponent<SortingGroup>();
                 sortingGroup.sortingOrder = layer.layer;
+
                 _layerParent[layer.layer] = layerParent.transform;
-                layerParent.transform.SetParent(gameObject.transform);
+
+                layerParent.transform.SetParent(transform, false);
             }
 
             for (int y = 0; y < tiles.GetLength(0); y++)
@@ -217,11 +239,19 @@ namespace Games.TileMatch.Manager
                 {
                     if (!layer.inactiveCells.Contains(new Vector2Int(x, y)))
                     {
-                        var position = new Vector2(x * spacing - offsetX, -y * spacing + offsetY);
-                        var tile = GameplayManager.PoolTile.GetPool(prefab, position);
+                        Vector2 localPosition = new Vector2(
+                            x * spacing - offsetX,
+                            -y * spacing + offsetY
+                        );
+
+                        var tile = GameplayManager.PoolTile.GetPool(prefab, Vector2.zero);
+
                         tile.transform.SetParent(_layerParent[layer.layer]);
-                        tile.SetData(layer, x, y);
+
+                        tile.transform.SetParent(_layerParent[layer.layer], false);
+                        tile.SetData(layer, x, y,localPosition);
                         tile.name = $"Tile_y:{y}_x:{x}";
+
                         tiles[y, x] = tile;
                     }
                 }

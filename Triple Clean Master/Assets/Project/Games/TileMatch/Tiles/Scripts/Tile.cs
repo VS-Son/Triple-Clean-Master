@@ -30,18 +30,19 @@ namespace Games.TileMatch.Tiles.Scripts
         private Tween _scaleTween;
         private Tween _rotateTween;
         private float TransY => transform.position.y;
-        private Vector2 LocalScale => transform.lossyScale;
+        private Vector2 LocalScale => transform.localScale;
         
         private readonly float _holdScale = 1.2f;
 
-        public void SetData(LayersData layer, int x, int y)
+        public void SetData(LayersData layer, int x, int y, Vector2 localPos)
         {
-            transform.localRotation = Quaternion.identity;
+            var transform1 = transform;
+            transform1.localRotation = Quaternion.identity;
             collider.enabled = true;
             isCollected = false;
             isClearing = false;
             currentLayer = layer.layer;
-            originalPos = transform.position;
+            transform1.localPosition =  originalPos =localPos;
             transform.localScale = originalScale =Util.SetScale();
             row = x;
             col = y;

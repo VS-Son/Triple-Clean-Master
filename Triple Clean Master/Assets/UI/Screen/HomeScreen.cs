@@ -56,12 +56,13 @@ namespace UI.Screen
       }
       public void OnPlay()
       {
+         
          StateUI.ChangeState(TypeScreen.PlayScreen);
          AudioManager.Instance.PlayBGM(AudioConstants.BGM, 1);
          AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
-
+         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
          UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
-         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
+         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
          TileManager.ZoomScaleTile();
          GameplayManager.Show(true);
          PlayScreen.UpdateUnlockBooster();

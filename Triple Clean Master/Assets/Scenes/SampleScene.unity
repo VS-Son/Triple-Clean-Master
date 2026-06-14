@@ -435,6 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420034}
+  - component: {fileID: 519420036}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
@@ -555,6 +556,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e522eb106f6c9948ba65f3b9eec9d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardRoot: {fileID: 2078785945}
+  paddingX: 0.5
+  paddingY: 0.5
+  minOrthographicSize: 6
+  maxOrthographicSize: 20
 --- !u!1 &593183982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,8 +1340,6 @@ MonoBehaviour:
     path: Home Screen
   - typeScreen: 1
     path: Play Screen
-  - typeScreen: 6
-    path: Status Bar
   - typeScreen: 2
     path: Revive Screen
   - typeScreen: 4
@@ -1332,6 +1348,8 @@ MonoBehaviour:
     path: Setting Screen
   - typeScreen: 5
     path: Shop Screen
+  - typeScreen: 6
+    path: Status Bar
 --- !u!1 &1585217922
 GameObject:
   m_ObjectHideFlags: 0

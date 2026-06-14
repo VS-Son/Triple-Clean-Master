@@ -312,7 +312,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8176285320687622797}
         m_TargetAssemblyTypeName: UI.Screen.StatusBar, Assembly-CSharp
-        m_MethodName: OnHome
+        m_MethodName: OnBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -382,9 +382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 6
-  levelText: {fileID: 746375117386219360}
+  textTitle: {fileID: 746375117386219360}
   setting: {fileID: 9100293302963521653}
   back: {fileID: 2708689728404129014}
+  statusCoin: {fileID: 3099298872310725996}
+  currentScreen: 0
 --- !u!1 &3276688413846942248
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +669,7 @@ GameObject:
   - component: {fileID: 7952967275370535799}
   - component: {fileID: 746375117386219360}
   m_Layer: 5
-  m_Name: Level Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

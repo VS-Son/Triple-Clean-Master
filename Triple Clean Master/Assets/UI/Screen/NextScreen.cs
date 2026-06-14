@@ -14,15 +14,20 @@ namespace UI.Screen
         private void OnEnable()
         {
             textNext.text = "Level " + (GameplayManager.CurrentLevel + 1);
+            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(false);
+
         }
 
         public void OnNext()
         {
             TileManager.ZoomScaleTile();
             TileManager.Instance.NextLevel();
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).levelText.gameObject.SetActive(true);
+            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
+            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(true);
+
             PlayScreen.UpdateUnlockBooster();
+            
             Close();
         }
     }
