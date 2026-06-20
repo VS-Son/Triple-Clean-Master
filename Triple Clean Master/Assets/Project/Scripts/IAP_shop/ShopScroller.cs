@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using EnhancedUI.EnhancedScroller;
 using Project.Scriptable;
+using UI.Screen.Shop;
 using UnityEngine;
 
-namespace UI.Screen.Shop
+namespace Project.Scripts.IAP_shop
 {
     public class ShopScroller: MonoBehaviour, IEnhancedScrollerDelegate
     {

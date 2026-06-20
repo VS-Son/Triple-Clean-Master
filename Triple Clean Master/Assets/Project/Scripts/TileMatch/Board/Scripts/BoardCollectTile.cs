@@ -87,7 +87,7 @@ namespace Project.Games.TileMatch.Board.Scripts
                     {
                         PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 0.6f);
                     }
-                    if (PlayScreen.IsClick)
+                    if (PlayScreen.IsClick && GameplayManager.LevelUnlockMagic)
                     {
                         PlayScreen.SetBoosterAlpha(TypeBooster.MagicWand, 0.6f);
                     }
@@ -183,7 +183,7 @@ namespace Project.Games.TileMatch.Board.Scripts
 
             IsMatching = EffectManager.IsLive;
             PlayScreen.IsClick = false;
-            if (!PlayScreen.IsClick)
+            if (!PlayScreen.IsClick && GameplayManager.LevelUnlockMagic)
             {
                 DOVirtual.DelayedCall(0.3f, () => PlayScreen.SetBoosterAlpha(TypeBooster.MagicWand, 1f));
             }

@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6708652772494742502}
   - component: {fileID: 6754978274086193527}
   m_Layer: 5
-  m_Name: amount
+  m_Name: value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,7 +423,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 1397160363279843331}
   redDot: {fileID: 8714330500620007618}
   iconLock: {fileID: 7114316313796621457}
-  amountBooster: {fileID: 0}
+  boosterValue: {fileID: 6754978274086193527}
   typeBooster: 3
 --- !u!1 &6692371185751216521
 GameObject:

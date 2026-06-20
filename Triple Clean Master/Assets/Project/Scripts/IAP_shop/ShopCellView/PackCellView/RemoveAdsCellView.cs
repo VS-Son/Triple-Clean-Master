@@ -1,5 +1,6 @@
 using System;
 using EnhancedUI.EnhancedScroller;
+using Project.Scripts.Effect;
 using UnityEngine.UI;
 using TMPro;
 
@@ -28,6 +29,7 @@ namespace UI.Screen.Shop
                 if (!isPurchased)
                 {
                     isPurchased = true;
+                    ResourceManager.AddCoin(removeAds.coin);
                     removeAds.isPurchase = isPurchased;
                 }
             }

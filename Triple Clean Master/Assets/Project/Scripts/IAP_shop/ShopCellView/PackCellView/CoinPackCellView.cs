@@ -1,5 +1,6 @@
 using System;
 using EnhancedUI.EnhancedScroller;
+using Project.Scripts.Effect;
 using TMPro;
 using UnityEngine.UI;
 
@@ -25,12 +26,21 @@ namespace UI.Screen.Shop
         {
             if (database is CoinPackData coinPackData)
             {
-                if (!id.Equals(coinPackData.id))return;
-                if (!isPurchased)
+                if (!id.Equals(coinPackData.id)) return;
+                if(!isPurchased)
                 {
-                    isPurchased = true;
-                    coinPackData.isPurchase = isPurchased;
+                    if (coinPackData.offerType == OfferType.Free || coinPackData.offerType == OfferType.Ads)
+                    {
+                        isPurchased = true;
+                        ResourceManager.AddCoin(coinPackData.coin);
+                        coinPackData.isPurchase = isPurchased;
+                    }
                 }
+                if (coinPackData.offerType == OfferType.Buy)
+                {
+                    ResourceManager.AddCoin(coinPackData.coin);
+                }
+                
             }
         }
 

@@ -1,15 +1,28 @@
-namespace UI.Screen.Shop
+using TMPro;
+using UI.Screen;
+using UnityEngine;
+
+namespace Project.Scripts.UI.Screen
 {
     public class ShopScreen : UICanvas
-    {    private ShopOpenSource _source;
+    {
+        [SerializeField] private TMP_Text undoValue;
+        [SerializeField] private TMP_Text magicWandValue;
+        [SerializeField] private TMP_Text shuffleValue;
 
-        public void OpenFrom(ShopOpenSource source)
+        public void UpdateTextUndo(int currentUndo)
         {
-            _source = source;
+            undoValue.text = $"{currentUndo}";
+           
         }
-        public void OnBack()
+        public void UpdateTextMagicWand( int currentMagic)
         {
-            Close();
+            magicWandValue.text = $"{currentMagic}";
+        }
+        public void UpdateTextShuffle( int currentShuffle)
+        {
+           
+            shuffleValue.text = $"{currentShuffle}";
         }
     }
 }

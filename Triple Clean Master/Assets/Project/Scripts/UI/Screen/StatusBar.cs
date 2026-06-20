@@ -3,12 +3,12 @@ using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Manager;
 using Project.Scripts.Effect;
+using Project.Scripts.UI.Screen;
 using Project.Services;
 using TMPro;
 using UI.Screen.Shop;
 using UnityEngine;
 using UnityEngine.UIElements;
-using AudioType = Project.Manager.AudioType;
 using Button = UnityEngine.UI.Button;
 
 namespace UI.Screen
@@ -78,15 +78,17 @@ namespace UI.Screen
 
         public void OnShop()
         {
-            var source = StateUI.IsState(TypeScreen.PlayScreen)
-                ? ShopOpenSource.Gameplay
-                : ShopOpenSource.HomeScreen;
+            var source = StateUI.IsState(TypeScreen.PlayScreen) ? ShopOpenSource.Gameplay : ShopOpenSource.HomeScreen;
 
             StateUI.ChangeState(TypeScreen.Shop);
             setting.SetActive(false);
             back.SetActive(true);
             textTitle.gameObject.SetActive(true);
             textTitle.text = "Store";
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(ResourceManager.CurrentUndo);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(ResourceManager.CurrentMagicWand);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(ResourceManager.CurrentShuffle);
+
             _source = source;
             
         }

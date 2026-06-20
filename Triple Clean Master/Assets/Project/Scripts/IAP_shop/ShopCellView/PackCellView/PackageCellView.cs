@@ -1,5 +1,7 @@
 using System;
 using EnhancedUI.EnhancedScroller;
+using Project.Scripts.Effect;
+using Project.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +39,9 @@ namespace UI.Screen.Shop
                 if (!isPurchased)
                 {
                     isPurchased = true;
+                    ResourceManager.AddBoosters(packageData.undo, packageData.magicWand, packageData.shuffle);
+                    ResourceManager.AddCoin(packageData.coin);
+                    UIManager.GetUI<PlayScreen>(TypeScreen.PlayScreen).UpdateTextBoosters();
                     packageData.isPurchase = isPurchased;
                 }
             }

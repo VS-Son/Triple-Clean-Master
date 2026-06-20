@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 4795808496806953104}
   - component: {fileID: 973215885102470723}
   m_Layer: 5
-  m_Name: amount
+  m_Name: value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 959283203130291480}
   - component: {fileID: 4631310723095856613}
   m_Layer: 5
-  m_Name: amount
+  m_Name: value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,7 +1129,7 @@ GameObject:
   - component: {fileID: 7225641471972325666}
   - component: {fileID: 9060681830993003901}
   m_Layer: 5
-  m_Name: amount
+  m_Name: value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1426,7 +1426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fbc7a53b6bcd6429765c2a875b50a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 5
+  typeBooster: 0
+  undoValue: {fileID: 4631310723095856613}
+  magicWandValue: {fileID: 9060681830993003901}
+  shuffleValue: {fileID: 973215885102470723}
 --- !u!1 &7222039368294460735
 GameObject:
   m_ObjectHideFlags: 0

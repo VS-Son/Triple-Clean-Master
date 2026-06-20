@@ -18,7 +18,7 @@ namespace UI.Components.booster
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private GameObject redDot;
         [SerializeField] private GameObject iconLock;
-        [SerializeField] private TMP_Text amountBooster;
+        [SerializeField] private TMP_Text boosterValue;
         
         public TypeBooster typeBooster;
 
@@ -29,8 +29,6 @@ namespace UI.Components.booster
         private void OnDisable()
         {
             PlayScreen.AlphaBooster -= OnAlphaBooster;
-
-
         }
 
         private void OnAlphaBooster(TypeBooster type, float alpha)
@@ -77,9 +75,8 @@ namespace UI.Components.booster
         {
             if (type == typeBooster)
             {
-                amountBooster.text = $"{amount}";
+                boosterValue.text = $"{amount}";
             }
-            
         }
     }
 }

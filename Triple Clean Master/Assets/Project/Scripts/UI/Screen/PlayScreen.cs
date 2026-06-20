@@ -87,12 +87,14 @@ namespace UI.Screen
 
         public void MagicWand()
         {
-            IsClick = true;
+            
             if (GameplayManager.LevelUnlockMagic )
             {
+                IsClick = true;
                 if (!BoardCollectTile.IsMatching && magicWand.IsDisplay(TypeBooster.MagicWand))
                 {
                     TileManager.Instance.CollectMatchThreeTiles();
+                    ResourceManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
                     magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.CurrentMagicWand);
                 }
             }
@@ -107,6 +109,7 @@ namespace UI.Screen
             if (GameplayManager.LevelUnlockShuffle)
             {
                 TileManager.Instance.ShuffleGridTiles();
+                ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
                 shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.CurrentShuffle);
 
                 
@@ -117,6 +120,11 @@ namespace UI.Screen
             }
         }
 
-        
+        public void UpdateTextBoosters()
+        {
+            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.CurrentUndo);
+            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.CurrentMagicWand);
+            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.CurrentShuffle);
+        }
     }
 }
