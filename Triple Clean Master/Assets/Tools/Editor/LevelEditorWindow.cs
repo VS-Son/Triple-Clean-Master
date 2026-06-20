@@ -340,12 +340,12 @@ namespace Tools.Editor
                 LevelData.OptionRow.Select(x => x.ToString()).ToArray(), GUILayout.Width(200));
             CurrentLevel.optionColIndex = EditorGUILayout.Popup("Option Col: ", CurrentLevel.optionColIndex,
                 LevelData.OptionCol.Select(x => x.ToString()).ToArray(), GUILayout.Width(200));
-            CurrentLevel.coinReward = EditorGUILayout.IntField("Coin Reward", CurrentLevel.coinReward);
+            CurrentLevel.coinReward = EditorGUILayout.IntField("CoinEffect Reward", CurrentLevel.coinReward);
             if (GUILayout.Button("Clear Current Grid" ,GUILayout.Height(40)))
             {
                         
             }
-            EditorGUILayout.IntField("Coin Reward", CurrentLevel.countCellActive);
+            EditorGUILayout.IntField("CoinEffect Reward", CurrentLevel.countCellActive);
         }
 
         private void DrawLayer()

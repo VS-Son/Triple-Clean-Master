@@ -381,11 +381,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e5b1b1342fcbc48bd0ef990cc19ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 6
+  typeBooster: 0
   textTitle: {fileID: 746375117386219360}
+  textCoin: {fileID: 5697528001295526073}
   setting: {fileID: 9100293302963521653}
   back: {fileID: 2708689728404129014}
   statusCoin: {fileID: 3099298872310725996}
+  iconCoin: {fileID: 5406174855930702716}
   currentScreen: 0
 --- !u!1 &3276688413846942248
 GameObject:
