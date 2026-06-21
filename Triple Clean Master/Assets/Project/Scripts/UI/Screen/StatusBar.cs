@@ -1,8 +1,8 @@
 using System;
-using Games.TileMatch.Manager;
 using Project.Core.UI;
 using Project.Manager;
 using Project.Scripts.Effect;
+using Project.Scripts.Manager;
 using Project.Scripts.UI.Screen;
 using Project.Services;
 using TMPro;
@@ -50,7 +50,7 @@ namespace UI.Screen
             {
                 StateUI.ChangeState(TypeScreen.HomeScreen);
                 AudioManager.Instance.StopBGM();
-                GameplayManager.Show(false);
+                GameplayManager.ActiveChild(false);
                 back.SetActive(false);
                 textTitle.gameObject.SetActive(false);
                 return;
@@ -60,7 +60,7 @@ namespace UI.Screen
                 case ShopOpenSource.HomeScreen:
                     StateUI.ChangeState(TypeScreen.HomeScreen);
                     AudioManager.Instance.StopBGM();
-                    GameplayManager.Show(false);
+                    GameplayManager.ActiveChild(false);
                     back.SetActive(false);
                     setting.SetActive(true);
                     textTitle.gameObject.SetActive(false);
@@ -79,15 +79,14 @@ namespace UI.Screen
         public void OnShop()
         {
             var source = StateUI.IsState(TypeScreen.PlayScreen) ? ShopOpenSource.Gameplay : ShopOpenSource.HomeScreen;
-
             StateUI.ChangeState(TypeScreen.Shop);
             setting.SetActive(false);
             back.SetActive(true);
             textTitle.gameObject.SetActive(true);
             textTitle.text = "Store";
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(ResourceManager.CurrentUndo);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(ResourceManager.CurrentMagicWand);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(ResourceManager.CurrentShuffle);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(ResourceManager.ValueUndo);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(ResourceManager.ValueMagicWand);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(ResourceManager.ValueShuffle);
 
             _source = source;
             

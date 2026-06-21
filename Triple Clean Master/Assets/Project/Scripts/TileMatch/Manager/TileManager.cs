@@ -5,17 +5,18 @@ using Games.TileMatch.ConfigData;
 using Games.TileMatch.Level.Data;
 using Games.TileMatch.Level.Scripts;
 using Games.TileMatch.Tiles.Data;
-using Project.Manager;
-using UnityEngine;
 using Games.TileMatch.Tiles.Scripts;
 using Project.Core.UI;
 using Project.Extensions;
 using Project.Games.TileMatch.Board.Scripts;
+using Project.Manager;
+using Project.Scripts.Manager;
 using Project.Services;
+using UnityEngine;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
-namespace Games.TileMatch.Manager
+namespace Project.Scripts.TileMatch.Manager
 {
     public class TileManager : Singleton<TileManager>
     {
@@ -82,7 +83,7 @@ namespace Games.TileMatch.Manager
             InitCoverageCount();
             if (StateUI.IsState(TypeScreen.HomeScreen))
             {
-                GameplayManager.Show(false);
+                GameplayManager.ActiveChild(false);
             }
 
         }

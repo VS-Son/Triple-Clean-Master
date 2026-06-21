@@ -16,19 +16,19 @@ MonoBehaviour:
   - id: starter_pack
     name: Starter Pack
     icon: {fileID: 21300000, guid: cd59076bac5099c4ba9456fd8e63b94b, type: 3}
-    coin: 1000
+    coin: 100
     price: 49000
-    isPurchase: 0
+    isPurchase: 1
     backgound: {fileID: 21300000, guid: 24d0f0c74d729584ea727f62fedb6708, type: 3}
-    undo: 4
-    magicWand: 4
-    shuffle: 4
+    undo: 3
+    magicWand: 3
+    shuffle: 3
   - id: bundle_pack
     name: Bundle Pack
     icon: {fileID: 21300000, guid: cd59076bac5099c4ba9456fd8e63b94b, type: 3}
-    coin: 2000
+    coin: 200
     price: 243000
-    isPurchase: 0
+    isPurchase: 1
     backgound: {fileID: 21300000, guid: 34099c9b60076154ba00f8c6cca09b84, type: 3}
     undo: 2
     magicWand: 2
@@ -36,13 +36,13 @@ MonoBehaviour:
   - id: super_pack
     name: Super Pack
     icon: {fileID: 21300000, guid: cd59076bac5099c4ba9456fd8e63b94b, type: 3}
-    coin: 4500
+    coin: 200
     price: 475000
     isPurchase: 1
     backgound: {fileID: 21300000, guid: 34099c9b60076154ba00f8c6cca09b84, type: 3}
-    undo: 5
-    magicWand: 5
-    shuffle: 5
+    undo: 2
+    magicWand: 2
+    shuffle: 2
   - id: legendary_pack
     name: Legendary Pack
     icon: {fileID: 21300000, guid: 6c6907346f214e4488ec084100238f00, type: 3}

@@ -1,18 +1,17 @@
 using System;
-using Games.TileMatch.Manager;
 using Project.Constants;
 using Project.Core.Notification;
 using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
-using Project.Scripts.Effect;
+using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Manager;
 using Project.Services;
 using UI.Components.booster;
+using UI.Screen;
 using UnityEngine;
-using UnityEngine.ResourceManagement;
-using UnityEngine.UI;
 using ResourceManager = Project.Scripts.Effect.ResourceManager;
 
-namespace UI.Screen
+namespace Project.Scripts.UI.Screen
 {
     public class PlayScreen:UICanvas
     {
@@ -23,10 +22,28 @@ namespace UI.Screen
         public static bool IsClick = false;
         private void Start()
         {
-            
         }
 
-        
+        private void OnEnable()
+        {
+            GameplayManager.ActiveChild(true);
+            ResourceManager.DisplayValueBooster += DisplayValueBooster;
+            ResourceManager.DisplayCoinBooster += DisplayCoinBooster;
+            ResourceManager.DisplayAdsBooster += DisplayAdsBooster;
+
+
+        }
+
+        private void OnDisable()
+        {
+            GameplayManager.ActiveChild(false);
+            ResourceManager.DisplayValueBooster -= DisplayValueBooster;
+            ResourceManager.DisplayCoinBooster -= DisplayCoinBooster;
+            ResourceManager.DisplayAdsBooster -= DisplayAdsBooster;
+
+        }
+
+
         public void OnLoadLevel()
         {
             BoardCollectTile.Instance.ResetBoard();
@@ -63,13 +80,25 @@ namespace UI.Screen
                 if (BoardCollectTile.HasTileInBoard() && !BoardCollectTile.IsMatching)
                 {
                     BoardCollectTile.Instance.UndoTile(1);
-                    if (ResourceManager.CurrentUndo > 0)
+                    if (ResourceManager.ValueUndo > 0)
                     {
                         ResourceManager.Instance.SpendBooster(TypeBooster.Undo, 1);
-                        undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.CurrentUndo);
+                        undo.UpdateTextBooster(TypeBooster.Undo, ResourceManager.ValueUndo);
+                       
                     }
-                    
-                   
+                    else
+                    {
+                        if (ResourceManager.HasEnoughCoin())
+                        {
+                            ResourceManager.SpendCoin(100);
+                        }
+                        else
+                        {
+                            Debug.Log("Display ads");
+                            
+                        }
+                    }
+
                 }
                 else
                 {
@@ -94,8 +123,24 @@ namespace UI.Screen
                 if (!BoardCollectTile.IsMatching && magicWand.IsDisplay(TypeBooster.MagicWand))
                 {
                     TileManager.Instance.CollectMatchThreeTiles();
-                    ResourceManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
-                    magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.CurrentMagicWand);
+                    if (ResourceManager.ValueMagicWand > 0)
+                    {
+                        ResourceManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
+                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand);
+                    }
+                    else
+                    {
+                        if (ResourceManager.HasEnoughCoin())
+                        {
+                            ResourceManager.SpendCoin(100);
+
+                        }
+                        else
+                        {
+                            Debug.Log("Display ads");
+                        }
+                    }
+                    
                 }
             }
             else
@@ -109,8 +154,24 @@ namespace UI.Screen
             if (GameplayManager.LevelUnlockShuffle)
             {
                 TileManager.Instance.ShuffleGridTiles();
-                ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
-                shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.CurrentShuffle);
+                if (ResourceManager.ValueShuffle > 0)
+                {
+                    ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
+                    shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle);
+                }
+                else
+                {
+                    if (ResourceManager.HasEnoughCoin())
+                    {
+                        ResourceManager.SpendCoin(100);
+
+                    }
+                    else
+                    {
+                        Debug.Log("Display ads");
+                    }
+                }
+               
 
                 
             }
@@ -120,11 +181,92 @@ namespace UI.Screen
             }
         }
 
+        private void DisplayValueBooster(TypeBooster type)
+        {
+            if (type == TypeBooster.Undo)
+            {
+                undo.coin.SetActive(false);
+                undo.redValue.SetActive(true);
+                undo.ads.SetActive(false);
+            }
+
+            if (type == TypeBooster.MagicWand)
+            {
+                magicWand.coin.SetActive(false);
+                magicWand.redValue.SetActive(true);
+                magicWand.ads.SetActive(false);
+            }
+
+            if (type == TypeBooster.Shuffle)
+            {
+                shuffle.coin.SetActive(false);
+                shuffle.redValue.SetActive(true);
+                shuffle.ads.SetActive(false);
+            }
+           
+        }
+
+        private void DisplayCoinBooster(TypeBooster type)
+        {
+            if (type == TypeBooster.Undo)
+            {
+                undo.coin.SetActive(true);
+                undo.redValue.SetActive(false);
+                undo.ads.SetActive(false);
+            }
+
+            if (type == TypeBooster.MagicWand)
+            {
+                magicWand.coin.SetActive(true);
+                magicWand.redValue.SetActive(false);
+                magicWand.ads.SetActive(false);
+            }
+
+            if (type == TypeBooster.Shuffle)
+            {
+                shuffle.coin.SetActive(true);
+                shuffle.redValue.SetActive(false);
+                shuffle.ads.SetActive(false);
+            }
+
+
+
+
+        }
+
+        private void DisplayAdsBooster( )
+        {
+            if (ResourceManager.ValueUndo <= 0)
+            {
+                undo.coin.SetActive(false);
+                undo.redValue.SetActive(false);
+                undo.ads.SetActive(true);
+            }
+
+            if (ResourceManager.ValueMagicWand <= 0)
+            {
+                magicWand.coin.SetActive(false);
+                magicWand.redValue.SetActive(false);
+                magicWand.ads.SetActive(true);
+            }
+
+            if (ResourceManager.ValueShuffle <= 0)
+            {
+                shuffle.coin.SetActive(false);
+                shuffle.redValue.SetActive(false);
+                shuffle.ads.SetActive(true);
+            }
+
+            
+
+        }
+
         public void UpdateTextBoosters()
         {
-            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.CurrentUndo);
-            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.CurrentMagicWand);
-            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.CurrentShuffle);
+            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.ValueUndo);
+            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand);
+            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle);
         }
+        
     }
 }

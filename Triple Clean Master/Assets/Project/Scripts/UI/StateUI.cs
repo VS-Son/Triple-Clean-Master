@@ -1,5 +1,4 @@
 using System;
-using Games.TileMatch.Manager;
 using Project.Manager;
 using Project.Scripts.UI.Screen;
 using Project.Services;
@@ -44,6 +43,7 @@ namespace Project.Core.UI
                     break;
                 case TypeScreen.NextScreen:
                     UIManager.OpenUI<NextScreen>(TypeScreen.NextScreen);
+                    UIManager.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
                     break;
 
                 case TypeScreen.Setting:

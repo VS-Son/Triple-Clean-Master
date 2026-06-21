@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Games.TileMatch.Manager;
 using Games.TileMatch.Tiles.Scripts;
 using Project.Constants;
 using Project.Core.UI;
 using Project.Manager;
 using Project.Scripts.Effect;
+using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Manager;
+using Project.Scripts.UI.Screen;
 using Project.Services;
 using UI.Components.booster;
 using UI.Screen;
@@ -288,6 +290,10 @@ namespace Project.Games.TileMatch.Board.Scripts
             _countSlot = 0;
             _collectedTile.Clear();
             _originalTile.Clear();
+            _clearQueue.Clear();
+            _isClearing = false;
+            IsMatching = false;
+            PlayScreen.IsClick = false;
         }
 
         public List<Tile> GetListCollect()

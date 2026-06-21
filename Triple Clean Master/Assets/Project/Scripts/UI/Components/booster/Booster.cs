@@ -1,5 +1,6 @@
 using System;
 using Project.Manager;
+using Project.Scripts.UI.Screen;
 using TMPro;
 using UI.Screen;
 using UnityEngine;
@@ -16,10 +17,12 @@ namespace UI.Components.booster
     public class Booster : MonoBehaviour
     {
         [SerializeField] private CanvasGroup canvasGroup;
-        [SerializeField] private GameObject redDot;
+        public GameObject redValue;
+        public GameObject coin;
+        public GameObject ads;
         [SerializeField] private GameObject iconLock;
         [SerializeField] private TMP_Text boosterValue;
-        
+
         public TypeBooster typeBooster;
 
         private void OnEnable()
@@ -36,7 +39,7 @@ namespace UI.Components.booster
             if (type == typeBooster)
             {
                 canvasGroup.alpha = alpha;
-                redDot.SetActive(true);
+                //redValue.SetActive(true);
                 iconLock.SetActive(false);
             }
         }
@@ -56,7 +59,7 @@ namespace UI.Components.booster
         {
             if (type == typeBooster)
             {
-                redDot.SetActive(true);
+                redValue.SetActive(true);
                 iconLock.SetActive(false);
             }
         }
@@ -65,7 +68,7 @@ namespace UI.Components.booster
         {
             if (type == typeBooster )
             {
-                redDot.SetActive(false);
+                redValue.SetActive(false);
                 iconLock.SetActive(true);
 
             }
@@ -77,6 +80,7 @@ namespace UI.Components.booster
             {
                 boosterValue.text = $"{amount}";
             }
+          
         }
     }
 }

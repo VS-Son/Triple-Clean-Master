@@ -1,9 +1,10 @@
 using System;
-using Games.TileMatch.Manager;
 using UnityEngine;
 using DG.Tweening;
 using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
+using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Manager;
 using TMPro;
 
 namespace UI.Screen

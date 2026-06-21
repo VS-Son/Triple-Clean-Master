@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using Games.TileMatch.Manager;
+using Project.Core.UI;
+using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
+using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Manager;
 using Project.Services;
 using TMPro;
 using UI.Screen;
@@ -37,7 +40,14 @@ namespace Project.Scripts.UI.Screen
                 iconGift.gameObject.SetActive(true);
             }
             UpdateProvenceReward();
+            CoinEffect.OnCompleteGoal += OnCompleteGoal;
+
             
+        }
+
+        private void OnDisable()
+        {
+            CoinEffect.OnCompleteGoal -= OnCompleteGoal;
         }
 
         private void UpdateProvenceReward()
@@ -108,10 +118,13 @@ namespace Project.Scripts.UI.Screen
         {
             TileManager.ZoomScaleTile();
             TileManager.Instance.NextLevel();
+            BoardCollectTile.Instance.ResetBoard();
+
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(true);
             PlayScreen.UpdateUnlockBooster();
+            StateUI.ChangeState(TypeScreen.PlayScreen);
             Close();
         }
     }

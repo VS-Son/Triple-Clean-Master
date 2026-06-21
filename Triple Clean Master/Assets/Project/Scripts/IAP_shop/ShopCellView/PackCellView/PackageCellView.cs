@@ -1,6 +1,7 @@
 using System;
 using EnhancedUI.EnhancedScroller;
 using Project.Scripts.Effect;
+using Project.Scripts.UI.Screen;
 using Project.Services;
 using TMPro;
 using UnityEngine;

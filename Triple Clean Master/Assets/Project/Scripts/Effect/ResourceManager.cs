@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using Project.Core.UI;
 using Project.Manager;
 using Project.Scripts.UI.Screen;
 using Project.Services;
@@ -11,41 +13,48 @@ namespace Project.Scripts.Effect
 {
     public class ResourceManager : Singleton<ResourceManager>
     {
+        public static event Action<TypeBooster> DisplayValueBooster;
+        public static event Action<TypeBooster> DisplayCoinBooster;
+        public static event Action DisplayAdsBooster;
+        public static event Action DisplayAllCoinBooster;
+
+
         [Min(0)] [SerializeField] int coin;
         [Min(0)] [SerializeField] int undo;
         [Min(0)] [SerializeField] int magicWand;
         [Min(0)] [SerializeField] private int shuffle;
 
-        public static int CurrentUndo
+        public static int ValueUndo
         {
             get => Instance.undo;
             set
             {
                 Instance.undo = value;
-                UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(Instance.undo);
-
+                CheckEnoughBooster(ValueUndo, TypeBooster.Undo);
+                
+                
             }
         }
 
-        public static int CurrentMagicWand
+        public static int ValueMagicWand
         {
             get => Instance.magicWand;
             set
             {
                 Instance.magicWand = value;
-                UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(Instance.magicWand);
-
+                CheckEnoughBooster(ValueMagicWand, TypeBooster.MagicWand);
             }
 
         }
 
-        public static int CurrentShuffle
+        public static int ValueShuffle
         {
             get => Instance.shuffle;
             set
             {
                 Instance.shuffle = value;
-                UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(Instance.shuffle);
+                CheckEnoughBooster(ValueShuffle, TypeBooster.Shuffle);
+
 
             }
 
@@ -70,25 +79,75 @@ namespace Project.Scripts.Effect
         public static void AddCoin(int amount)
         {
             Coin += amount;
+           
+            if(ValueUndo <= 0)
+            {
+                if (HasEnoughCoin())
+                {
+                    DisplayCoinBooster?.Invoke(TypeBooster.Undo);
+                }
+            }
+            if(ValueMagicWand <= 0)
+            {
+                if (HasEnoughCoin())
+                {
+                    DisplayCoinBooster?.Invoke(TypeBooster.MagicWand);
+                }
+            }
+            if(ValueShuffle <= 0)
+            {
+                if (HasEnoughCoin())
+                {
+                    DisplayCoinBooster?.Invoke(TypeBooster.Shuffle);
+                }
+            }
+           
         }
-
-        public void SpendCoin(int amount)
+        
+        public static void SpendCoin(int amount)
         {
-            coin -= amount;
+            Coin -= amount;
+            if (!HasEnoughCoin())
+            {
+                DisplayAdsBooster?.Invoke();
+            }
         }
+        
 
+        private static void CheckEnoughBooster(int value, TypeBooster type)
+        {
+            if (value > 0)
+            {
+                DisplayValueBooster?.Invoke(type);
+            }
+            else
+            {
+                if (HasEnoughCoin())
+                {
+                    DisplayCoinBooster?.Invoke(type);
+                }
+                else
+                {
+                    DisplayAdsBooster?.Invoke();
+                }
+            }
+        }
+        public static bool HasEnoughCoin()
+        {
+            return Coin >= 100;
+        }
         public void SpendBooster(TypeBooster type, int amount)
         {
             switch (type)
             {
                 case TypeBooster.Undo:
-                    CurrentUndo -= amount;
+                    ValueUndo -= amount;
                     break;
                 case TypeBooster.MagicWand:
-                    CurrentMagicWand -= amount;
+                    ValueMagicWand -= amount;
                     break;
                 case TypeBooster.Shuffle:
-                    CurrentShuffle -= amount;
+                    ValueShuffle -= amount;
                     break;
                 case TypeBooster.None:
                     break;
@@ -97,9 +156,9 @@ namespace Project.Scripts.Effect
 
         public static void AddBoosters(int amountUndo, int amountMagic, int amountShuffle)
         {
-            CurrentUndo += amountUndo;
-            CurrentMagicWand += amountMagic;
-            CurrentShuffle += amountShuffle;
+            ValueUndo += amountUndo;
+            ValueMagicWand += amountMagic;
+            ValueShuffle += amountShuffle;
         }
 
     }

@@ -1,20 +1,19 @@
 using Games.TileMatch.Tiles.Scripts;
-using Project.Scripts.Effect;
-using Project.Scripts.Manager;
-using Project.Services;
-using UI.Components.booster;
-using UI.Screen;
+using Project.Games.TileMatch.Board.Scripts;
+using Project.Manager;
 using UnityEngine;
 
-namespace Project.Manager
+namespace Project.Scripts.Manager
 {
     public class GameplayManager : Singleton<GameplayManager>
     {
+        public GameObject board;
         private readonly PoolManager<Tile> _poolTile = new();
         private readonly PoolManager<CoinEffect> _poolCoin = new();
         public static PoolManager<Tile> PoolTile => Instance._poolTile;
         public static PoolManager<CoinEffect> PoolCoin => Instance._poolCoin;
         [Min(1)][SerializeField] private int level;
+        
 
         public static int CurrentLevel
         {
@@ -31,18 +30,16 @@ namespace Project.Manager
         [Min(1)] [SerializeField] private int levelShuffle;
         public static bool LevelUnlockShuffle => CurrentLevel >= Instance.levelShuffle;
 
-        public static void Show(bool isActive)
+        public static void ActiveChild(bool isActive)
         {
             foreach (Transform child in Instance.transform)
             {
                 child.gameObject.SetActive(isActive);
             }
         }
-        [SerializeField ] private int score;
 
-        public static int UpdateScore()
-        {
-            return Instance.score += 100;
-        }
+      
+
+        
     }
 }

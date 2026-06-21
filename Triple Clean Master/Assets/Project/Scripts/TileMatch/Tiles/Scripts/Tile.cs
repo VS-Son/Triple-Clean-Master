@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Games.TileMatch.Level.Data;
-using Games.TileMatch.Manager;
 using Games.TileMatch.Tiles.Data;
 using Project.Extensions;
 using DG.Tweening;
@@ -12,6 +11,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using DG.Tweening;
+using Project.Scripts.TileMatch.Manager;
 using Unity.VisualScripting;
 using Sequence = DG.Tweening.Sequence;
 

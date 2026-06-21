@@ -514,6 +514,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &424053610 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5518833906671504182, guid: 6833e827c2b28044c8cb408a03c787cb, type: 3}
+  m_PrefabInstance: {fileID: 5518833907444791112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &426348779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2725,10 +2730,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2047831391}
+  - component: {fileID: 2047831395}
   - component: {fileID: 2047831394}
   - component: {fileID: 2047831393}
   - component: {fileID: 2047831392}
-  - component: {fileID: 2047831395}
   m_Layer: 0
   m_Name: 'Canvas Resource '
   m_TagString: Untagged
@@ -2832,10 +2837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e34ddb9cb7df514f9cb06a5d7bc2874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 999
-  undo: 0
-  magicWand: 0
-  shuffle: 0
+  coin: 200
+  undo: 2
+  magicWand: 1
+  shuffle: 1
 --- !u!1 &2078785944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2882,11 +2887,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7be6f7d4137a8346a05a42090d2e77e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
-  levelUndo: 2
-  levelMagicWand: 3
-  levelShuffle: 4
-  score: 0
+  board: {fileID: 424053610}
+  level: 2
+  levelUndo: 1
+  levelMagicWand: 1
+  levelShuffle: 1
 --- !u!198 &2086965454 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2867668752697868338, guid: 2c896c327455b0e4ea43a7fb3873635a, type: 3}
