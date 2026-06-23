@@ -2837,8 +2837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e34ddb9cb7df514f9cb06a5d7bc2874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 200
-  undo: 2
+  coin: 500
+  undo: 1
   magicWand: 1
   shuffle: 1
 --- !u!1 &2078785944
@@ -2888,7 +2888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 424053610}
-  level: 2
+  level: 1
   levelUndo: 1
   levelMagicWand: 1
   levelShuffle: 1

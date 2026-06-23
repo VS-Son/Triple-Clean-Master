@@ -9,9 +9,9 @@ using Project.Manager;
 using Project.Scripts.Effect;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Manager;
+using Project.Scripts.UI.Components.booster;
 using Project.Scripts.UI.Screen;
 using Project.Services;
-using UI.Components.booster;
 using UI.Screen;
 using UnityEngine;
 
@@ -56,6 +56,7 @@ namespace Project.Games.TileMatch.Board.Scripts
             }
         }
 
+       
         private bool CheckShowRevive()
         {
             return _countSlot >= 7 && !IsMatching;
@@ -143,6 +144,7 @@ namespace Project.Games.TileMatch.Board.Scripts
 
             _isClearing = false;
             IsMatching = false;
+            
         }
 
         IEnumerator ClearMatchedTiles(List<Tile> tileMatch)
@@ -188,6 +190,11 @@ namespace Project.Games.TileMatch.Board.Scripts
             if (!PlayScreen.IsClick && GameplayManager.LevelUnlockMagic)
             {
                 DOVirtual.DelayedCall(0.3f, () => PlayScreen.SetBoosterAlpha(TypeBooster.MagicWand, 1f));
+            }
+
+            if (HasTileInBoard() && _clearQueue.Count <= 0)
+            {
+                DOVirtual.DelayedCall(0.3f,(() => PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 1f) )) ;
             }
         }
 

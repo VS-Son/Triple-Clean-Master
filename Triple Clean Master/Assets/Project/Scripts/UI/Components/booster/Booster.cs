@@ -1,11 +1,9 @@
-using System;
-using Project.Manager;
+using Project.Scripts.Effect;
 using Project.Scripts.UI.Screen;
 using TMPro;
-using UI.Screen;
 using UnityEngine;
 
-namespace UI.Components.booster
+namespace Project.Scripts.UI.Components.booster
 {
     public enum TypeBooster
     {
@@ -16,12 +14,13 @@ namespace UI.Components.booster
     }
     public class Booster : MonoBehaviour
     {
-        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private GameObject iconLock;
         public GameObject redValue;
         public GameObject coin;
         public GameObject ads;
-        [SerializeField] private GameObject iconLock;
+        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TMP_Text boosterValue;
+        [SerializeField] private TMP_Text boosterCoin;
 
         public TypeBooster typeBooster;
 
@@ -39,11 +38,17 @@ namespace UI.Components.booster
             if (type == typeBooster)
             {
                 canvasGroup.alpha = alpha;
-                //redValue.SetActive(true);
-                iconLock.SetActive(false);
             }
         }
-
+        public void OnDisplayBooster(TypeBooster type, float alpha, int value)
+        {
+            if (type == typeBooster)
+            {
+                iconLock.SetActive(false);
+                canvasGroup.alpha = alpha;
+                redValue.SetActive(value >= 1);
+            }
+        }
         public bool IsDisplay(TypeBooster type)
         {
             if (type == typeBooster)
@@ -74,13 +79,49 @@ namespace UI.Components.booster
             }
         }
 
-        public void UpdateTextBooster(TypeBooster type, int amount)
+        public void UpdateTextBooster(TypeBooster type, int value, int spendCoin)
         {
             if (type == typeBooster)
             {
-                boosterValue.text = $"{amount}";
+                if (value > 0)
+                {
+                    boosterValue.text = $"{value}";
+                }
+                else
+                {
+                    boosterCoin.text = $"{spendCoin}";
+                }
+                
             }
           
+        }
+
+        public void DisplayValue(TypeBooster type)
+        {
+            if (type == typeBooster)
+            {
+                coin.SetActive(false);
+                redValue.SetActive(true);
+                ads.SetActive(false);
+            }
+        }
+        public void DisplayCoin(TypeBooster type)
+        {
+            if (type == typeBooster)
+            {
+                coin.SetActive(true);
+                redValue.SetActive(false);
+                ads.SetActive(false);
+            }
+        }
+        public void DisplayAds(int value)
+        {
+            if (value <= 0 )
+            {
+                coin.SetActive(false);
+                redValue.SetActive(false);
+                ads.SetActive(true);
+            }
         }
     }
 }

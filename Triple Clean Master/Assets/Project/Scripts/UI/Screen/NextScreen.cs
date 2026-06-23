@@ -31,7 +31,7 @@ namespace Project.Scripts.UI.Screen
        
         private void OnEnable()
         {
-            textNext.text = "Level " + (NextLevel);
+            textNext.text = "Level " + ( GameplayManager.CurrentLevel + 1);
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(false);
             btNext.transform.localPosition = Vector3.zero;
             if (countProgression <= 0)
@@ -123,7 +123,6 @@ namespace Project.Scripts.UI.Screen
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(true);
-            PlayScreen.UpdateUnlockBooster();
             StateUI.ChangeState(TypeScreen.PlayScreen);
             Close();
         }

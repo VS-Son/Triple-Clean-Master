@@ -33,6 +33,7 @@ namespace Project.Scripts.TileMatch.Manager
         private List<TileId> _distributeTiles;
         private readonly Dictionary<TileId, int> _countTileId = new Dictionary<TileId, int>();
         private Dictionary<TileId, Sprite> _spriteLookUp;
+        public static bool IsCompleteShuffle = false; 
 
         private readonly List<TileId> _tileId = new List<TileId>()
             { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
@@ -424,6 +425,7 @@ namespace Project.Scripts.TileMatch.Manager
 
         public void ShuffleGridTiles()
         {
+            IsCompleteShuffle = true;
             List<Tile> remainingTile = new();
             List<TileId> listId = new();
 
@@ -470,7 +472,7 @@ namespace Project.Scripts.TileMatch.Manager
             foreach (var tile in remainingTile)
             {
                 seq.Join(tile.transform.DOMove(originalPos[tile], 0.35f).SetEase(Ease.OutBack));
-                seq.Join(tile.transform.DOScale(Util.SetScale(), 0.35f));
+                seq.Join(tile.transform.DOScale(Util.SetScale(), 0.35f).OnComplete((() => DOVirtual.DelayedCall(0.3f,() =>IsCompleteShuffle = false))));
             }
         }
 

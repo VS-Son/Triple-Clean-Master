@@ -2,9 +2,9 @@ using System;
 using System.Security.Cryptography;
 using Project.Core.UI;
 using Project.Manager;
+using Project.Scripts.UI.Components.booster;
 using Project.Scripts.UI.Screen;
 using Project.Services;
-using UI.Components.booster;
 using UI.Screen;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace Project.Scripts.Effect
             set
             {
                 Instance.undo = value;
-                CheckEnoughBooster(ValueUndo, TypeBooster.Undo);
+                CheckEnoughBooster(ValueUndo, TypeBooster.Undo,100);
                 
                 
             }
@@ -42,7 +42,7 @@ namespace Project.Scripts.Effect
             set
             {
                 Instance.magicWand = value;
-                CheckEnoughBooster(ValueMagicWand, TypeBooster.MagicWand);
+                CheckEnoughBooster(ValueMagicWand, TypeBooster.MagicWand,200);
             }
 
         }
@@ -53,7 +53,7 @@ namespace Project.Scripts.Effect
             set
             {
                 Instance.shuffle = value;
-                CheckEnoughBooster(ValueShuffle, TypeBooster.Shuffle);
+                CheckEnoughBooster(ValueShuffle, TypeBooster.Shuffle, 300);
 
 
             }
@@ -65,7 +65,7 @@ namespace Project.Scripts.Effect
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateTextCoin(coin);
         }
 
-        private static int Coin
+        public static int Coin
         {
             get => Instance.coin;
             set
@@ -82,21 +82,21 @@ namespace Project.Scripts.Effect
            
             if(ValueUndo <= 0)
             {
-                if (HasEnoughCoin())
+                if (HasEnoughCoin(amount))
                 {
                     DisplayCoinBooster?.Invoke(TypeBooster.Undo);
                 }
             }
             if(ValueMagicWand <= 0)
             {
-                if (HasEnoughCoin())
+                if (HasEnoughCoin(amount))
                 {
                     DisplayCoinBooster?.Invoke(TypeBooster.MagicWand);
                 }
             }
             if(ValueShuffle <= 0)
             {
-                if (HasEnoughCoin())
+                if (HasEnoughCoin(amount))
                 {
                     DisplayCoinBooster?.Invoke(TypeBooster.Shuffle);
                 }
@@ -107,14 +107,11 @@ namespace Project.Scripts.Effect
         public static void SpendCoin(int amount)
         {
             Coin -= amount;
-            if (!HasEnoughCoin())
-            {
-                DisplayAdsBooster?.Invoke();
-            }
+            DisplayAdsBooster?.Invoke();
         }
         
 
-        private static void CheckEnoughBooster(int value, TypeBooster type)
+        private static void CheckEnoughBooster(int value, TypeBooster type, int amount)
         {
             if (value > 0)
             {
@@ -122,7 +119,7 @@ namespace Project.Scripts.Effect
             }
             else
             {
-                if (HasEnoughCoin())
+                if (HasEnoughCoin(amount))
                 {
                     DisplayCoinBooster?.Invoke(type);
                 }
@@ -132,9 +129,9 @@ namespace Project.Scripts.Effect
                 }
             }
         }
-        public static bool HasEnoughCoin()
+        public static bool HasEnoughCoin(int amount)
         {
-            return Coin >= 100;
+            return Coin >= amount;
         }
         public void SpendBooster(TypeBooster type, int amount)
         {

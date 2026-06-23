@@ -5,8 +5,8 @@ using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Manager;
+using Project.Scripts.UI.Components.booster;
 using Project.Services;
-using UI.Components.booster;
 using UI.Screen;
 using UnityEngine;
 using ResourceManager = Project.Scripts.Effect.ResourceManager;
@@ -20,18 +20,15 @@ namespace Project.Scripts.UI.Screen
         [SerializeField] private Booster shuffle;
         public static event Action<TypeBooster, float> AlphaBooster;
         public static bool IsClick = false;
-        private void Start()
-        {
-        }
-
+        
         private void OnEnable()
         {
             GameplayManager.ActiveChild(true);
             ResourceManager.DisplayValueBooster += DisplayValueBooster;
             ResourceManager.DisplayCoinBooster += DisplayCoinBooster;
             ResourceManager.DisplayAdsBooster += DisplayAdsBooster;
-
-
+            UpdateUnlockBooster();
+            UpdateTextBoosters();
         }
 
         private void OnDisable()
@@ -53,21 +50,26 @@ namespace Project.Scripts.UI.Screen
             UpdateUnlockBooster();
         }
 
-        public static void UpdateUnlockBooster()
+        private void UpdateUnlockBooster()
         {
             if (GameplayManager.LevelUnlockUndo)
             {
-                SetBoosterAlpha(TypeBooster.Undo,0.6f);
+                undo.OnDisplayBooster(TypeBooster.Undo, !BoardCollectTile.HasTileInBoard() ? 0.6f : 1f,
+                    ResourceManager.ValueUndo);
             }
+
             if (GameplayManager.LevelUnlockMagic)
             {
-                SetBoosterAlpha(TypeBooster.MagicWand,1);
+                magicWand.OnDisplayBooster(TypeBooster.MagicWand, 1f,ResourceManager.ValueUndo );
+                
             }
             if (GameplayManager.LevelUnlockShuffle)
             {
-                SetBoosterAlpha(TypeBooster.Shuffle, 1);
-            }
+                shuffle.OnDisplayBooster(TypeBooster.Shuffle, 1f,ResourceManager.ValueUndo);
+                
+            }       
         }
+      
         public static void SetBoosterAlpha(TypeBooster type, float alpha)
         {
             AlphaBooster?.Invoke(type, alpha);
@@ -77,18 +79,18 @@ namespace Project.Scripts.UI.Screen
         {
             if (GameplayManager.LevelUnlockUndo)
             {
-                if (BoardCollectTile.HasTileInBoard() && !BoardCollectTile.IsMatching)
+                if (undo.IsDisplay(TypeBooster.Undo))
                 {
                     BoardCollectTile.Instance.UndoTile(1);
                     if (ResourceManager.ValueUndo > 0)
                     {
                         ResourceManager.Instance.SpendBooster(TypeBooster.Undo, 1);
-                        undo.UpdateTextBooster(TypeBooster.Undo, ResourceManager.ValueUndo);
+                        undo.UpdateTextBooster(TypeBooster.Undo, ResourceManager.ValueUndo,100);
                        
                     }
                     else
                     {
-                        if (ResourceManager.HasEnoughCoin())
+                        if (ResourceManager.HasEnoughCoin(100))
                         {
                             ResourceManager.SpendCoin(100);
                         }
@@ -102,7 +104,6 @@ namespace Project.Scripts.UI.Screen
                 }
                 else
                 {
-                    AlphaBooster?.Invoke(TypeBooster.Undo, 0.6f);
                     ToastMessage.ShowMessage(MessageConstants.MessageNotUndo);
                 }
             }
@@ -126,14 +127,13 @@ namespace Project.Scripts.UI.Screen
                     if (ResourceManager.ValueMagicWand > 0)
                     {
                         ResourceManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
-                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand);
+                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand,200);
                     }
                     else
                     {
-                        if (ResourceManager.HasEnoughCoin())
+                        if (ResourceManager.HasEnoughCoin(200))
                         {
-                            ResourceManager.SpendCoin(100);
-
+                            ResourceManager.SpendCoin(200);
                         }
                         else
                         {
@@ -153,27 +153,27 @@ namespace Project.Scripts.UI.Screen
         {
             if (GameplayManager.LevelUnlockShuffle)
             {
-                TileManager.Instance.ShuffleGridTiles();
-                if (ResourceManager.ValueShuffle > 0)
+                if (!TileManager.IsCompleteShuffle && shuffle.IsDisplay(TypeBooster.Shuffle))
                 {
-                    ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
-                    shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle);
-                }
-                else
-                {
-                    if (ResourceManager.HasEnoughCoin())
+                    TileManager.Instance.ShuffleGridTiles();
+                    if (ResourceManager.ValueShuffle > 0)
                     {
-                        ResourceManager.SpendCoin(100);
-
+                        ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
+                        shuffle.UpdateTextBooster(TypeBooster.Shuffle, ResourceManager.ValueShuffle,300);
                     }
                     else
                     {
-                        Debug.Log("Display ads");
+                        if (ResourceManager.HasEnoughCoin(300))
+                        {
+                            ResourceManager.SpendCoin(300);
+
+                        }
+                        else
+                        {
+                            Debug.Log("Display ads");
+                        }
                     }
                 }
-               
-
-                
             }
             else
             {
@@ -183,89 +183,44 @@ namespace Project.Scripts.UI.Screen
 
         private void DisplayValueBooster(TypeBooster type)
         {
-            if (type == TypeBooster.Undo)
-            {
-                undo.coin.SetActive(false);
-                undo.redValue.SetActive(true);
-                undo.ads.SetActive(false);
-            }
-
-            if (type == TypeBooster.MagicWand)
-            {
-                magicWand.coin.SetActive(false);
-                magicWand.redValue.SetActive(true);
-                magicWand.ads.SetActive(false);
-            }
-
-            if (type == TypeBooster.Shuffle)
-            {
-                shuffle.coin.SetActive(false);
-                shuffle.redValue.SetActive(true);
-                shuffle.ads.SetActive(false);
-            }
-           
+            undo.DisplayValue(type);
+            magicWand.DisplayValue(type);
+            shuffle.DisplayValue(type);
         }
 
         private void DisplayCoinBooster(TypeBooster type)
         {
-            if (type == TypeBooster.Undo)
-            {
-                undo.coin.SetActive(true);
-                undo.redValue.SetActive(false);
-                undo.ads.SetActive(false);
-            }
-
-            if (type == TypeBooster.MagicWand)
-            {
-                magicWand.coin.SetActive(true);
-                magicWand.redValue.SetActive(false);
-                magicWand.ads.SetActive(false);
-            }
-
-            if (type == TypeBooster.Shuffle)
-            {
-                shuffle.coin.SetActive(true);
-                shuffle.redValue.SetActive(false);
-                shuffle.ads.SetActive(false);
-            }
-
-
-
-
+            undo.DisplayCoin(type);
+            magicWand.DisplayCoin(type);
+            shuffle.DisplayCoin(type);
         }
 
         private void DisplayAdsBooster( )
         {
-            if (ResourceManager.ValueUndo <= 0)
+            if (ResourceManager.Coin < 300)
             {
-                undo.coin.SetActive(false);
-                undo.redValue.SetActive(false);
-                undo.ads.SetActive(true);
+                shuffle.DisplayAds(ResourceManager.ValueShuffle);
             }
-
-            if (ResourceManager.ValueMagicWand <= 0)
+            if (ResourceManager.Coin < 200)
             {
-                magicWand.coin.SetActive(false);
-                magicWand.redValue.SetActive(false);
-                magicWand.ads.SetActive(true);
+                shuffle.DisplayAds(ResourceManager.ValueShuffle);
+                magicWand.DisplayAds(ResourceManager.ValueMagicWand);
             }
-
-            if (ResourceManager.ValueShuffle <= 0)
+            if (ResourceManager.Coin < 100)
             {
-                shuffle.coin.SetActive(false);
-                shuffle.redValue.SetActive(false);
-                shuffle.ads.SetActive(true);
+                undo.DisplayAds(ResourceManager.ValueUndo);
+                magicWand.DisplayAds(ResourceManager.ValueMagicWand);
+                shuffle.DisplayAds(ResourceManager.ValueShuffle);
             }
-
+           
             
-
         }
 
         public void UpdateTextBoosters()
         {
-            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.ValueUndo);
-            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand);
-            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle);
+            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.ValueUndo,100);
+            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand,200);
+            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle,300);
         }
         
     }

@@ -622,12 +622,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7485387b1a6c64a8de74ba851ee662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 1397160363279843331}
+  iconLock: {fileID: 7114316313796621457}
   redValue: {fileID: 8714330500620007618}
   coin: {fileID: 1368572982939368093}
   ads: {fileID: 1103722203950947522}
-  iconLock: {fileID: 7114316313796621457}
+  canvasGroup: {fileID: 1397160363279843331}
   boosterValue: {fileID: 6754978274086193527}
+  boosterCoin: {fileID: 4544652682919306311}
   typeBooster: 3
 --- !u!1 &6562064541617586578
 GameObject:
@@ -1009,7 +1010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1674149430691909315
 RectTransform:
   m_ObjectHideFlags: 0

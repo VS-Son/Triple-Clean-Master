@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeBooster: 0
+  boosters: {fileID: 375924271456866480}
   undo: {fileID: 9019677428225297416}
   magicWand: {fileID: 5669103388749826306}
   shuffle: {fileID: 6625436594407975532}

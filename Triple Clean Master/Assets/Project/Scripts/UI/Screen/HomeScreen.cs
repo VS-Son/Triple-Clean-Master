@@ -67,7 +67,6 @@ namespace UI.Screen
          UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
          TileManager.ZoomScaleTile();
          GameplayManager.ActiveChild(true);
-         PlayScreen.UpdateUnlockBooster();
          
       }
    }
