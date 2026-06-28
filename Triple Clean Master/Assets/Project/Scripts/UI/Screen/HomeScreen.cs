@@ -4,6 +4,7 @@ using DG.Tweening;
 using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Manager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace Project.Scripts.UI.Screen
       [SerializeField] private Transform btPlay;
       [SerializeField] private List<RectTransform> logoTiles;
       [SerializeField] private Image bannerExplorer;
+      [SerializeField] private TMP_Text textLevel;
 
       private void Start()
       {
@@ -24,6 +26,7 @@ namespace Project.Scripts.UI.Screen
          }
          btPlay.localScale = Vector3.zero;
          StartCoroutine(ScaleTilesSequentially());
+         UpdayeTextLevel();
       }
 
       IEnumerator ScaleTilesSequentially(int index = 0)
@@ -64,7 +67,11 @@ namespace Project.Scripts.UI.Screen
          TileManager.ZoomScaleTile();
          GameplayManager.SetBoardActive(true);
          GameplayManager.SetTileManagerActive(true);
-         
+      }
+
+      public void UpdayeTextLevel()
+      {
+         textLevel.text = $"Level {GameplayManager.CurrentLevel}";
       }
    }
 }

@@ -25,9 +25,8 @@ namespace Project.Scripts.TileMatch.Manager
         [SerializeField] private Tile prefab;
         [SerializeField] private ListDataSprite listDataSprites;
         [SerializeField] private ListThemeTileConfig listThemeTileConfig;
-
-        private int _lastScreenWidth;
-        private int _lastScreenHeight;
+        
+        
         private Dictionary<int, LevelData> _levelData;
         private readonly Dictionary<int, Transform> _layerParent = new();
         private readonly Dictionary<int, Tile[,]> _layerTile = new();
@@ -113,10 +112,7 @@ namespace Project.Scripts.TileMatch.Manager
         private void ApplyResponsiveBoardScale()
         {
             if (transform == null) return;
-
-            _lastScreenWidth = Screen.width;
-            _lastScreenHeight = Screen.height;
-
+            
             float scale = Util.GetScreenAspectScale();
 
             transform.localScale = Vector3.one * scale;

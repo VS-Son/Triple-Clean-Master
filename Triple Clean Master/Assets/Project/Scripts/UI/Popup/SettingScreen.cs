@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Project.Scripts.Config;
 using Project.Scripts.Manager;
@@ -14,6 +15,14 @@ namespace Project.Scripts.UI.Popup
         [SerializeField] private GameObject turnOnSfx;
         [SerializeField] private List<Image> imageTiles;
         [SerializeField] private ListThemeTileConfig listThemeTileConfig;
+       
+
+        private void Awake()
+        {
+            turnOnBgm.SetActive(!AudioManager.Instance.IsMuted(AudioType.BGM));
+            turnOnSfx.SetActive(!AudioManager.Instance.IsMuted(AudioType.Sfx));
+        }
+
         private ThemeTileData Data => listThemeTileConfig.listThemeTileData.Find(t => t.isSelected);
         private void OnEnable()
         {
@@ -39,6 +48,7 @@ namespace Project.Scripts.UI.Popup
         {
             AudioManager.Instance.ToggleMute(turnOn, AudioType.BGM);
             turnOnBgm.SetActive(!turnOn);
+            
         }
 
         public void TurnOnVolumeSfx(bool turnOn)

@@ -59,6 +59,7 @@ namespace Project.Scripts.UI.Screen
                     setting.SetActive(true);
                     textTitle.gameObject.SetActive(false);
                     UIManager.CloseUI<ShopScreen>(TypeScreen.Shop);
+                    UIManager.GetUI<HomeScreen>(TypeScreen.HomeScreen).UpdayeTextLevel();
                     break;
 
                 case ShopOpenSource.Gameplay:

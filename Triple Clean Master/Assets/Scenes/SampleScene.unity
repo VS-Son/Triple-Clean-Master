@@ -495,8 +495,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1585217923}
   sfxSource: {fileID: 1365829399}
-  bgmVolume: 0
-  sfxVolume: 0
+  bgmVolume: 0.587
+  sfxVolume: 0.575
 --- !u!4 &363185795
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1467,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 0.575
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2126,7 +2126,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 0.587
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2872,10 +2872,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e34ddb9cb7df514f9cb06a5d7bc2874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 500
-  undo: 1
-  magicWand: 1
-  shuffle: 1
+  coin: 100
+  undo: 2
+  magicWand: 2
+  shuffle: 2
 --- !u!1 &2078785944
 GameObject:
   m_ObjectHideFlags: 0

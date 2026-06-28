@@ -15,11 +15,14 @@ namespace Project.Scripts.Manager
         [SerializeField] private AudioSource sfxSource;
         [Range(0, 1f)] public float bgmVolume;
         [Range(0, 1f)] public float sfxVolume;
-        
+        private const string BgmMutedKey = "BgmMuted";
+        private const string SfxMutedKey = "SfxMuted";
         private readonly Dictionary<string, AudioClip> _audioClips = new();
 
         private void Awake()
         {
+            bgmSource.mute = PlayerPrefs.GetInt(BgmMutedKey, false ? 1 : 0) ==1 ;
+            sfxSource.mute = PlayerPrefs.GetInt(SfxMutedKey, false ? 1 : 0) == 1;
             LoadAllSfx();
         }
 
@@ -81,11 +84,26 @@ namespace Project.Scripts.Manager
             {
                 case AudioType.BGM:
                     bgmSource.mute = isMute;
+                    PlayerPrefs.SetInt(BgmMutedKey, isMute ? 1: 0);
+                    PlayerPrefs.Save();
                     break;
                 case AudioType.Sfx:
                     sfxSource.mute = isMute;
+                    PlayerPrefs.SetInt(SfxMutedKey, isMute ?1 :0);
+                    PlayerPrefs.Save();
+
                     break;
             }
         }
+        public bool IsMuted(AudioType audioType)
+        {
+            return audioType switch
+            {
+                AudioType.BGM => bgmSource.mute,
+                AudioType.Sfx => sfxSource.mute,
+                _ => false
+            };
+        }
+        
     }
 }

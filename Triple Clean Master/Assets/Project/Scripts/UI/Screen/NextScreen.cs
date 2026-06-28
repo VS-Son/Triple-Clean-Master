@@ -20,11 +20,15 @@ namespace Project.Scripts.UI.Screen
         [SerializeField] private Image iconGift;
         [SerializeField] private int amountReward;
         [SerializeField] private int countProgression;
+        private const string ProgressionKey = "CountProgression";
         public static event Action<int> GetCoin;
-        private static int NextLevel => GameplayManager.CurrentLevel + 1; 
+        private static int NextLevel => GameplayManager.CurrentLevel + 1;
 
+        private void Awake()
+        {
+            LoadCountProgression();
+        }
 
-       
         private void OnEnable()
         {
             textNext.text = "Level " + ( GameplayManager.CurrentLevel + 1);
@@ -55,6 +59,7 @@ namespace Project.Scripts.UI.Screen
         {
             progressionFill.value = countProgression/4f;
             countProgression = Mathf.Min(countProgression + 1, 4);
+            SaveCountProgression();
             textProgression.text = $"Provence {countProgression}/4";
             var amountValue = progressionFill.maxValue / 4f;
             var targetValue = Mathf.Min(progressionFill.value + amountValue, progressionFill.maxValue);
@@ -121,6 +126,17 @@ namespace Project.Scripts.UI.Screen
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(true);
             StateUI.ChangeState(TypeScreen.PlayScreen);
             Close();
+        }
+
+        private void LoadCountProgression()
+        {
+            countProgression = PlayerPrefs.GetInt(ProgressionKey, countProgression);
+        }
+
+        private void SaveCountProgression()
+        {
+            PlayerPrefs.SetInt(ProgressionKey, countProgression);
+            PlayerPrefs.Save();
         }
     }
 }
