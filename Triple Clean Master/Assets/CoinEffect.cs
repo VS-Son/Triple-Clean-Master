@@ -2,12 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Project.Manager;
 using Project.Scripts.Effect;
+using Project.Scripts.Manager;
 using Project.Scripts.UI.Screen;
-using Project.Services;
 using TMPro;
-using UI.Screen;
 using UnityEngine;
 
 public class CoinEffect : MonoBehaviour

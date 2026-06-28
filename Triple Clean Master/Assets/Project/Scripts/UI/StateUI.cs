@@ -1,13 +1,9 @@
-using System;
-using Project.Manager;
+using Project.Scripts.Manager;
 using Project.Scripts.UI.Popup;
 using Project.Scripts.UI.Screen;
-using Project.Services;
-using UI.Screen;
-using UI.Screen.Shop;
 using UnityEngine;
 
-namespace Project.Core.UI
+namespace Project.Scripts.UI
 {
     public class StateUI : MonoBehaviour
     {

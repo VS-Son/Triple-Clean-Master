@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UI.Screen.Shop
+namespace Project.Scripts.IAP_shop.ShopData
 {
     public enum ShopItemType
     {

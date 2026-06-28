@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Editor;
-using Games.TileMatch.Level.Data;
-using Project.Constants;
+using Project.Scripts.Constants;
+using Project.Scripts.TileMatch.Level.Data;
 using UnityEditor;
 using UnityEngine;
 

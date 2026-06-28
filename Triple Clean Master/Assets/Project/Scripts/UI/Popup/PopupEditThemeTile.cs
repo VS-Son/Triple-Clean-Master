@@ -1,6 +1,6 @@
 using System;
-using Project.Scripts.Scroll;
-using UI.Screen;
+using Project.Scripts.Scroller;
+using Project.Scripts.UI.Screen;
 using UnityEngine;
 
 namespace Project.Scripts.UI.Popup

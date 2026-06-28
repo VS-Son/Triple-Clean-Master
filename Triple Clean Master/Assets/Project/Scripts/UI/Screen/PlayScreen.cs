@@ -1,14 +1,10 @@
 using System;
-using Project.Constants;
-using Project.Core.Notification;
-using Project.Games.TileMatch.Board.Scripts;
-using Project.Manager;
-using Project.Scripts.Effect;
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
+using Project.Scripts.Message;
+using Project.Scripts.TileMatch.Board;
 using Project.Scripts.TileMatch.Manager;
 using Project.Scripts.UI.Components.booster;
-using Project.Services;
-using UI.Screen;
 using UnityEngine;
 
 namespace Project.Scripts.UI.Screen
@@ -23,20 +19,20 @@ namespace Project.Scripts.UI.Screen
         
         private void OnEnable()
         {
-            GameplayManager.ActiveBoard(true);
-            PlayerInventoryManager.DisplayValueBooster += DisplayValueBooster;
-            PlayerInventoryManager.DisplayCoinBooster += DisplayCoinBooster;
-            PlayerInventoryManager.DisplayAdsBooster += DisplayAdsBooster;
+            GameplayManager.SetBoardActive(true);
+            PlayerInventoryManager.OnShowBoosterCountRequested += OnShowBoosterCountRequested;
+            PlayerInventoryManager.OnShowCoinPurchaseRequested += OnShowCoinPurchaseRequested;
+            PlayerInventoryManager.OnShowAdUnlockRequested += OnShowAdUnlockRequested;
             UpdateUnlockBooster();
             UpdateTextBoosters();
         }
 
         private void OnDisable()
         {
-            GameplayManager.ActiveBoard(false);
-            PlayerInventoryManager.DisplayValueBooster -= DisplayValueBooster;
-            PlayerInventoryManager.DisplayCoinBooster -= DisplayCoinBooster;
-            PlayerInventoryManager.DisplayAdsBooster -= DisplayAdsBooster;
+            GameplayManager.SetBoardActive(false);
+            PlayerInventoryManager.OnShowBoosterCountRequested -= OnShowBoosterCountRequested;
+            PlayerInventoryManager.OnShowCoinPurchaseRequested -= OnShowCoinPurchaseRequested;
+            PlayerInventoryManager.OnShowAdUnlockRequested -= OnShowAdUnlockRequested;
 
         }
 
@@ -52,20 +48,20 @@ namespace Project.Scripts.UI.Screen
 
         private void UpdateUnlockBooster()
         {
-            if (GameplayManager.LevelUnlockUndo)
+            if (GameplayManager.IsUndoUnlocked)
             {
                 undo.OnDisplayBooster(TypeBooster.Undo, !BoardCollectTile.HasTileInBoard() ? 0.6f : 1f,
-                    PlayerInventoryManager.ValueUndo);
+                    PlayerInventoryManager.UndoCount);
             }
 
-            if (GameplayManager.LevelUnlockMagic)
+            if (GameplayManager.IsMagicWandUnlocked)
             {
-                magicWand.OnDisplayBooster(TypeBooster.MagicWand, 1f,PlayerInventoryManager.ValueUndo );
+                magicWand.OnDisplayBooster(TypeBooster.MagicWand, 1f,PlayerInventoryManager.UndoCount );
                 
             }
-            if (GameplayManager.LevelUnlockShuffle)
+            if (GameplayManager.IsShuffleUnlocked)
             {
-                shuffle.OnDisplayBooster(TypeBooster.Shuffle, 1f,PlayerInventoryManager.ValueUndo);
+                shuffle.OnDisplayBooster(TypeBooster.Shuffle, 1f,PlayerInventoryManager.UndoCount);
                 
             }       
         }
@@ -77,15 +73,15 @@ namespace Project.Scripts.UI.Screen
 
         public void Undo()
         {
-            if (GameplayManager.LevelUnlockUndo)
+            if (GameplayManager.IsUndoUnlocked)
             {
                 if (undo.IsDisplay(TypeBooster.Undo))
                 {
                     BoardCollectTile.Instance.UndoTile(1);
-                    if (PlayerInventoryManager.ValueUndo > 0)
+                    if (PlayerInventoryManager.UndoCount > 0)
                     {
-                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.Undo, 1);
-                        undo.UpdateTextBooster(TypeBooster.Undo, PlayerInventoryManager.ValueUndo,100);
+                        PlayerInventoryManager.Instance.ConsumeBooster(TypeBooster.Undo, 1);
+                        undo.UpdateTextBooster(TypeBooster.Undo, PlayerInventoryManager.UndoCount,100);
                        
                     }
                     else
@@ -118,16 +114,16 @@ namespace Project.Scripts.UI.Screen
         public void MagicWand()
         {
             
-            if (GameplayManager.LevelUnlockMagic )
+            if (GameplayManager.IsMagicWandUnlocked )
             {
                 IsClick = true;
                 if (!BoardCollectTile.IsMatching && magicWand.IsDisplay(TypeBooster.MagicWand))
                 {
                     TileManager.Instance.CollectMatchThreeTiles();
-                    if (PlayerInventoryManager.ValueMagicWand > 0)
+                    if (PlayerInventoryManager.MagicWandCount > 0)
                     {
-                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
-                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.ValueMagicWand,200);
+                        PlayerInventoryManager.Instance.ConsumeBooster(TypeBooster.MagicWand, 1);
+                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.MagicWandCount,200);
                     }
                     else
                     {
@@ -151,15 +147,15 @@ namespace Project.Scripts.UI.Screen
 
         public void OnShuffle()
         {
-            if (GameplayManager.LevelUnlockShuffle)
+            if (GameplayManager.IsShuffleUnlocked)
             {
                 if (!TileManager.IsCompleteShuffle && shuffle.IsDisplay(TypeBooster.Shuffle))
                 {
                     TileManager.Instance.ShuffleGridTiles();
-                    if (PlayerInventoryManager.ValueShuffle > 0)
+                    if (PlayerInventoryManager.ShuffleCount > 0)
                     {
-                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
-                        shuffle.UpdateTextBooster(TypeBooster.Shuffle, PlayerInventoryManager.ValueShuffle,300);
+                        PlayerInventoryManager.Instance.ConsumeBooster(TypeBooster.Shuffle, 1);
+                        shuffle.UpdateTextBooster(TypeBooster.Shuffle, PlayerInventoryManager.ShuffleCount,300);
                     }
                     else
                     {
@@ -181,36 +177,36 @@ namespace Project.Scripts.UI.Screen
             }
         }
 
-        private void DisplayValueBooster(TypeBooster type)
+        private void OnShowBoosterCountRequested(TypeBooster type)
         {
             undo.DisplayValue(type);
             magicWand.DisplayValue(type);
             shuffle.DisplayValue(type);
         }
 
-        private void DisplayCoinBooster(TypeBooster type)
+        private void OnShowCoinPurchaseRequested(TypeBooster type)
         {
             undo.DisplayCoin(type);
             magicWand.DisplayCoin(type);
             shuffle.DisplayCoin(type);
         }
 
-        private void DisplayAdsBooster( )
+        private void OnShowAdUnlockRequested( )
         {
             if (PlayerInventoryManager.Coin < 300)
             {
-                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
+                shuffle.DisplayAds(PlayerInventoryManager.ShuffleCount);
             }
             if (PlayerInventoryManager.Coin < 200)
             {
-                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
-                magicWand.DisplayAds(PlayerInventoryManager.ValueMagicWand);
+                shuffle.DisplayAds(PlayerInventoryManager.ShuffleCount);
+                magicWand.DisplayAds(PlayerInventoryManager.MagicWandCount);
             }
             if (PlayerInventoryManager.Coin < 100)
             {
-                undo.DisplayAds(PlayerInventoryManager.ValueUndo);
-                magicWand.DisplayAds(PlayerInventoryManager.ValueMagicWand);
-                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
+                undo.DisplayAds(PlayerInventoryManager.UndoCount);
+                magicWand.DisplayAds(PlayerInventoryManager.MagicWandCount);
+                shuffle.DisplayAds(PlayerInventoryManager.ShuffleCount);
             }
            
             
@@ -218,9 +214,9 @@ namespace Project.Scripts.UI.Screen
 
         public void UpdateTextBoosters()
         {
-            undo.UpdateTextBooster(TypeBooster.Undo,PlayerInventoryManager.ValueUndo,100);
-            magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.ValueMagicWand,200);
-            shuffle.UpdateTextBooster(TypeBooster.Shuffle,PlayerInventoryManager.ValueShuffle,300);
+            undo.UpdateTextBooster(TypeBooster.Undo,PlayerInventoryManager.UndoCount,100);
+            magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.MagicWandCount,200);
+            shuffle.UpdateTextBooster(TypeBooster.Shuffle,PlayerInventoryManager.ShuffleCount,300);
         }
         
     }

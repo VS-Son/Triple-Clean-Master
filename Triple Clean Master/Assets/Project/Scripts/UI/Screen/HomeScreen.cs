@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Project.Constants;
-using Project.Core.UI;
-using Project.Manager;
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Manager;
-using Project.Scripts.UI.Screen;
-using Project.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Screen
+namespace Project.Scripts.UI.Screen
 {
    public class HomeScreen : UICanvas
    {
@@ -66,8 +62,8 @@ namespace UI.Screen
          UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
          UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
          TileManager.ZoomScaleTile();
-         GameplayManager.ActiveBoard(true);
-         GameplayManager.ActiveTileManager(true);
+         GameplayManager.SetBoardActive(true);
+         GameplayManager.SetTileManagerActive(true);
          
       }
    }

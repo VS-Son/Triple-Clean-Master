@@ -1,9 +1,9 @@
-using UnityEngine;
 using DG.Tweening;
-using Project.Manager;
+using Project.Scripts.Manager;
 using TMPro;
+using UnityEngine;
 
-namespace Project.Core.Notification
+namespace Project.Scripts.Message
 {
     public class ToastMessage : Singleton<ToastMessage>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EnhancedUI.EnhancedScroller;
-using UI.Screen.Shop;
+using Project.Scripts.IAP_shop.ShopData;
 using UnityEngine;
 
 namespace Project.Scriptable

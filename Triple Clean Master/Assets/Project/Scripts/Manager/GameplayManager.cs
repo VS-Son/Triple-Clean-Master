@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Games.TileMatch.Tiles.Scripts;
-using Project.Games.TileMatch.Board.Scripts;
-using Project.Manager;
+using Project.Scripts.TileMatch.Tiles;
 using UnityEngine;
 
 namespace Project.Scripts.Manager
@@ -24,15 +22,15 @@ namespace Project.Scripts.Manager
         }
         [Header("Unlock Booster")]
         [Min(1)] [SerializeField] private int levelUndo;
-        public static bool LevelUnlockUndo => CurrentLevel >= Instance.levelUndo;
+        public static bool IsUndoUnlocked => CurrentLevel >= Instance.levelUndo;
 
         [Min(1)] [SerializeField] private int levelMagicWand;
-        public static bool LevelUnlockMagic => CurrentLevel >= Instance.levelMagicWand;
+        public static bool IsMagicWandUnlocked => CurrentLevel >= Instance.levelMagicWand;
         
         [Min(1)] [SerializeField] private int levelShuffle;
-        public static bool LevelUnlockShuffle => CurrentLevel >= Instance.levelShuffle;
+        public static bool IsShuffleUnlocked => CurrentLevel >= Instance.levelShuffle;
 
-        public static void ActiveBoard(bool isActive)
+        public static void SetBoardActive(bool isActive)
         {
             if (Instance.board != null)
             {
@@ -40,15 +38,12 @@ namespace Project.Scripts.Manager
 
             }
         }
-        public static void ActiveTileManager(bool isActive)
+
+        public static void SetTileManagerActive(bool isActive)
         {
             Instance.tileManager.SetActive(isActive);
         }
-        
-        
 
-      
 
-        
     }
 }

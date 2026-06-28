@@ -1,14 +1,10 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using Project.Core.UI;
-using Project.Games.TileMatch.Board.Scripts;
-using Project.Manager;
 using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Board;
 using Project.Scripts.TileMatch.Manager;
-using Project.Services;
 using TMPro;
-using UI.Screen;
 using UnityEngine;
 using UnityEngine.UI;
 

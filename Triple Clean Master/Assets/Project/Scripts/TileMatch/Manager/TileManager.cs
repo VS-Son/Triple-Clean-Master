@@ -1,20 +1,17 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Games.TileMatch.ConfigData;
-using Games.TileMatch.Level.Data;
-using Games.TileMatch.Level.Scripts;
-using Games.TileMatch.Tiles.Data;
-using Games.TileMatch.Tiles.Scripts;
-using Project.Core.UI;
-using Project.Extensions;
-using Project.Games.TileMatch.Board.Scripts;
-using Project.Manager;
+using Project.Scripts.Config;
+using Project.Scripts.Extensions;
+using Project.Scripts.Json;
 using Project.Scripts.Manager;
-using Project.Scripts.Scroll;
-using Project.Scripts.TileMatch.Tiles.Theme;
-using Project.Services;
+using Project.Scripts.Scroller;
+using Project.Scripts.TileMatch.Board;
+using Project.Scripts.TileMatch.ConfigData;
+using Project.Scripts.TileMatch.Level.Data;
+using Project.Scripts.TileMatch.Tiles;
+using Project.Scripts.TileMatch.Tiles.Data;
+using Project.Scripts.UI;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
@@ -108,7 +105,7 @@ namespace Project.Scripts.TileMatch.Manager
             InitCoverageCount();
             if (StateUI.IsState(TypeScreen.HomeScreen))
             {
-                GameplayManager.ActiveTileManager(false);
+                GameplayManager.SetTileManagerActive(false);
             }
 
         }

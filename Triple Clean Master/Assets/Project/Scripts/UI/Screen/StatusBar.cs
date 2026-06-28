@@ -1,17 +1,9 @@
-using System;
-using Project.Core.UI;
-using Project.Manager;
-using Project.Scripts.Effect;
 using Project.Scripts.Manager;
-using Project.Scripts.UI.Screen;
-using Project.Services;
 using TMPro;
-using UI.Screen.Shop;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
-namespace UI.Screen
+namespace Project.Scripts.UI.Screen
 {
     public enum ShopOpenSource
     {
@@ -51,8 +43,8 @@ namespace UI.Screen
             {
                 StateUI.ChangeState(TypeScreen.HomeScreen);
                 AudioManager.Instance.StopBGM();
-                GameplayManager.ActiveBoard(false);
-                GameplayManager.ActiveTileManager(false);
+                GameplayManager.SetBoardActive(false);
+                GameplayManager.SetTileManagerActive(false);
                 back.SetActive(false);
                 textTitle.gameObject.SetActive(false);
                 return;
@@ -62,7 +54,7 @@ namespace UI.Screen
                 case ShopOpenSource.HomeScreen:
                     StateUI.ChangeState(TypeScreen.HomeScreen);
                     AudioManager.Instance.StopBGM();
-                    GameplayManager.ActiveBoard(false);
+                    GameplayManager.SetBoardActive(false);
                     back.SetActive(false);
                     setting.SetActive(true);
                     textTitle.gameObject.SetActive(false);
@@ -86,9 +78,9 @@ namespace UI.Screen
             back.SetActive(true);
             textTitle.gameObject.SetActive(true);
             textTitle.text = "Store";
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(PlayerInventoryManager.ValueUndo);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(PlayerInventoryManager.ValueMagicWand);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(PlayerInventoryManager.ValueShuffle);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(PlayerInventoryManager.UndoCount);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(PlayerInventoryManager.MagicWandCount);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(PlayerInventoryManager.ShuffleCount);
 
             _source = source;
             

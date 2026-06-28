@@ -1,12 +1,13 @@
 using System;
 using EnhancedUI.EnhancedScroller;
-using Project.Scripts.Effect;
+using Project.Scripts.IAP_shop.ShopData;
+using Project.Scripts.Manager;
 using Project.Scripts.UI.Screen;
-using Project.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-namespace UI.Screen.Shop
+
+namespace Project.Scripts.IAP_shop.ShopCellView.PackCellView
 {
     public class PackageCellView : EnhancedScrollerCellView, IShopCellView
     {
@@ -40,7 +41,7 @@ namespace UI.Screen.Shop
                 if (!isPurchased)
                 {
                     isPurchased = true;
-                    PlayerInventoryManager.AddBoosters(packageData.undo, packageData.magicWand, packageData.shuffle);
+                    PlayerInventoryManager.AddBoosterCounts(packageData.undo, packageData.magicWand, packageData.shuffle);
                     PlayerInventoryManager.AddCoin(packageData.coin);
                     UIManager.GetUI<PlayScreen>(TypeScreen.PlayScreen).UpdateTextBoosters();
                     packageData.isPurchase = isPurchased;

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Games.TileMatch.Tiles.Data;
-namespace Games.TileMatch.Level.Data
+
+namespace Project.Scripts.TileMatch.Level.Data
 {
     [Serializable]
     public class LevelRoot

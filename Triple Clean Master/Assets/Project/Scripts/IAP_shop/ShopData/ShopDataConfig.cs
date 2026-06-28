@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI.Screen.Shop
+namespace Project.Scripts.IAP_shop.ShopData
 {
     [Serializable]
     public class PackageData: ShopItemDataBase

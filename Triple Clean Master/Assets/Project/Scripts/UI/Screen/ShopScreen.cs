@@ -1,7 +1,6 @@
 using System;
 using Project.Scripts.Effect;
 using TMPro;
-using UI.Screen;
 using UnityEngine;
 
 namespace Project.Scripts.UI.Screen

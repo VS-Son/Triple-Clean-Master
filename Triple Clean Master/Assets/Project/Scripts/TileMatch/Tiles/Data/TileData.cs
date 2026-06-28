@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Games.TileMatch.Tiles.Data
+namespace Project.Scripts.TileMatch.Tiles.Data
 {
     public enum TileId {None,Id1, Id2, Id3, Id4, Id5,Id6,Id7,Id8,Id9,Id10 }
     public class TileData : MonoBehaviour

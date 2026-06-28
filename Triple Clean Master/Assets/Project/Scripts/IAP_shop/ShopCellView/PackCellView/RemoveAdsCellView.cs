@@ -1,10 +1,11 @@
 using System;
 using EnhancedUI.EnhancedScroller;
-using Project.Scripts.Effect;
-using UnityEngine.UI;
+using Project.Scripts.IAP_shop.ShopData;
+using Project.Scripts.Manager;
 using TMPro;
+using UnityEngine.UI;
 
-namespace UI.Screen.Shop
+namespace Project.Scripts.IAP_shop.ShopCellView.PackCellView
 {
     public class RemoveAdsCellView : EnhancedScrollerCellView,IShopCellView
     {

@@ -1,6 +1,7 @@
 using System;
+using Project.Scripts.IAP_shop.ShopData;
 
-namespace UI.Screen.Shop
+namespace Project.Scripts.IAP_shop.ShopCellView
 {
     public interface IShopCellView
     {

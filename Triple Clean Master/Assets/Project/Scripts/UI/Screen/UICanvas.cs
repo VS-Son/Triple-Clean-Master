@@ -1,7 +1,7 @@
-using Project.Services;
+using Project.Scripts.Manager;
 using UnityEngine;
 
-namespace UI.Screen
+namespace Project.Scripts.UI.Screen
 {
     public abstract class UICanvas : MonoBehaviour
     {

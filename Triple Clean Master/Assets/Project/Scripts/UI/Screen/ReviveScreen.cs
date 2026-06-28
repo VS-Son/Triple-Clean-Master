@@ -1,13 +1,11 @@
-using System;
-using UnityEngine;
 using DG.Tweening;
-using Project.Games.TileMatch.Board.Scripts;
-using Project.Manager;
 using Project.Scripts.Manager;
+using Project.Scripts.TileMatch.Board;
 using Project.Scripts.TileMatch.Manager;
 using TMPro;
+using UnityEngine;
 
-namespace UI.Screen
+namespace Project.Scripts.UI.Screen
 {
     public class ReviveScreen : UICanvas
     {

@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Project.Manager;
 using UnityEngine;
 using DG.Tweening;
-using Project.Services;
-using UI.Screen;
+using Project.Scripts.Manager;
 
 namespace Project.Scripts.Effect
 {
@@ -21,16 +19,7 @@ namespace Project.Scripts.Effect
         public EffectTypes effectTypes;
         public int direction;
         public float speed;
-        void OnEnable()
-        {
-            
-        }
-
-        public void OnDisable()
-        {
-            
-        }
-
+        
         public static IEnumerator PlayEffectAndWait(List<ParticleSystem> effects, int index, Action onComplete = null)
         {
             if (effects == null) yield break;;

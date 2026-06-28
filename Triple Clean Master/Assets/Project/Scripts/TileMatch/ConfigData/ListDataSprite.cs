@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Games.TileMatch.Tiles.Data;
+using Project.Scripts.TileMatch.Tiles.Data;
 using UnityEngine;
 
-namespace Games.TileMatch.ConfigData
+namespace Project.Scripts.TileMatch.ConfigData
 {
     public enum TypeTileTheme
     {
