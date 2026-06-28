@@ -3,13 +3,13 @@ using Project.Constants;
 using Project.Core.Notification;
 using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
+using Project.Scripts.Effect;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Manager;
 using Project.Scripts.UI.Components.booster;
 using Project.Services;
 using UI.Screen;
 using UnityEngine;
-using ResourceManager = Project.Scripts.Effect.ResourceManager;
 
 namespace Project.Scripts.UI.Screen
 {
@@ -23,20 +23,20 @@ namespace Project.Scripts.UI.Screen
         
         private void OnEnable()
         {
-            GameplayManager.ActiveChild(true);
-            ResourceManager.DisplayValueBooster += DisplayValueBooster;
-            ResourceManager.DisplayCoinBooster += DisplayCoinBooster;
-            ResourceManager.DisplayAdsBooster += DisplayAdsBooster;
+            GameplayManager.ActiveBoard(true);
+            PlayerInventoryManager.DisplayValueBooster += DisplayValueBooster;
+            PlayerInventoryManager.DisplayCoinBooster += DisplayCoinBooster;
+            PlayerInventoryManager.DisplayAdsBooster += DisplayAdsBooster;
             UpdateUnlockBooster();
             UpdateTextBoosters();
         }
 
         private void OnDisable()
         {
-            GameplayManager.ActiveChild(false);
-            ResourceManager.DisplayValueBooster -= DisplayValueBooster;
-            ResourceManager.DisplayCoinBooster -= DisplayCoinBooster;
-            ResourceManager.DisplayAdsBooster -= DisplayAdsBooster;
+            GameplayManager.ActiveBoard(false);
+            PlayerInventoryManager.DisplayValueBooster -= DisplayValueBooster;
+            PlayerInventoryManager.DisplayCoinBooster -= DisplayCoinBooster;
+            PlayerInventoryManager.DisplayAdsBooster -= DisplayAdsBooster;
 
         }
 
@@ -45,7 +45,7 @@ namespace Project.Scripts.UI.Screen
         {
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
-            TileManager.Instance.OnInit();
+            //TileManager.Instance.OnInit();
             UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
             UpdateUnlockBooster();
         }
@@ -55,17 +55,17 @@ namespace Project.Scripts.UI.Screen
             if (GameplayManager.LevelUnlockUndo)
             {
                 undo.OnDisplayBooster(TypeBooster.Undo, !BoardCollectTile.HasTileInBoard() ? 0.6f : 1f,
-                    ResourceManager.ValueUndo);
+                    PlayerInventoryManager.ValueUndo);
             }
 
             if (GameplayManager.LevelUnlockMagic)
             {
-                magicWand.OnDisplayBooster(TypeBooster.MagicWand, 1f,ResourceManager.ValueUndo );
+                magicWand.OnDisplayBooster(TypeBooster.MagicWand, 1f,PlayerInventoryManager.ValueUndo );
                 
             }
             if (GameplayManager.LevelUnlockShuffle)
             {
-                shuffle.OnDisplayBooster(TypeBooster.Shuffle, 1f,ResourceManager.ValueUndo);
+                shuffle.OnDisplayBooster(TypeBooster.Shuffle, 1f,PlayerInventoryManager.ValueUndo);
                 
             }       
         }
@@ -82,17 +82,17 @@ namespace Project.Scripts.UI.Screen
                 if (undo.IsDisplay(TypeBooster.Undo))
                 {
                     BoardCollectTile.Instance.UndoTile(1);
-                    if (ResourceManager.ValueUndo > 0)
+                    if (PlayerInventoryManager.ValueUndo > 0)
                     {
-                        ResourceManager.Instance.SpendBooster(TypeBooster.Undo, 1);
-                        undo.UpdateTextBooster(TypeBooster.Undo, ResourceManager.ValueUndo,100);
+                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.Undo, 1);
+                        undo.UpdateTextBooster(TypeBooster.Undo, PlayerInventoryManager.ValueUndo,100);
                        
                     }
                     else
                     {
-                        if (ResourceManager.HasEnoughCoin(100))
+                        if (PlayerInventoryManager.HasEnoughCoin(100))
                         {
-                            ResourceManager.SpendCoin(100);
+                            PlayerInventoryManager.SpendCoin(100);
                         }
                         else
                         {
@@ -124,16 +124,16 @@ namespace Project.Scripts.UI.Screen
                 if (!BoardCollectTile.IsMatching && magicWand.IsDisplay(TypeBooster.MagicWand))
                 {
                     TileManager.Instance.CollectMatchThreeTiles();
-                    if (ResourceManager.ValueMagicWand > 0)
+                    if (PlayerInventoryManager.ValueMagicWand > 0)
                     {
-                        ResourceManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
-                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand,200);
+                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.MagicWand, 1);
+                        magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.ValueMagicWand,200);
                     }
                     else
                     {
-                        if (ResourceManager.HasEnoughCoin(200))
+                        if (PlayerInventoryManager.HasEnoughCoin(200))
                         {
-                            ResourceManager.SpendCoin(200);
+                            PlayerInventoryManager.SpendCoin(200);
                         }
                         else
                         {
@@ -156,16 +156,16 @@ namespace Project.Scripts.UI.Screen
                 if (!TileManager.IsCompleteShuffle && shuffle.IsDisplay(TypeBooster.Shuffle))
                 {
                     TileManager.Instance.ShuffleGridTiles();
-                    if (ResourceManager.ValueShuffle > 0)
+                    if (PlayerInventoryManager.ValueShuffle > 0)
                     {
-                        ResourceManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
-                        shuffle.UpdateTextBooster(TypeBooster.Shuffle, ResourceManager.ValueShuffle,300);
+                        PlayerInventoryManager.Instance.SpendBooster(TypeBooster.Shuffle, 1);
+                        shuffle.UpdateTextBooster(TypeBooster.Shuffle, PlayerInventoryManager.ValueShuffle,300);
                     }
                     else
                     {
-                        if (ResourceManager.HasEnoughCoin(300))
+                        if (PlayerInventoryManager.HasEnoughCoin(300))
                         {
-                            ResourceManager.SpendCoin(300);
+                            PlayerInventoryManager.SpendCoin(300);
 
                         }
                         else
@@ -197,20 +197,20 @@ namespace Project.Scripts.UI.Screen
 
         private void DisplayAdsBooster( )
         {
-            if (ResourceManager.Coin < 300)
+            if (PlayerInventoryManager.Coin < 300)
             {
-                shuffle.DisplayAds(ResourceManager.ValueShuffle);
+                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
             }
-            if (ResourceManager.Coin < 200)
+            if (PlayerInventoryManager.Coin < 200)
             {
-                shuffle.DisplayAds(ResourceManager.ValueShuffle);
-                magicWand.DisplayAds(ResourceManager.ValueMagicWand);
+                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
+                magicWand.DisplayAds(PlayerInventoryManager.ValueMagicWand);
             }
-            if (ResourceManager.Coin < 100)
+            if (PlayerInventoryManager.Coin < 100)
             {
-                undo.DisplayAds(ResourceManager.ValueUndo);
-                magicWand.DisplayAds(ResourceManager.ValueMagicWand);
-                shuffle.DisplayAds(ResourceManager.ValueShuffle);
+                undo.DisplayAds(PlayerInventoryManager.ValueUndo);
+                magicWand.DisplayAds(PlayerInventoryManager.ValueMagicWand);
+                shuffle.DisplayAds(PlayerInventoryManager.ValueShuffle);
             }
            
             
@@ -218,9 +218,9 @@ namespace Project.Scripts.UI.Screen
 
         public void UpdateTextBoosters()
         {
-            undo.UpdateTextBooster(TypeBooster.Undo,ResourceManager.ValueUndo,100);
-            magicWand.UpdateTextBooster(TypeBooster.MagicWand,ResourceManager.ValueMagicWand,200);
-            shuffle.UpdateTextBooster(TypeBooster.Shuffle,ResourceManager.ValueShuffle,300);
+            undo.UpdateTextBooster(TypeBooster.Undo,PlayerInventoryManager.ValueUndo,100);
+            magicWand.UpdateTextBooster(TypeBooster.MagicWand,PlayerInventoryManager.ValueMagicWand,200);
+            shuffle.UpdateTextBooster(TypeBooster.Shuffle,PlayerInventoryManager.ValueShuffle,300);
         }
         
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -11,6 +12,8 @@ using Project.Extensions;
 using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
 using Project.Scripts.Manager;
+using Project.Scripts.Scroll;
+using Project.Scripts.TileMatch.Tiles.Theme;
 using Project.Services;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -20,10 +23,11 @@ namespace Project.Scripts.TileMatch.Manager
 {
     public class TileManager : Singleton<TileManager>
     {
+        [SerializeField] private Transform spawn;
         [SerializeField] public int tileIndex;
         [SerializeField] private Tile prefab;
         [SerializeField] private ListDataSprite listDataSprites;
-        [SerializeField] private ListTileThemesData listThemesData;
+        [SerializeField] private ListThemeTileConfig listThemeTileConfig;
 
         private int _lastScreenWidth;
         private int _lastScreenHeight;
@@ -36,7 +40,7 @@ namespace Project.Scripts.TileMatch.Manager
         public static bool IsCompleteShuffle = false; 
 
         private readonly List<TileId> _tileId = new List<TileId>()
-            { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5 };
+            { TileId.Id1, TileId.Id2, TileId.Id3, TileId.Id4, TileId.Id5,TileId.Id6,TileId.Id7,TileId.Id8,TileId.Id9,TileId.Id10 };
 
         private void Awake()
         {
@@ -44,16 +48,43 @@ namespace Project.Scripts.TileMatch.Manager
             
         }
 
+        private void OnEnable()
+        {
+            ThemeTileScroller.ApplyThemeTiles += ApplyThemeTiles;
+        }
         private void Start()
         {
             OnInit();
-            GenerateTileManager();
         }
 
         public void OnInit()
         {
+            LoadLevel();
+            LoadApplyThemeTile();
+            GenerateTileManager();
+        }
+
+        private void LoadLevel()
+        {
             var level = LoadFileJson.GetData<LevelRoot>().levelTile;
             _levelData = level.ToDictionary(l => l.level);
+        }
+
+        private void LoadApplyThemeTile()
+        {
+            if (listDataSprites!= null)
+            {
+                var themeConfirmed = listThemeTileConfig.listThemeTileData.Find(t => t.isSelected);
+                for (int i = 0; i < listDataSprites.listTileSprite.Count; i++)
+                {
+                    listDataSprites.listTileSprite[i].sprite = themeConfirmed.listThemeTiles[i];
+                }
+            }
+            
+        }
+
+        private void GenerateTileManager()
+        {
             _spriteLookUp = new Dictionary<TileId, Sprite>();
             foreach (var dataSprite in listDataSprites.listTileSprite)
             {
@@ -62,13 +93,6 @@ namespace Project.Scripts.TileMatch.Manager
                     _spriteLookUp.Add(dataSprite.typeId, dataSprite.sprite);
                 }
             }
-
-
-        }
-
-        private void GenerateTileManager()
-        {
-
             var layerConfig = LoadLayerConfigs();
             int totalTiles = layerConfig.Sum(config => (config.rows * config.cols) - config.inactiveCells.Count);
             Debug.Log("total tile: " + totalTiles);
@@ -84,7 +108,7 @@ namespace Project.Scripts.TileMatch.Manager
             InitCoverageCount();
             if (StateUI.IsState(TypeScreen.HomeScreen))
             {
-                GameplayManager.ActiveChild(false);
+                GameplayManager.ActiveTileManager(false);
             }
 
         }
@@ -232,7 +256,7 @@ namespace Project.Scripts.TileMatch.Manager
 
                 _layerParent[layer.layer] = layerParent.transform;
 
-                layerParent.transform.SetParent(transform, false);
+                layerParent.transform.SetParent(spawn, false);
             }
 
             for (int y = 0; y < tiles.GetLength(0); y++)
@@ -558,6 +582,36 @@ namespace Project.Scripts.TileMatch.Manager
             _countTileId.Clear();
             _distributeTiles = null;
             GenerateTileManager();
+        }
+
+        public void ApplyThemeTiles(ThemeTileData theme)
+        {
+            if (theme == null || theme.listThemeTiles == null || theme.listThemeTiles.Count == 0) return;
+            for (int i = 0; i < listDataSprites.listTileSprite.Count; i++)
+            {
+                listDataSprites.listTileSprite[i].sprite = theme.listThemeTiles[i];
+            }
+
+            _spriteLookUp = new();
+            foreach (var data in listDataSprites.listTileSprite)
+            {
+
+                if (!_spriteLookUp.ContainsKey(data.typeId))
+                {
+                    _spriteLookUp.Add(data.typeId, data.sprite);
+                }
+            }
+
+            foreach (var tile in LayerTile())
+            {
+                if (tile != null )
+                {
+                    if (_spriteLookUp.TryGetValue(tile.tileId, out Sprite sprite))
+                    {
+                        tile.spriteTile.sprite = sprite;
+                    }
+                }
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace UI.Screen.Shop
                 if (!isPurchased)
                 {
                     isPurchased = true;
-                    ResourceManager.AddCoin(removeAds.coin);
+                    PlayerInventoryManager.AddCoin(removeAds.coin);
                     removeAds.isPurchase = isPurchased;
                 }
             }

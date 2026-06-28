@@ -7,7 +7,7 @@ using UI.Screen;
 
 namespace Project.Services
 {
-    public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, NextScreen, Shop, StatusBar, Setting }
+    public enum TypeScreen { HomeScreen, PlayScreen, Revive, Result, NextScreen, Shop, StatusBar, Setting, PopupEditTheme }
     
     [Serializable]
     public class UIConfig

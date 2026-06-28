@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Games.TileMatch.Tiles.Scripts;
 using Project.Games.TileMatch.Board.Scripts;
 using Project.Manager;
@@ -7,7 +8,8 @@ namespace Project.Scripts.Manager
 {
     public class GameplayManager : Singleton<GameplayManager>
     {
-        public GameObject board;
+        [SerializeField] GameObject board;
+        [SerializeField] private GameObject tileManager;
         private readonly PoolManager<Tile> _poolTile = new();
         private readonly PoolManager<CoinEffect> _poolCoin = new();
         public static PoolManager<Tile> PoolTile => Instance._poolTile;
@@ -30,13 +32,20 @@ namespace Project.Scripts.Manager
         [Min(1)] [SerializeField] private int levelShuffle;
         public static bool LevelUnlockShuffle => CurrentLevel >= Instance.levelShuffle;
 
-        public static void ActiveChild(bool isActive)
+        public static void ActiveBoard(bool isActive)
         {
-            foreach (Transform child in Instance.transform)
+            if (Instance.board != null)
             {
-                child.gameObject.SetActive(isActive);
+                Instance.board.SetActive(isActive);
+
             }
         }
+        public static void ActiveTileManager(bool isActive)
+        {
+            Instance.tileManager.SetActive(isActive);
+        }
+        
+        
 
       
 

@@ -95,7 +95,7 @@ public class CoinEffect : MonoBehaviour
         {
             TargetCoin.transform.DOScale(1, 0.4f);
         }));
-        ResourceManager.AddCoin(_coinPerSecond);
+        PlayerInventoryManager.AddCoin(_coinPerSecond);
 
     }
 }

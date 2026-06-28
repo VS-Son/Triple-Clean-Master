@@ -259,8 +259,7 @@ namespace Project.Games.TileMatch.Board.Scripts
             {
                 int index = _originalTile.Count - 1 - i;
                 Tile tile = _originalTile[index];
-               
-                tile.transform.DOMove(tile.originalPos, 0.4f).SetEase(Ease.Flash).OnComplete((() =>
+                tile.transform.DOLocalMove(tile.originalPos, 0.4f).SetEase(Ease.Flash).OnComplete((() =>
                 {
                     if (quantity > 1 && i >= count)
                     {

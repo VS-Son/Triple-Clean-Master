@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Games.TileMatch.Tiles.Data
 {
-    public enum TileId {None,Id1, Id2, Id3, Id4, Id5 }
+    public enum TileId {None,Id1, Id2, Id3, Id4, Id5,Id6,Id7,Id8,Id9,Id10 }
     public class TileData : MonoBehaviour
     {
         public TileId tileId;

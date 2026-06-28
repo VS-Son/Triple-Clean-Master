@@ -32,13 +32,13 @@ namespace UI.Screen.Shop
                     if (coinPackData.offerType == OfferType.Free || coinPackData.offerType == OfferType.Ads)
                     {
                         isPurchased = true;
-                        ResourceManager.AddCoin(coinPackData.coin);
+                        PlayerInventoryManager.AddCoin(coinPackData.coin);
                         coinPackData.isPurchase = isPurchased;
                     }
                 }
                 if (coinPackData.offerType == OfferType.Buy)
                 {
-                    ResourceManager.AddCoin(coinPackData.coin);
+                    PlayerInventoryManager.AddCoin(coinPackData.coin);
                 }
                 
             }

@@ -452,7 +452,7 @@ MonoBehaviour:
   animGift: {fileID: 7978256270581281774}
   iconGift: {fileID: 6317673001652037981}
   amountReward: 30
-  countProgression: 3
+  countProgression: 0
 --- !u!1 &2970072475252784234
 GameObject:
   m_ObjectHideFlags: 0

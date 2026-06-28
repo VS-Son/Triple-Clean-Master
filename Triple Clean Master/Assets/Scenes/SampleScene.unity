@@ -2017,7 +2017,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
@@ -2048,6 +2048,8 @@ MonoBehaviour:
     path: Shop Screen
   - typeScreen: 6
     path: Status Bar
+  - typeScreen: 8
+    path: Popup Edit Theme Tiles
 --- !u!1 &1539350109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2581,37 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2867668752697868338, guid: 2c896c327455b0e4ea43a7fb3873635a, type: 3}
   m_PrefabInstance: {fileID: 249658674}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1883075397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1883075398}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1883075398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883075397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1967345330}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1928494084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,7 +2712,7 @@ GameObject:
   - component: {fileID: 1967345330}
   - component: {fileID: 1967345331}
   m_Layer: 0
-  m_Name: Grid Tile Spawner
+  m_Name: Grid Tile Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2696,7 +2729,8 @@ Transform:
   m_LocalPosition: {x: 1.5821064, y: -0.5918478, z: 2.7486095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1883075398}
   m_Father: {fileID: 2078785945}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2712,10 +2746,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81427ce457914540a149e3067312ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawn: {fileID: 1883075398}
   tileIndex: 0
   prefab: {fileID: 3739456829574475772, guid: 57a7d30be51f8f34dab40150cae69893, type: 3}
   listDataSprites: {fileID: 11400000, guid: 404f3f44293762f41b4d3660abf5dea6, type: 2}
-  listThemesData: {fileID: 11400000, guid: 040e772daf790a3468f5d33bb9d9405d, type: 2}
+  listThemeTileConfig: {fileID: 11400000, guid: 8a2b38f4b78366445aa79fa830bff441, type: 2}
 --- !u!198 &2041450762 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2867668752697868338, guid: 2c896c327455b0e4ea43a7fb3873635a, type: 3}
@@ -2888,10 +2923,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 424053610}
+  tileManager: {fileID: 1883075397}
   level: 1
-  levelUndo: 1
-  levelMagicWand: 1
-  levelShuffle: 1
+  levelUndo: 2
+  levelMagicWand: 3
+  levelShuffle: 4
 --- !u!198 &2086965454 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2867668752697868338, guid: 2c896c327455b0e4ea43a7fb3873635a, type: 3}

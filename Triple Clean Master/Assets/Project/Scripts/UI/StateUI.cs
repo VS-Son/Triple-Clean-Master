@@ -1,5 +1,6 @@
 using System;
 using Project.Manager;
+using Project.Scripts.UI.Popup;
 using Project.Scripts.UI.Screen;
 using Project.Services;
 using UI.Screen;
@@ -52,6 +53,9 @@ namespace Project.Core.UI
 
                 case TypeScreen.Shop:
                     UIManager.OpenUI<ShopScreen>(TypeScreen.Shop);
+                    break;
+                case TypeScreen.PopupEditTheme:
+                    UIManager.OpenUI<PopupEditThemeTile>(TypeScreen.PopupEditTheme);
                     break;
             }
         }

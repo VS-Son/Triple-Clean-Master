@@ -42,6 +42,7 @@ namespace UI.Screen
         public void OnSetting()
         {
             StateUI.ChangeState(TypeScreen.Setting);
+            setting.SetActive(false);
         }
 
         public void OnBack()
@@ -50,7 +51,8 @@ namespace UI.Screen
             {
                 StateUI.ChangeState(TypeScreen.HomeScreen);
                 AudioManager.Instance.StopBGM();
-                GameplayManager.ActiveChild(false);
+                GameplayManager.ActiveBoard(false);
+                GameplayManager.ActiveTileManager(false);
                 back.SetActive(false);
                 textTitle.gameObject.SetActive(false);
                 return;
@@ -60,7 +62,7 @@ namespace UI.Screen
                 case ShopOpenSource.HomeScreen:
                     StateUI.ChangeState(TypeScreen.HomeScreen);
                     AudioManager.Instance.StopBGM();
-                    GameplayManager.ActiveChild(false);
+                    GameplayManager.ActiveBoard(false);
                     back.SetActive(false);
                     setting.SetActive(true);
                     textTitle.gameObject.SetActive(false);
@@ -84,9 +86,9 @@ namespace UI.Screen
             back.SetActive(true);
             textTitle.gameObject.SetActive(true);
             textTitle.text = "Store";
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(ResourceManager.ValueUndo);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(ResourceManager.ValueMagicWand);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(ResourceManager.ValueShuffle);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(PlayerInventoryManager.ValueUndo);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(PlayerInventoryManager.ValueMagicWand);
+            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(PlayerInventoryManager.ValueShuffle);
 
             _source = source;
             

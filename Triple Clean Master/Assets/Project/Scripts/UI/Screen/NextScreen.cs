@@ -116,7 +116,7 @@ namespace Project.Scripts.UI.Screen
 
         public void OnNext()
         {
-            TileManager.ZoomScaleTile();
+            //TileManager.ZoomScaleTile();
             TileManager.Instance.NextLevel();
             BoardCollectTile.Instance.ResetBoard();
 
