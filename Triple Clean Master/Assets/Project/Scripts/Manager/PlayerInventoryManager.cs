@@ -10,6 +10,7 @@ namespace Project.Scripts.Manager
         public static event Action<TypeBooster> OnShowBoosterCountRequested;
         public static event Action<TypeBooster> OnShowCoinPurchaseRequested;
         public static event Action OnShowAdUnlockRequested;
+        public static Action <int> OnCoinchange;
 
         private const string CoinKey = "Coin";
         private const string UndoKey = "Undo";
@@ -20,17 +21,17 @@ namespace Project.Scripts.Manager
         private const int MagicWandPrice = 200;
         private const int ShufflePrice = 300;
         
-        [Min(0)] [SerializeField] int coin;
-        [Min(0)] [SerializeField] int undo;
-        [Min(0)] [SerializeField] int magicWand;
-        [Min(0)] [SerializeField] private int shuffle;
+        private static int _coin = 100;
+        private static int _undo = 2;
+        private static int _magicWand = 2;
+        private static int _shuffle = 2;
 
         public static int UndoCount
         {
-            get => Instance.undo;
+            get => _undo;
             set
             {
-                Instance.undo = Mathf.Max(0, value);
+                _undo = Mathf.Max(0, value);
                 SaveBooster(TypeBooster.Undo);
                 RefreshBoosterButtonState( TypeBooster.Undo);
                 
@@ -40,10 +41,10 @@ namespace Project.Scripts.Manager
 
         public static int MagicWandCount
         {
-            get => Instance.magicWand;
+            get => _magicWand;
             set
             {
-                Instance.magicWand = Mathf.Max(0, value);
+                _magicWand = Mathf.Max(0, value);
                 SaveBooster(TypeBooster.MagicWand);
                 RefreshBoosterButtonState( TypeBooster.MagicWand);
             }
@@ -52,10 +53,10 @@ namespace Project.Scripts.Manager
 
         public static int ShuffleCount
         {
-            get => Instance.shuffle;
+            get => _shuffle;
             set
             {
-                Instance.shuffle = Mathf.Max(0, value);
+               _shuffle = Mathf.Max(0, value);
                 SaveBooster(TypeBooster.Shuffle);
                 RefreshBoosterButtonState(TypeBooster.Shuffle);
 
@@ -67,17 +68,17 @@ namespace Project.Scripts.Manager
         private void Start()
         {
             LoadInventory();
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateTextCoin(coin);
+            OnCoinchange?.Invoke(_coin);
         }
 
         public static int Coin
         {
-            get => Instance.coin;
+            get => _coin;
             set
             {
-                Instance.coin = Mathf.Max(0, value);
+                _coin = Mathf.Max(0, value);
                 SaveCoin();
-                UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateTextCoin(Instance.coin);
+                OnCoinchange?.Invoke(_coin);
             }
 
         }
@@ -189,14 +190,14 @@ namespace Project.Scripts.Manager
 
         private void LoadInventory()
         {
-            coin = PlayerPrefs.GetInt(CoinKey, coin);
-            undo = PlayerPrefs.GetInt(UndoKey, undo);
-            magicWand = PlayerPrefs.GetInt(MagicWandKey, magicWand);
-            shuffle = PlayerPrefs.GetInt(ShuffleKey, shuffle);
+            _coin = PlayerPrefs.GetInt(CoinKey, _coin);
+            _undo = PlayerPrefs.GetInt(UndoKey, _undo);
+            _magicWand = PlayerPrefs.GetInt(MagicWandKey, _magicWand);
+            _shuffle = PlayerPrefs.GetInt(ShuffleKey, _shuffle);
         }
         private static void SaveCoin()
         {
-            PlayerPrefs.SetInt(CoinKey, Instance.coin);
+            PlayerPrefs.SetInt(CoinKey, _coin);
             PlayerPrefs.Save();
         }
         private static void SaveBooster(TypeBooster type)
@@ -204,15 +205,15 @@ namespace Project.Scripts.Manager
             switch (type)
             {
                 case TypeBooster.Undo:
-                    PlayerPrefs.SetInt(UndoKey, Instance.undo);
+                    PlayerPrefs.SetInt(UndoKey, _undo);
                     break;
 
                 case TypeBooster.MagicWand:
-                    PlayerPrefs.SetInt(MagicWandKey, Instance.magicWand);
+                    PlayerPrefs.SetInt(MagicWandKey, _magicWand);
                     break;
 
                 case TypeBooster.Shuffle:
-                    PlayerPrefs.SetInt(ShuffleKey, Instance.shuffle);
+                    PlayerPrefs.SetInt(ShuffleKey, _shuffle);
                     break;
             }
 

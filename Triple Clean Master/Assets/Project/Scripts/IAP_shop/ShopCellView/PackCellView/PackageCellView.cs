@@ -43,7 +43,7 @@ namespace Project.Scripts.IAP_shop.ShopCellView.PackCellView
                     isPurchased = true;
                     PlayerInventoryManager.AddBoosterCounts(packageData.undo, packageData.magicWand, packageData.shuffle);
                     PlayerInventoryManager.AddCoin(packageData.coin);
-                    UIManager.GetUI<PlayScreen>(TypeScreen.PlayScreen).UpdateTextBoosters();
+                    UIManager.GetUI<PlayScreen>(ScreenType.PlayScreen).UpdateTextBoosters();
                     packageData.isPurchase = isPurchased;
                 }
             }

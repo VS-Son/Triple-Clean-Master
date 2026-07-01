@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -10,14 +11,15 @@ using UnityEngine.UI;
 
 namespace Project.Scripts.UI.Screen
 {
-   public class HomeScreen : UICanvas
+   public class HomeScreen : UIScreen
    {
       //public override TypeScreen Type => TypeScreen.HomeScreen;
       [SerializeField] private Transform btPlay;
       [SerializeField] private List<RectTransform> logoTiles;
       [SerializeField] private Image bannerExplorer;
       [SerializeField] private TMP_Text textLevel;
-
+      public static Action UpdateLevelText;
+      public static Action<bool,bool> OnActveStatusBar;
       private void Start()
       {
          foreach (var tileIndex in logoTiles)
@@ -57,13 +59,11 @@ namespace Project.Scripts.UI.Screen
       }
       public void OnPlay()
       {
-         
-         StateUI.ChangeState(TypeScreen.PlayScreen);
+         StateUI.ChangeState(ScreenType.PlayScreen);
          AudioManager.Instance.PlayBGM(AudioConstants.BGM, 1);
          AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
-         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
-         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).back.SetActive(true);
-         UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
+         UpdateLevelText?.Invoke();
+         OnActveStatusBar?.Invoke(false,true);
          TileManager.ZoomScaleTile();
          GameplayManager.SetBoardActive(true);
          GameplayManager.SetTileManagerActive(true);

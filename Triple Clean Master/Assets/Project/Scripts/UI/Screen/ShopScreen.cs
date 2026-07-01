@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Project.Scripts.UI.Screen
 {
-    public class ShopScreen : UICanvas
+    public class ShopScreen : UIScreen
     {
         [SerializeField] private TMP_Text undoValue;
         [SerializeField] private TMP_Text magicWandValue;

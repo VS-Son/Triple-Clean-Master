@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Project.Scripts.UI.Screen
 {
-    public class ReviveScreen : UICanvas
+    public class PopupRevive : UICanvas
     {
         public Transform bg;
         [SerializeField] private TMP_Text textLevel;
@@ -29,6 +29,7 @@ namespace Project.Scripts.UI.Screen
         {
             BoardCollectTile.Instance.UndoTile(5);
             TileManager.Instance.DisableInput(true);
+            StatusBar.Source = ShopOpenSource.Gameplay;
             Close();
             SetScale();
         }
@@ -37,6 +38,7 @@ namespace Project.Scripts.UI.Screen
         {
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
+            StatusBar.Source = ShopOpenSource.Gameplay;
             Close();
             SetScale();
 

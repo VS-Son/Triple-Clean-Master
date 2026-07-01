@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 680, y: 180}
+  m_SizeDelta: {x: 702, y: 235}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7366886770548329777
 CanvasRenderer:
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6539a3de2f0b53d449fb780aa052058d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 460634e481855b4459f0755550da0127, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -585,7 +585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69595b26c437f104a9a025f8e986bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeBooster: 0
 --- !u!1 &7366886772050044478
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,10 +888,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Support
+  m_text: Comfirm
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -911,7 +910,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
+  m_TextStyleHashCode: 97690656
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -1080,8 +1079,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7366886771808262490}
-        m_TargetAssemblyTypeName: UI.Screen.UICanvas, Assembly-CSharp
-        m_MethodName: Close
+        m_TargetAssemblyTypeName: Project.Scripts.UI.UIPopup, Assembly-CSharp
+        m_MethodName: CloseSelf
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

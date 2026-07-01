@@ -20,8 +20,8 @@ namespace Project.Scripts.Scroller
         private readonly List<ThemeTileCellView> _activeCellViews = new();
         private int _selectedId = -1;
         private bool _isInitialized;
+        public static Action OnEditTiles;
 
-        
         private void OnEnable()
         {
             if (!_isInitialized) return;
@@ -121,7 +121,7 @@ namespace Project.Scripts.Scroller
                 ThemeTileData confirmed = listThemeTileConfig.listThemeTileData.Find(t => t.isSelected);
                 TileManager.Instance.ApplyThemeTiles(confirmed);
                 ApplyThemeTiles?.Invoke(confirmed);
-                UIManager.GetUI<SettingScreen>(TypeScreen.Setting).SetEditTiles();
+                OnEditTiles?.Invoke();
                  _selectedId = -1;
                  themeScroller.ReloadData();
                  

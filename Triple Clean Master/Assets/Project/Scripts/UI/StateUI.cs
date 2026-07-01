@@ -1,5 +1,4 @@
 using Project.Scripts.Manager;
-using Project.Scripts.UI.Popup;
 using Project.Scripts.UI.Screen;
 using UnityEngine;
 
@@ -7,58 +6,47 @@ namespace Project.Scripts.UI
 {
     public class StateUI : MonoBehaviour
     {
-        private static TypeScreen _currentScreen;
-        private static TypeScreen _previousScreen;
+        private static ScreenType _currentScreen;
+        private static ScreenType _previousScreen;
 
-        public static TypeScreen CurrentScreen => _currentScreen;
-        public static TypeScreen PreviousScreen => _previousScreen;
+        public static ScreenType CurrentScreen => _currentScreen;
+        public static ScreenType PreviousScreen => _previousScreen;
 
         private void Start()
         {
-            ChangeState(TypeScreen.HomeScreen);
+            ChangeState(ScreenType.HomeScreen);
+            UIManager.OpenCommon<StatusBar>(CommonUIType.StatusBar);
         }
 
-        public static void ChangeState(TypeScreen state)
+        public static void ChangeState(ScreenType state)
         {
             _previousScreen = _currentScreen;
             _currentScreen = state;
 
             switch (_currentScreen)
             {
-                case TypeScreen.HomeScreen:
-                    UIManager.OpenUI<HomeScreen>(TypeScreen.HomeScreen);
-                    UIManager.OpenUI<StatusBar>(TypeScreen.StatusBar);
-                    UIManager.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
+                case ScreenType.HomeScreen:
+                    UIManager.OpenScreen<HomeScreen>(ScreenType.HomeScreen);
                     break;
 
-                case TypeScreen.PlayScreen:
-                    UIManager.OpenUI<PlayScreen>(TypeScreen.PlayScreen);
-                    UIManager.CloseUI<HomeScreen>(TypeScreen.HomeScreen);
-                    break;
-                case TypeScreen.Revive:
-                    UIManager.OpenUI<ReviveScreen>(TypeScreen.Revive);
-                    break;
-                case TypeScreen.NextScreen:
-                    UIManager.OpenUI<NextScreen>(TypeScreen.NextScreen);
-                    UIManager.CloseUI<PlayScreen>(TypeScreen.PlayScreen);
+                case ScreenType.PlayScreen:
+                    UIManager.OpenScreen<PlayScreen>(ScreenType.PlayScreen);
                     break;
 
-                case TypeScreen.Setting:
-                    UIManager.OpenUI<SettingScreen>(TypeScreen.Setting);
+                case ScreenType.Shop:
+                    UIManager.OpenScreen<ShopScreen>(ScreenType.Shop);
                     break;
 
-                case TypeScreen.Shop:
-                    UIManager.OpenUI<ShopScreen>(TypeScreen.Shop);
+                case ScreenType.NextScreen:
+                    UIManager.OpenScreen<NextScreen>(ScreenType.NextScreen);
                     break;
-                case TypeScreen.PopupEditTheme:
-                    UIManager.OpenUI<PopupEditThemeTile>(TypeScreen.PopupEditTheme);
-                    break;
+                
             }
         }
 
-        public static bool IsState(TypeScreen typeScreen)
+        public static bool IsState(ScreenType type)
         {
-            return _currentScreen == typeScreen;
+            return _currentScreen == type;
         }
     }
 }

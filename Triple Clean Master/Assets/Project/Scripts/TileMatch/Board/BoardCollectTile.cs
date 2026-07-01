@@ -48,7 +48,7 @@ namespace Project.Scripts.TileMatch.Board
             if (CheckShowRevive())
             {
                 TileManager.Instance.DisableInput(false);
-                DOVirtual.DelayedCall(0.5f, (() => StateUI.ChangeState(TypeScreen.Revive)));
+                DOVirtual.DelayedCall(0.5f, (() => StateUI.ChangeState(ScreenType.Revive)));
 
             }
         }
@@ -229,7 +229,7 @@ namespace Project.Scripts.TileMatch.Board
             {
                 DOVirtual.DelayedCall(0.1f, (() =>
                 {
-                    StateUI.ChangeState(TypeScreen.NextScreen);
+                    StateUI.ChangeState(ScreenType.NextScreen);
                 }));
             }))) ;
 

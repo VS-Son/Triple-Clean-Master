@@ -102,7 +102,7 @@ namespace Project.Scripts.TileMatch.Manager
             Physics2D.SyncTransforms();
             BuildCoverGraph();
             InitCoverageCount();
-            if (StateUI.IsState(TypeScreen.HomeScreen))
+            if (StateUI.IsState(ScreenType.HomeScreen))
             {
                 GameplayManager.SetTileManagerActive(false);
             }

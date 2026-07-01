@@ -5,14 +5,10 @@ using UnityEngine;
 
 namespace Project.Scripts.UI.Popup
 {
-    public class PopupEditThemeTile : UICanvas
+    public class PopupEditThemeTile : UIPopup
     {
         private ThemeTileScroller ThemeScroll => FindObjectOfType<ThemeTileScroller>();
         
-        public void OnClose()
-        {
-            Close();
-        }
 
         public void OnConfirm()
         {

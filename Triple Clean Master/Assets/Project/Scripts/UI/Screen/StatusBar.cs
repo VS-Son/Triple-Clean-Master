@@ -1,5 +1,9 @@
+using System;
 using Project.Scripts.Manager;
+using Project.Scripts.Scroller;
+using Project.Scripts.UI.Popup;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using Button = UnityEngine.UI.Button;
 
@@ -10,7 +14,7 @@ namespace Project.Scripts.UI.Screen
         HomeScreen,
         Gameplay
     }
-    public class StatusBar : UICanvas
+    public class StatusBar : UICommon
     {
         public TMP_Text textTitle;
         public TMP_Text textCoin;
@@ -18,72 +22,94 @@ namespace Project.Scripts.UI.Screen
         public GameObject back;
         [SerializeField] private Button statusCoin;
         public Transform iconCoin;
-        public  TypeScreen currentScreen;
-        private static ShopOpenSource _source;
+        public static ShopOpenSource Source;
 
         private void OnEnable()
         {
-            if (StateUI.IsState(TypeScreen.HomeScreen))
+            PlayerInventoryManager.OnCoinchange += UpdateTextCoin;
+            HomeScreen.UpdateLevelText += UpdateLevelText;
+            HomeScreen.OnActveStatusBar += SetActiveStatusOnPlay;
+            NextScreen.OnActiveStatus += SetActiveStatusOnNext;
+            NextScreen.UpdateLevelText += UpdateLevelText;
+            PlayScreen.UpdateLevelText += UpdateLevelText;
+
+
+            UpdateLevelText();
+            if (StateUI.IsState(ScreenType.HomeScreen))
             {
                 textTitle.gameObject.SetActive(false);
             }
-            UpdateLevelText();
-           
+        }
+
+        private void OnDisable()
+        {
+            PlayerInventoryManager.OnCoinchange -= UpdateTextCoin;
+            HomeScreen.UpdateLevelText -= UpdateLevelText;
+            HomeScreen.OnActveStatusBar -= SetActiveStatusOnPlay;
+            NextScreen.OnActiveStatus -= SetActiveStatusOnNext;
+            NextScreen.UpdateLevelText -= UpdateLevelText;
+            PlayScreen.UpdateLevelText -= UpdateLevelText;
         }
 
         public void OnSetting()
         {
-            StateUI.ChangeState(TypeScreen.Setting);
-            setting.SetActive(false);
+            ShowButtonSetting(false);
+            ShowButtonBack(false);
+            var popup = UIManager.OpenPopup<PopupSetting>(PopupType.Setting);
+            popup.OnClosePopup -= HandleSettingClosed;
+            popup.OnClosePopup += HandleSettingClosed;
         }
-
+        private void HandleSettingClosed()
+        {
+            ShowButtonSetting(true);
+        }
         public void OnBack()
         {
-            if (StateUI.IsState(TypeScreen.PlayScreen))
+            if (StateUI.IsState(ScreenType.PlayScreen))
             {
-                StateUI.ChangeState(TypeScreen.HomeScreen);
+                StateUI.ChangeState(ScreenType.HomeScreen);
                 AudioManager.Instance.StopBGM();
                 GameplayManager.SetBoardActive(false);
                 GameplayManager.SetTileManagerActive(false);
                 back.SetActive(false);
+                setting.SetActive(true);
                 textTitle.gameObject.SetActive(false);
                 return;
             }
-            switch (_source)
+            switch (Source)
             {
                 case ShopOpenSource.HomeScreen:
-                    StateUI.ChangeState(TypeScreen.HomeScreen);
+                    StateUI.ChangeState(ScreenType.HomeScreen);
                     AudioManager.Instance.StopBGM();
                     GameplayManager.SetBoardActive(false);
                     back.SetActive(false);
                     setting.SetActive(true);
                     textTitle.gameObject.SetActive(false);
-                    UIManager.CloseUI<ShopScreen>(TypeScreen.Shop);
-                    UIManager.GetUI<HomeScreen>(TypeScreen.HomeScreen).UpdayeTextLevel();
+                    UIManager.CloseUI<ShopScreen>(ScreenType.Shop);
+                    UIManager.GetUI<HomeScreen>(ScreenType.HomeScreen).UpdayeTextLevel();
                     break;
 
                 case ShopOpenSource.Gameplay:
-                    StateUI.ChangeState(TypeScreen.PlayScreen);
-                    UIManager.CloseUI<ShopScreen>(TypeScreen.Shop);
+                    StateUI.ChangeState(ScreenType.PlayScreen);
+                    UIManager.CloseUI<ShopScreen>(ScreenType.Shop);
                     UpdateLevelText();
-                    setting.SetActive(true);
                     break;
             }
         }
 
         public void OnShop()
         {
-            var source = StateUI.IsState(TypeScreen.PlayScreen) ? ShopOpenSource.Gameplay : ShopOpenSource.HomeScreen;
-            StateUI.ChangeState(TypeScreen.Shop);
+            var source = StateUI.IsState(ScreenType.PlayScreen) ? ShopOpenSource.Gameplay : ShopOpenSource.HomeScreen;
+            StateUI.ChangeState(ScreenType.Shop);
             setting.SetActive(false);
             back.SetActive(true);
             textTitle.gameObject.SetActive(true);
             textTitle.text = "Store";
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextUndo(PlayerInventoryManager.UndoCount);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextMagicWand(PlayerInventoryManager.MagicWandCount);
-            UIManager.GetUI<ShopScreen>(TypeScreen.Shop).UpdateTextShuffle(PlayerInventoryManager.ShuffleCount);
+            UIManager.GetUI<ShopScreen>(ScreenType.Shop).UpdateTextUndo(PlayerInventoryManager.UndoCount);
+            UIManager.GetUI<ShopScreen>(ScreenType.Shop).UpdateTextMagicWand(PlayerInventoryManager.MagicWandCount);
+            UIManager.GetUI<ShopScreen>(ScreenType.Shop).UpdateTextShuffle(PlayerInventoryManager.ShuffleCount);
 
-            _source = source;
+            Source = source;
             
         }
         
@@ -93,24 +119,32 @@ namespace Project.Scripts.UI.Screen
             textTitle.text = $"Level {GameplayManager.CurrentLevel}";
         }
 
-        public void UpdateTextCoin(int coin)
+        private void UpdateTextCoin(int coin)
         {
             textCoin.text = coin >= 1000 ? $"{coin/1000}K" : $"{coin.ToString()}";
         }
 
-        public void OnActiveStatus(bool isActive)
+        private void SetActiveStatusOnNext(bool isActive)
         {
             statusCoin.enabled = isActive;
             textTitle.gameObject.SetActive(isActive);
-            setting.SetActive(isActive);
             back.SetActive(isActive);
-
         }
 
-
-        public void UpdateCoinPerSecond(int coinPerSecond)
+        private void SetActiveStatusOnPlay(bool isHide, bool isShow)
         {
-            
+            ShowButtonSetting(isHide);
+            ShowButtonBack(isShow);
+            textTitle.gameObject.SetActive(isShow);
+        }
+
+        private void ShowButtonSetting(bool isShow)
+        {
+            setting.SetActive(isShow);
+        }
+        private void ShowButtonBack(bool isShow)
+        {
+            back.SetActive(isShow);
         }
     }
 }

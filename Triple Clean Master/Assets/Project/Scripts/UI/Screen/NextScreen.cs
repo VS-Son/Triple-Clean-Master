@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Project.Scripts.Effect;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Board;
 using Project.Scripts.TileMatch.Manager;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Project.Scripts.UI.Screen
 {
-    public class NextScreen : UICanvas
+    public class NextScreen : UIScreen
     {
         [SerializeField] private TMP_Text textNext;
         [SerializeField] private Slider progressionFill;
@@ -24,6 +25,9 @@ namespace Project.Scripts.UI.Screen
         public static event Action<int> GetCoin;
         private static int NextLevel => GameplayManager.CurrentLevel + 1;
 
+        public static Action<bool> OnActiveStatus;
+        public static Action UpdateLevelText;
+
         private void Awake()
         {
             LoadCountProgression();
@@ -32,12 +36,13 @@ namespace Project.Scripts.UI.Screen
         private void OnEnable()
         {
             textNext.text = "Level " + ( GameplayManager.CurrentLevel + 1);
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(false);
-            btNext.transform.localPosition = Vector3.zero;
+            OnActiveStatus?.Invoke(false);
+            
             if (countProgression <= 0)
             {
                 progressionFill.gameObject.SetActive(true);
                 iconGift.gameObject.SetActive(true);
+                
             }
             UpdateProvenceReward();
             CoinEffect.OnCompleteGoal += OnCompleteGoal;
@@ -48,6 +53,11 @@ namespace Project.Scripts.UI.Screen
         private void OnDisable()
         {
             CoinEffect.OnCompleteGoal -= OnCompleteGoal;
+            if (countProgression >= 4)
+            {
+                countProgression = 0;
+            }
+            
         }
 
         private void UpdateProvenceReward()
@@ -84,6 +94,7 @@ namespace Project.Scripts.UI.Screen
             }
             if (to >= progressionFill.maxValue)
             {
+                animGift.gameObject.SetActive(true);
                 progressionFill.gameObject.SetActive(false);
                 animGift.enabled = true;
                 iconGift.gameObject.SetActive(false);
@@ -96,7 +107,7 @@ namespace Project.Scripts.UI.Screen
         }
         private void OnCompleteGoal()
         {
-            btNext.gameObject.SetActive(true);
+           
             btNext.transform.DOScale(1, 0.6f).OnComplete(()=>
             {
                 btNext.enabled = true;
@@ -118,13 +129,15 @@ namespace Project.Scripts.UI.Screen
         public void OnNext()
         {
             //TileManager.ZoomScaleTile();
+            if (countProgression >= 4)
+            {
+                countProgression = 0;
+            }
             TileManager.Instance.NextLevel();
             BoardCollectTile.Instance.ResetBoard();
-
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).textTitle.gameObject.SetActive(true);
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).OnActiveStatus(true);
-            StateUI.ChangeState(TypeScreen.PlayScreen);
+            UpdateLevelText?.Invoke();
+            OnActiveStatus?.Invoke(true);
+            StateUI.ChangeState(ScreenType.PlayScreen);
             Close();
         }
 

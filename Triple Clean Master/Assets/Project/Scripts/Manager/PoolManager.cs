@@ -18,7 +18,6 @@ namespace Project.Scripts.Manager
                 _poolInactive.Add(creObj);
             }
             
-            Debug.Log(_poolInactive.Count);
             var lastIndex = _poolInactive.Count - 1;
             T obj = _poolInactive[lastIndex];
             obj.transform.position = position;
@@ -27,6 +26,23 @@ namespace Project.Scripts.Manager
             obj.gameObject.SetActive(true);
             return obj;
             
+        }
+        public T GetPool(T prefab, Vector2 position, Transform transform)
+        {
+            if (_poolInactive.Count <= 0)
+            {
+                var creObj = Object.Instantiate(prefab, position, Quaternion.identity, transform);
+                creObj.gameObject.SetActive(false);
+                _poolInactive.Add(creObj);
+            }
+            
+            var lastIndex = _poolInactive.Count - 1;
+            T obj = _poolInactive[lastIndex];
+            obj.transform.position = position;
+            _poolInactive.RemoveAt(lastIndex);
+            _poolActive.Add(obj);
+            obj.gameObject.SetActive(true);
+            return obj;
         }
 
 

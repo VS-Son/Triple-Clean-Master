@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Project.Scripts.Effect;
 using Project.Scripts.TileMatch.Tiles;
 using UnityEngine;
 
@@ -9,12 +10,12 @@ namespace Project.Scripts.Manager
     {
         [SerializeField] GameObject board;
         [SerializeField] private GameObject tileManager;
-        private readonly PoolManager<Tile> _poolTile = new();
         private readonly PoolManager<CoinEffect> _poolCoin = new();
         private const string LevelKey = "Level";
 
-        public static PoolManager<Tile> PoolTile => Instance._poolTile; 
+        public static PoolManager<Tile> PoolTile { get; } = new();
 
+        public static PoolManager<Coin> PoolCoin { get; } = new();
         private void Awake()
         {
             LoadLevel();

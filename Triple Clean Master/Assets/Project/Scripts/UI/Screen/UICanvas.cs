@@ -5,7 +5,7 @@ namespace Project.Scripts.UI.Screen
 {
     public abstract class UICanvas : MonoBehaviour
     {
-        public TypeScreen typeBooster;
+        public ScreenType screenTypeBooster;
 
         public void Open()
         {

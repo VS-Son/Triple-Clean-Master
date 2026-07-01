@@ -21,8 +21,8 @@ namespace Project.Scripts.Manager
 
         private void Awake()
         {
-            bgmSource.mute = PlayerPrefs.GetInt(BgmMutedKey, false ? 1 : 0) ==1 ;
-            sfxSource.mute = PlayerPrefs.GetInt(SfxMutedKey, false ? 1 : 0) == 1;
+            bgmSource.mute = PlayerPrefs.GetInt(BgmMutedKey, false ? 0 : 1) ==0 ;
+            sfxSource.mute = PlayerPrefs.GetInt(SfxMutedKey, false ? 0 : 1) ==0;
             LoadAllSfx();
         }
 
@@ -84,12 +84,12 @@ namespace Project.Scripts.Manager
             {
                 case AudioType.BGM:
                     bgmSource.mute = isMute;
-                    PlayerPrefs.SetInt(BgmMutedKey, isMute ? 1: 0);
+                    PlayerPrefs.SetInt(BgmMutedKey, isMute ? 0: 1);
                     PlayerPrefs.Save();
                     break;
                 case AudioType.Sfx:
                     sfxSource.mute = isMute;
-                    PlayerPrefs.SetInt(SfxMutedKey, isMute ?1 :0);
+                    PlayerPrefs.SetInt(SfxMutedKey, isMute ?0 :1);
                     PlayerPrefs.Save();
 
                     break;

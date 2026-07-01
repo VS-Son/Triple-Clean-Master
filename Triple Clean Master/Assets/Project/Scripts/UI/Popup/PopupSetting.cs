@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Project.Scripts.Config;
 using Project.Scripts.Manager;
+using Project.Scripts.Scroller;
 using Project.Scripts.UI.Screen;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,13 +10,13 @@ using AudioType = Project.Scripts.Manager.AudioType;
 
 namespace Project.Scripts.UI.Popup
 {
-    public class SettingScreen : UICanvas
+    public class PopupSetting : UIPopup
     {
         [SerializeField] private GameObject turnOnBgm;
         [SerializeField] private GameObject turnOnSfx;
         [SerializeField] private List<Image> imageTiles;
         [SerializeField] private ListThemeTileConfig listThemeTileConfig;
-       
+        public event Action OnClosePopup;
 
         private void Awake()
         {
@@ -26,10 +27,21 @@ namespace Project.Scripts.UI.Popup
         private ThemeTileData Data => listThemeTileConfig.listThemeTileData.Find(t => t.isSelected);
         private void OnEnable()
         {
+            ThemeTileScroller.OnEditTiles += SetEditTiles;
             SetEditTiles();
         }
 
-       
+        private void OnDisable()
+        {
+            ThemeTileScroller.OnEditTiles -= SetEditTiles;
+        }
+
+        protected override void OnClosed()
+        {
+            base.OnClosed();
+            OnClosePopup?.Invoke();
+        }
+
         public void SetEditTiles()
         {
             for (int i = 0; i < 3; i++)
@@ -38,11 +50,7 @@ namespace Project.Scripts.UI.Popup
             }
         }
 
-        public void OnClose()
-        {
-            Close();
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).setting.SetActive(true);
-        }
+     
 
         public void TurnOnVolumeBgm(bool turnOn)
         {
@@ -59,7 +67,7 @@ namespace Project.Scripts.UI.Popup
 
         public void OnEditTileset()
         {
-            StateUI.ChangeState(TypeScreen.PopupEditTheme);
+            UIManager.OpenPopup<PopupEditThemeTile>(PopupType.PopupEditTheme);
         }
     }
 }

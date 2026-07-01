@@ -9,13 +9,14 @@ using UnityEngine;
 
 namespace Project.Scripts.UI.Screen
 {
-    public class PlayScreen:UICanvas
+    public class PlayScreen:UIScreen
     {
         [SerializeField] private Booster undo;
         [SerializeField] private Booster magicWand;
         [SerializeField] private Booster shuffle;
         public static event Action<TypeBooster, float> AlphaBooster;
         public static bool IsClick = false;
+        public static Action UpdateLevelText;
         
         private void OnEnable()
         {
@@ -42,7 +43,7 @@ namespace Project.Scripts.UI.Screen
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
             //TileManager.Instance.OnInit();
-            UIManager.GetUI<StatusBar>(TypeScreen.StatusBar).UpdateLevelText();
+            UpdateLevelText?.Invoke();
             UpdateUnlockBooster();
         }
 
