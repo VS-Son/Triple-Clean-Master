@@ -48,7 +48,7 @@ namespace Project.Scripts.TileMatch.Board
             if (CheckShowRevive())
             {
                 TileManager.Instance.DisableInput(false);
-                DOVirtual.DelayedCall(0.5f, (() => StateUI.ChangeState(ScreenType.Revive)));
+                DOVirtual.DelayedCall(0.5f, (() => UIManager.OpenPopup<PopupRevive>(PopupType.Revive)));
 
             }
         }

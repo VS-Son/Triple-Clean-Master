@@ -1,4 +1,5 @@
 using System;
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using Project.Scripts.Scroller;
 using Project.Scripts.UI.Popup;
@@ -53,6 +54,7 @@ namespace Project.Scripts.UI.Screen
 
         public void OnSetting()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             ShowButtonSetting(false);
             ShowButtonBack(false);
             var popup = UIManager.OpenPopup<PopupSetting>(PopupType.Setting);
@@ -65,6 +67,7 @@ namespace Project.Scripts.UI.Screen
         }
         public void OnBack()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             if (StateUI.IsState(ScreenType.PlayScreen))
             {
                 StateUI.ChangeState(ScreenType.HomeScreen);
@@ -99,6 +102,7 @@ namespace Project.Scripts.UI.Screen
 
         public void OnShop()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             var source = StateUI.IsState(ScreenType.PlayScreen) ? ShopOpenSource.Gameplay : ShopOpenSource.HomeScreen;
             StateUI.ChangeState(ScreenType.Shop);
             setting.SetActive(false);

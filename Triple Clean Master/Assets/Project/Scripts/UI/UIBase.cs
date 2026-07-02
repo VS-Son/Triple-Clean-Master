@@ -1,3 +1,4 @@
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Project.Scripts.UI
         public virtual void Close()
         {
             OnClosed();
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             gameObject.SetActive(false);
         }
 

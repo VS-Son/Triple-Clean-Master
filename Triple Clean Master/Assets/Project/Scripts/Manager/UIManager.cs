@@ -121,7 +121,6 @@ namespace Project.Scripts.Manager
         }
         public static T OpenPopup<T>(PopupType type) where T : UIPopup
         {
-            var instance = Instance;
 
             T popup = GetPopup<T>(type);
             if (popup == null) return null;
@@ -129,15 +128,13 @@ namespace Project.Scripts.Manager
             popup.Open();
             popup.transform.SetAsLastSibling();
 
-            instance._popupStack.Remove(popup);
-            instance._popupStack.Add(popup);
+            Instance._popupStack.Remove(popup);
+            Instance._popupStack.Add(popup);
 
             return popup;
         }
         public static T OpenCommon<T>(CommonUIType type) where T : UICommon
         {
-            var instance = Instance;
-
             T common = GetCommon<T>(type);
             if (common == null) return null;
 

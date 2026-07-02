@@ -59,6 +59,7 @@ namespace Project.Scripts.UI.Screen
       }
       public void OnPlay()
       {
+         AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
          StateUI.ChangeState(ScreenType.PlayScreen);
          AudioManager.Instance.PlayBGM(AudioConstants.BGM, 1);
          AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);

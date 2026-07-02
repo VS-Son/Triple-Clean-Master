@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 3795784167615337699}
   - component: {fileID: 1017103909953507060}
   m_Layer: 5
-  m_Name: Popup Revive
+  m_Name: 'Popup Revive '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,7 +618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc57114e01b03c44ae2bde968ae1134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeBooster: 0
   bg: {fileID: 9152614911712275730}
   textLevel: {fileID: 8561408984798821191}
   timeScale: 0.3

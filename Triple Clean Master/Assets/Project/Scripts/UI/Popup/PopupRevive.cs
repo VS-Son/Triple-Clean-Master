@@ -1,13 +1,15 @@
 using DG.Tweening;
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Board;
 using Project.Scripts.TileMatch.Manager;
+using Project.Scripts.UI.Components.booster;
 using TMPro;
 using UnityEngine;
 
 namespace Project.Scripts.UI.Screen
 {
-    public class PopupRevive : UICanvas
+    public class PopupRevive : UIPopup
     {
         public Transform bg;
         [SerializeField] private TMP_Text textLevel;
@@ -27,6 +29,7 @@ namespace Project.Scripts.UI.Screen
 
         public void OnRevive()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             BoardCollectTile.Instance.UndoTile(5);
             TileManager.Instance.DisableInput(true);
             StatusBar.Source = ShopOpenSource.Gameplay;
@@ -36,6 +39,8 @@ namespace Project.Scripts.UI.Screen
 
         public void OnReplay()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
+            PlayScreen.SetBoosterAlpha(TypeBooster.Undo, 0.6f);
             BoardCollectTile.Instance.ResetBoard();
             TileManager.Instance.ResetTiles();
             StatusBar.Source = ShopOpenSource.Gameplay;

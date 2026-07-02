@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Project.Scripts.Constants;
 using Project.Scripts.Effect;
 using Project.Scripts.Manager;
 using Project.Scripts.TileMatch.Board;
@@ -128,7 +129,8 @@ namespace Project.Scripts.UI.Screen
 
         public void OnNext()
         {
-            //TileManager.ZoomScaleTile();
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
+            TileManager.ZoomScaleTile();
             if (countProgression >= 4)
             {
                 countProgression = 0;

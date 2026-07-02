@@ -21,7 +21,7 @@ namespace Project.Scripts.TileMatch.Level.Data
         public static int[] OptionRow= {1,2, 3, 4, 5, 6, 7, 8, 9, 10 };
         public static int[] OptionCol= { 3, 4, 5, 6, 7, 8, 9, 10 };
 
-        public int optionRowIndex = 0;
+        public int optionRowIndex = 2;
         public int optionColIndex = 0;
         public int CurrentRows => OptionRow[optionRowIndex];
         public int CurrentCols => OptionCol[optionColIndex];
@@ -37,6 +37,7 @@ namespace Project.Scripts.TileMatch.Level.Data
         public int layer;
         public string layerName;
         public List<Vector2Int> inactiveCells;
+        public int startLayerPatternIndex = 0;
         public bool[,] Cells;
 
         public LayersData(int cols, int rows)

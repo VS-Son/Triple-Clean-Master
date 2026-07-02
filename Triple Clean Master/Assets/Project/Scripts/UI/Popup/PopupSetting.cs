@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Project.Scripts.Config;
+using Project.Scripts.Constants;
 using Project.Scripts.Manager;
 using Project.Scripts.Scroller;
 using Project.Scripts.UI.Screen;
@@ -42,7 +43,7 @@ namespace Project.Scripts.UI.Popup
             OnClosePopup?.Invoke();
         }
 
-        public void SetEditTiles()
+        private void SetEditTiles()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -54,6 +55,7 @@ namespace Project.Scripts.UI.Popup
 
         public void TurnOnVolumeBgm(bool turnOn)
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             AudioManager.Instance.ToggleMute(turnOn, AudioType.BGM);
             turnOnBgm.SetActive(!turnOn);
             
@@ -61,12 +63,14 @@ namespace Project.Scripts.UI.Popup
 
         public void TurnOnVolumeSfx(bool turnOn)
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             AudioManager.Instance.ToggleMute(turnOn, AudioType.Sfx);
             turnOnSfx.SetActive(!turnOn);
         }
 
         public void OnEditTileset()
         {
+            AudioManager.Instance.PlaySfx(AudioConstants.HighPitchDefault);
             UIManager.OpenPopup<PopupEditThemeTile>(PopupType.PopupEditTheme);
         }
     }

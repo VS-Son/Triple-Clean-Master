@@ -20,8 +20,8 @@ namespace Project.Scripts.Scroller
         [ContextMenu(nameof(RefundPurchased))]
         private void Start()
         {
-            OnInit();
             UpdatePurchasedNonConsumable();
+            OnInit();
         }
 
         private void OnInit()

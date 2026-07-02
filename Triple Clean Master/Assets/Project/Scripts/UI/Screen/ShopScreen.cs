@@ -14,7 +14,6 @@ namespace Project.Scripts.UI.Screen
         public void UpdateTextUndo(int currentUndo)
         {
             undoValue.text = $"{currentUndo}";
-           
         }
         public void UpdateTextMagicWand( int currentMagic)
         {
