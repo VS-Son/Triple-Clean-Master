@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Project.Scripts.Manager
 {
     public enum ScreenType { HomeScreen, PlayScreen, Revive, NextScreen, Shop, StatusBar, Setting, PopupEditTheme }
-    public enum PopupType {  Revive, Setting, PopupEditTheme }
+    public enum PopupType {  Revive, Setting, PopupEditTheme, LoadAds, Sorry }
     public enum CommonUIType {  StatusBar }
 
     

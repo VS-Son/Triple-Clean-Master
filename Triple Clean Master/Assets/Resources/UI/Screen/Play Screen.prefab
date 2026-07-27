@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38b03e523ed4b99a5e9be4d6edac856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeBooster: 0
-  boosters: {fileID: 375924271456866480}
   undo: {fileID: 9019677428225297416}
   magicWand: {fileID: 5669103388749826306}
   shuffle: {fileID: 6625436594407975532}
@@ -168,7 +166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4518056364227937965
 RectTransform:
   m_ObjectHideFlags: 0
