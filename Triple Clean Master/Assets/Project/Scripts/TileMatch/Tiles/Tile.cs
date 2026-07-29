@@ -121,7 +121,7 @@ namespace Project.Scripts.TileMatch.Tiles
                  DoKill();
                  _isHolding = false;
                  _scaleTween = (transform.DOScale(LocalScale / _holdScale, 0.1f).SetEase(Ease.OutQuad));
-                 _swayTween = transform.DOMoveY(originalPos.y, 0.5f).SetEase(Ease.InOutSine);
+                 _swayTween = transform.DOLocalMoveY(originalPos.y, 0.5f).SetEase(Ease.InOutSine);
                  _rotateTween = transform.DOLocalRotate(new Vector3(0f, 0f, 0f), 0.3f);
              }
             

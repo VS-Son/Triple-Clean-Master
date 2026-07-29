@@ -11,6 +11,7 @@ namespace Project.Scripts.IAP_shop.ShopCellView.PackCellView
 {
     public class PackageCellView : EnhancedScrollerCellView, IShopCellView
     {
+        public static event Action OnPurchase; 
         public Action<IShopCellView> Onclick { get; set; }
         public string id;
         public TMP_Text textName;
@@ -43,7 +44,7 @@ namespace Project.Scripts.IAP_shop.ShopCellView.PackCellView
                     isPurchased = true;
                     PlayerInventoryManager.AddBoosterCounts(packageData.undo, packageData.magicWand, packageData.shuffle);
                     PlayerInventoryManager.AddCoin(packageData.coin);
-                    UIManager.GetUI<PlayScreen>(ScreenType.PlayScreen).UpdateTextBoosters();
+                    OnPurchase?.Invoke();
                     packageData.isPurchase = isPurchased;
                 }
             }

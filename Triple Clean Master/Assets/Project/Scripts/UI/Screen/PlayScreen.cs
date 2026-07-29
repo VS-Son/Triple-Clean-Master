@@ -1,5 +1,6 @@
 using System;
 using Project.Scripts.Constants;
+using Project.Scripts.IAP_shop.ShopCellView.PackCellView;
 using Project.Scripts.Manager;
 using Project.Scripts.Message;
 using Project.Scripts.TileMatch.Board;
@@ -24,6 +25,7 @@ namespace Project.Scripts.UI.Screen
             PlayerInventoryManager.OnShowBoosterCountRequested += OnShowBoosterCountRequested;
             PlayerInventoryManager.OnShowCoinPurchaseRequested += OnShowCoinPurchaseRequested;
             PlayerInventoryManager.OnShowAdUnlockRequested += OnShowAdUnlockRequested;
+            PackageCellView.OnPurchase += OnPurchase;
             UpdateUnlockBooster();
             UpdateTextBoosters();
         }
@@ -34,7 +36,12 @@ namespace Project.Scripts.UI.Screen
             PlayerInventoryManager.OnShowBoosterCountRequested -= OnShowBoosterCountRequested;
             PlayerInventoryManager.OnShowCoinPurchaseRequested -= OnShowCoinPurchaseRequested;
             PlayerInventoryManager.OnShowAdUnlockRequested -= OnShowAdUnlockRequested;
+            PackageCellView.OnPurchase -= OnPurchase;
+        }
 
+        private void OnPurchase()
+        {
+            UpdateTextBoosters();
         }
 
 
